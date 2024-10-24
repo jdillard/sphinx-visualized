@@ -142,7 +142,6 @@ window.onload = function() {
   root.descendants().forEach((d, i) => {
     d.id = i;
     d._children = d.children;
-    if (d.depth && d.data.label.length !== 7) d.children = null;
   });
 
   update(null, root);
