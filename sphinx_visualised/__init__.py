@@ -8,7 +8,7 @@ import os
 from collections import Counter
 from pathlib import Path
 
-__version__ = "0.2.3"
+__version__ = "0.3.0"
 
 
 def setup(app):

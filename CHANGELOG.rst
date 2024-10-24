@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.3.0
+-----
+
+- Make toctree graph collapsible
+
 0.2.3
 -----
 
