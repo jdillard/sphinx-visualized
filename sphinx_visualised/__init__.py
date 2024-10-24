@@ -7,6 +7,7 @@ import sphinx
 import os
 from collections import Counter
 from pathlib import Path
+from docutils import nodes as docutils_nodes
 
 __version__ = "0.3.0"
 
@@ -42,17 +43,23 @@ def get_links(app, doctree, docname):
     """
     references = [] # a list of every internal reference made between pages
 
-    for node in doctree.traverse():
+    #TODO handle troctree entries?
+    #TODO get targets
+    # for node in doctree.traverse(sphinx.addnodes.toctree):
+    #     print(vars(node))
+
+    for node in doctree.traverse(docutils_nodes.reference):
         # add internal references
-        if node.tagname == 'reference' and 'internal' in node.attributes and node.attributes['internal'] and 'refuri' in node.attributes and node.attributes['refuri']:
+        if node.tagname == 'reference' and node.get('internal') and node.get('refuri'):
+            # calulate path of the referenced page in relation to docname
             ref = node.attributes['refuri'].split("#")[0]
-            # path of the referenced page
             absolute_ref = os.path.abspath(os.path.join(os.path.dirname(f"/{docname}.html"), ref))[1:-5]
 
             #TODO some how get ref/doc/term for type?
             # add each link as an individual reference
             references.append((f"/{docname}.html", f"/{absolute_ref}.html", "ref"))
 
+            #TODO turn to function
             # a group is the name of the top level directory
             docname_group = f"/{docname}.html".split('/')[1]
             if not docname_group in app.env.app.groups:
