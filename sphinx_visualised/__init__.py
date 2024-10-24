@@ -49,8 +49,9 @@ def get_links(app, doctree, docname):
             # path of the referenced page
             absolute_ref = os.path.abspath(os.path.join(os.path.dirname(f"/{docname}.html"), ref))[1:-5]
 
+            #TODO some how get ref/doc/term for type?
             # add each link as an individual reference
-            references.append((f"/{docname}.html", f"/{absolute_ref}.html"))
+            references.append((f"/{docname}.html", f"/{absolute_ref}.html", "ref"))
 
             # a group is the name of the top level directory
             docname_group = f"/{docname}.html".split('/')[1]
@@ -106,6 +107,7 @@ def get_links(app, doctree, docname):
             "target": app.env.app.pages.index(ref[1]),
             "source": app.env.app.pages.index(ref[0]),
             "strength": 1,
+            "type": ref[2],
         })
 
 
