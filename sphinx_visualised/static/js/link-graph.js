@@ -1,124 +1,127 @@
-function getNeighbors(node) {
-    return links.reduce(function (neighbors, link) {
-        if (link.target.id === node.id) {
-            neighbors.push(link.source.id)
-        } else if (link.source.id === node.id) {
-            neighbors.push(link.target.id)
-        }
-        return neighbors
-        },
-        [node.id]
-    )
-}
-
-function isNeighborLink(node, link) {
-    return link.target.id === node.id || link.source.id === node.id
-}
-
-
-function getNodeColor(node, neighbors) {
-    if (Array.isArray(neighbors) && neighbors.indexOf(node.id) > -1) {
-        return node.level === 1 ? 'blue' : 'green'
-    }
-
-    return node.level === 1 ? 'red' : 'gray'
-}
-
-
-function getLinkColor(node, link) {
-    return isNeighborLink(node, link) ? 'green' : '#E5E5E5'
-}
-
-
-function getTextColor(node, neighbors) {
-    return Array.isArray(neighbors) && neighbors.indexOf(node.id) > -1 ? 'green' : 'black'
-}
-
 window.onload = function() {
-    var width = window.innerWidth
-    var height = window.innerHeight
-
-    var svg = d3.select('svg')
-        svg.attr('width', width).attr('height', height)
-
-    // simulation setup with all forces
-    var linkForce = d3
-        .forceLink()
-        .id(function (link) { return link.id })
-        .strength(function (link) { return link.strength })
-
-    var simulation = d3
-        .forceSimulation()
-        .force('link', linkForce)
-        .force('charge', d3.forceManyBody().strength(-500))
-        .force('center', d3.forceCenter(width / 2, height / 2))
-
-    var dragDrop = d3.drag().on('start', function (node) {
-            node.fx = node.x
-            node.fy = node.y
-        }).on('drag', function (node) {
-            simulation.alphaTarget(0.7).restart()
-            node.fx = d3.event.x
-            node.fy = d3.event.y
-        }).on('end', function (node) {
-            if (!d3.event.active) {
-                simulation.alphaTarget(0)
-            }
-            node.fx = null
-            node.fy = null
-        })
-
-    function selectNode(selectedNode) {
-        var neighbors = getNeighbors(selectedNode)
-
-        // we modify the styles to highlight selected nodes
-        nodeElements.attr('fill', function (node) { return getNodeColor(node, neighbors) })
-        textElements.attr('fill', function (node) { return getTextColor(node, neighbors) })
-        linkElements.attr('stroke', function (link) { return getLinkColor(selectedNode, link) })
+    function linkArc(d) {
+        const r = Math.hypot(d.target.x - d.source.x, d.target.y - d.source.y);
+        return `
+            M${d.source.x},${d.source.y}
+            A${r},${r} 0 0,1 ${d.target.x},${d.target.y}
+        `;
     }
 
-    var linkElements = svg.append("g")
-        .attr("class", "links")
-        .selectAll("line")
-        .data(links)
-        .enter().append("line")
-            .attr("stroke-width", 1)
-            .attr("stroke", "rgba(50, 50, 50, 0.2)")
+    drag = simulation => {
 
-    var nodeElements = svg.append("g")
-        .attr("class", "nodes")
-        .selectAll("circle")
-        .data(nodes)
-        .enter().append("circle")
-            .attr("r", 5)
-            .attr("fill", getNodeColor)
-            .call(dragDrop)
-            .on('click', selectNode)
+        function dragstarted(event, d) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
 
-    var textElements = svg.append("g")
-        .attr("class", "texts")
-        .selectAll("text")
-        .data(nodes)
-        .enter().append("a")
-            .attr("xlink:href", function (node) { return  node.path }).append("text")
-                .text(function (node) { return  node.label })
-                .attr("font-size", 15)
-                .attr("dx", 15)
-                .attr("dy", 4)
+        function dragged(event, d) {
+            d.fx = event.x;
+            d.fy = event.y;
+        }
 
-    simulation.nodes(nodes).on('tick', () => {
-        nodeElements
-            .attr('cx', function (node) { return node.x })
-            .attr('cy', function (node) { return node.y })
-        textElements
-            .attr('x', function (node) { return node.x })
-            .attr('y', function (node) { return node.y })
-        linkElements
-            .attr('x1', function (link) { return link.source.x })
-            .attr('y1', function (link) { return link.source.y })
-            .attr('x2', function (link) { return link.target.x })
-            .attr('y2', function (link) { return link.target.y })
-    })
+        function dragended(event, d) {
+            if (!event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
 
-    simulation.force("link").links(links)
+        return d3.drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended);
+    }
+
+    const width = 928;
+    const height = 600;
+    const types = Array.from(new Set(links_data.map(d => d.type)));
+    const nodes = nodes_data
+    const links = links_data
+
+    let colorIndustry = [
+        "#5A88B8",
+        "#5A88B8",
+        "#5A88B8",
+        "#FFAB00",
+        "#FFAB00",
+        "#FFAB00",
+        "#FFAB00",
+        "#E96463",
+        "#E96463",
+        "#E96463",
+        "#7CC4CC",
+        "#7CC4CC",
+        "#24B086",
+        "#C3BD0C",
+        "#C67194",
+    ]
+    const color = d3.scaleOrdinal(types, colorIndustry);
+
+    const simulation = d3.forceSimulation(nodes)
+        .force("link", d3.forceLink(links).id(d => d.id))
+        .force("charge", d3.forceManyBody().strength(-400))
+        .force("x", d3.forceX())
+        .force("y", d3.forceY());
+
+    const svg = d3.select("svg")
+        .attr("viewBox", [-width / 2, -height / 2, width, height])
+        .attr("width", width)
+        .attr("height", height)
+        .attr("style", "max-width: 100%; height: auto; font: 12px sans-serif;");
+
+    // Per-type markers, as they don't inherit styles.
+    svg.append("defs").selectAll("marker")
+    .data(types)
+    .join("marker")
+        .attr("id", d => `arrow-${d}`)
+        .attr("viewBox", "0 -5 10 10")
+        .attr("refX", 15)
+        .attr("refY", -0.5)
+        .attr("markerWidth", 6)
+        .attr("markerHeight", 6)
+        .attr("orient", "auto")
+    .append("path")
+        .attr("fill", color)
+        .attr("d", "M0,-5L10,0L0,5");
+
+    const link = svg.append("g")
+        .attr("fill", "none")
+        .attr("stroke-width", 1.5)
+    .selectAll("path")
+    .data(links)
+    .join("path")
+        .attr("stroke", d => color(d.type))
+        .attr("marker-end", d => `url(${new URL(`#arrow-${d.type}`, location)})`);
+
+    const node = svg.append("g")
+        .attr("fill", "currentColor")
+        .attr("stroke-linecap", "round")
+        .attr("stroke-linejoin", "round")
+    .selectAll("g")
+    .data(nodes)
+    .join("g")
+        .call(drag(simulation));
+
+    node.append("circle")
+        .attr("stroke", "white")
+        .attr("stroke-width", 1.5)
+        .attr("r", 4);
+
+    node.append("a")
+        .attr("xlink:href", d => d.path)
+        .append("text")
+            .attr("x", 8)
+            .attr("y", "0.31em")
+            .text(d => d.label)
+        .clone(true).lower()
+            .attr("fill", "none")
+            .attr("stroke", "white")
+            .attr("stroke-width", 3);
+
+    simulation.on("tick", () => {
+        link.attr("d", linkArc);
+        node.attr("transform", d => `translate(${d.x},${d.y})`);
+    });
+
+    svg.node()
 };
