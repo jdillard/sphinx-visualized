@@ -20,7 +20,9 @@ For example:
 Usage
 -----
 
-After building the docs, open one of the following in the browser:
+After building the docs, open the following pages in the browser:
 
 - ``/_static/link-graph.html``
 - ``/_static/toctree-graph.html``
+
+.. note:: You can see generated examples of each page in :doc:`example/index`.
