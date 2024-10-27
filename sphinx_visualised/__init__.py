@@ -87,7 +87,7 @@ def get_links(app, doctree, docname):
                     "id": app.env.app.pages.index(f"/{docname}.html"),
                     "group": app.env.app.groups.index(docname_group),
                     "label": title,
-                    "path": f"../{docname}.html",
+                    "path": f"../../../{docname}.html",
                     "level": 1
                 })
 
@@ -102,7 +102,7 @@ def get_links(app, doctree, docname):
                     "id": app.env.app.pages.index(f"/{absolute_ref}.html"),
                     "group": app.env.app.groups.index(absolute_ref_group),
                     "label": title,
-                    "path": f"../{absolute_ref}.html",
+                    "path": f"../../../{absolute_ref}.html",
                     "level": 1
                 })
 
@@ -130,7 +130,7 @@ def build_toctree_hierarchy(app):
             node_map[key] = {
                 "id": key,
                 "label": app.env.titles.get(key).astext(),
-                "path": f"../{key}.html",
+                "path": f"../../../{key}.html",
                 "children": [],
             }
 
@@ -139,7 +139,7 @@ def build_toctree_hierarchy(app):
                 node_map[child] = {
                     "id": child,
                     "label": app.env.titles.get(child).astext(),
-                    "path": f"../{child}.html",
+                    "path": f"../../../{child}.html",
                     "children": [],
                 }
             node_map[key]["children"].append(node_map[child])
