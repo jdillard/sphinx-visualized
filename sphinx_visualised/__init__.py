@@ -4,7 +4,9 @@
 
 import json
 import sphinx
+from packaging import version
 import os
+import shutil
 from collections import Counter
 from pathlib import Path
 from docutils import nodes as docutils_nodes
@@ -152,11 +154,20 @@ def create_json(app, exception):
     Create and copy static files for visualizations
     """
     os.makedirs(Path(app.outdir) / "_static" / "sphinx-visualized", exist_ok=True)
-    sphinx.util.fileutil.copy_asset(
-        os.path.join(os.path.dirname(__file__), "static"),
-        os.path.join(app.builder.outdir, '_static', "sphinx-visualized"),
-        force=True,
-    )
+    if version.parse(sphinx.__version__) >= version.parse("8.0.0"):
+        # Use the 'force' argument if it's available
+        sphinx.util.fileutil.copy_asset(
+            os.path.join(os.path.dirname(__file__), "static"),
+            os.path.join(app.builder.outdir, '_static', "sphinx-visualized"),
+            force=True,
+        )
+    else:
+        # Fallback for older versions without 'force' argument
+        shutil.rmtree(Path(app.outdir) / "_static" / "sphinx-visualized")
+        sphinx.util.fileutil.copy_asset(
+            os.path.join(os.path.dirname(__file__), "static"),
+            os.path.join(app.builder.outdir, '_static', "sphinx-visualized"),
+        )
 
     filename = Path(app.outdir) / "_static" / "sphinx-visualized" / "js" / "links.js"
     with open(filename, "w") as json_file:

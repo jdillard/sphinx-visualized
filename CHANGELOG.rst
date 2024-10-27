@@ -7,6 +7,7 @@ Changelog
 - Make toctree graph collapsible
 - Show the reference directionality in link graph
 - Consolidate files to single location
+- Support older versions of sphinx.util.fileutil.copy_asset()
 
 0.2.3
 -----
