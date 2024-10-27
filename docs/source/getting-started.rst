@@ -20,9 +20,8 @@ For example:
 Usage
 -----
 
-After building the docs, open the following pages in the browser:
+After building the docs, view by opening the following page:
 
-- ``/_static/link-graph.html``
-- ``/_static/toctree-graph.html``
+- ``/_static/sphinx-visualized/index.html``
 
 .. note:: You can see generated examples of each page in :doc:`example/index`.

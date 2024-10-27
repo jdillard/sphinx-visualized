@@ -1,7 +1,7 @@
 Example Site
 ============
 
-This demonstrates the `link-graph.html`_ and `toctree-graph.html`_ pages.
+This demonstrates the generated `sphinx-visualized`_ pages.
 
 .. toctree::
 
@@ -12,5 +12,4 @@ This demonstrates the `link-graph.html`_ and `toctree-graph.html`_ pages.
    amet
    glossary
 
-.. _link-graph.html: /en/latest/_static/link-graph.html
-.. _toctree-graph.html: /en/latest/_static/toctree-graph.html
+.. _sphinx-visualized: ../../_static/sphinx-visualized/html/index.html

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Sphinx visualized</title>
+    <style>
+      body, html {
+        height: 100%;
+        margin: 0;
+      }
+    
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 33vh;
+      }
+
+      #toc {
+        display: flex;
+        flex-direction: column;
+      }
+
+      #toc a {
+        display: block;
+        padding: 20px;
+        border: 1px solid black;
+        margin-bottom: 10px;
+        text-align: center;
+        text-decoration: none;
+        color: black;
+        width: 200px;
+      }
+
+      #toc a:hover {
+        background-color: #f0f0f0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center;">Sphinx Visualized</h1>
+    <p style="text-align: center;"><a href="/">back home</a></p>
+    <div class="container">
+      <div id="toc">
+        <a href="link-graph.html">Sphinx Link Graph</a>
+        <a href="toctree-graph.html">Toctree Graph</a>
+      </div>
+    </div>
+  </body>
+</html>
+

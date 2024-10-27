@@ -149,44 +149,23 @@ def build_toctree_hierarchy(app):
 
 def create_json(app, exception):
     """
-    Create static files for visualizations
+    Create and copy static files for visualizations
     """
-    filename = Path(app.outdir) / "_static" / "links.js"
+    os.makedirs(Path(app.outdir) / "_static" / "sphinx-visualized", exist_ok=True)
+    sphinx.util.fileutil.copy_asset(
+        os.path.join(os.path.dirname(__file__), "static"),
+        os.path.join(app.builder.outdir, '_static', "sphinx-visualized"),
+        force=True,
+    )
+
+    filename = Path(app.outdir) / "_static" / "sphinx-visualized" / "js" / "links.js"
     with open(filename, "w") as json_file:
         json_file.write(f'var links_data = {json.dumps(app.env.app.links, indent=4)};')
 
-    filename = Path(app.outdir) / "_static" / "nodes.js"
+    filename = Path(app.outdir) / "_static" / "sphinx-visualized" / "js" / "nodes.js"
     with open(filename, "w") as json_file:
         json_file.write(f'var nodes_data = {json.dumps(app.env.app.nodes, indent=4)};')
 
-    filename = Path(app.outdir) / "_static" / "toctree.js"
+    filename = Path(app.outdir) / "_static" / "sphinx-visualized" / "js" / "toctree.js"
     with open(filename, "w") as json_file:
         json_file.write(f'var toctree = {json.dumps(build_toctree_hierarchy(app), indent=4)};')
-
-    filename = "link-graph.html"
-    sphinx.util.fileutil.copy_asset_file(
-        os.path.join(os.path.dirname(__file__), "static", "html", filename),
-        os.path.join(app.builder.outdir, '_static', filename),
-        force=True,
-    )
-
-    filename = "link-graph.js"
-    sphinx.util.fileutil.copy_asset_file(
-        os.path.join(os.path.dirname(__file__), "static", "js", filename),
-        os.path.join(app.builder.outdir, '_static', filename),
-        force=True,
-    )
-
-    filename = "toctree-graph.html"
-    sphinx.util.fileutil.copy_asset_file(
-        os.path.join(os.path.dirname(__file__), "static", "html", filename),
-        os.path.join(app.builder.outdir, '_static', filename),
-        force=True,
-    )
-
-    filename = "toctree-graph.js"
-    sphinx.util.fileutil.copy_asset_file(
-        os.path.join(os.path.dirname(__file__), "static", "js", filename),
-        os.path.join(app.builder.outdir, '_static', filename),
-        force=True,
-    )

@@ -5,7 +5,8 @@ Changelog
 -----
 
 - Make toctree graph collapsible
-- Show reference direction in link graph
+- Show the reference directionality in link graph
+- Consolidate files to single location
 
 0.2.3
 -----
