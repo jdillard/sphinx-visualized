@@ -12,4 +12,4 @@ This demonstrates the generated `sphinx-visualized`_ pages.
    amet
    glossary
 
-.. _sphinx-visualized: ../../_static/sphinx-visualized/html/index.html
+.. _sphinx-visualized: ../_static/sphinx-visualized/html/index.html
