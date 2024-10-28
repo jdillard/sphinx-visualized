@@ -6,7 +6,7 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "sphinx-visualised"
+name = "sphinx-visualized"
 description = "Visualization generator for Sphinx"
 authors = [
     {name = "Jared Dillard", email = "jared.dillard@gmail.com"},

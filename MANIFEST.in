@@ -1,2 +1,2 @@
 include LICENSE
-recursive-include sphinx_visualised/static *
+recursive-include sphinx_visualized/static *

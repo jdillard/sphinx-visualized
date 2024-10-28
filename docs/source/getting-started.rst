@@ -8,14 +8,14 @@ Directly install via pip by using:
 
 .. code-block::
 
-   pip install sphinx-visualised
+   pip install sphinx-visualized
 
-Add ``sphinx_visualised`` to the `extensions <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-extensions>`_ array in your Sphinx **conf.py**.
+Add ``sphinx_visualized`` to the `extensions <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-extensions>`_ array in your Sphinx **conf.py**.
 For example:
 
 .. code-block:: python
 
-   extensions = ['sphinx_visualised']
+   extensions = ['sphinx_visualized']
 
 Usage
 -----
