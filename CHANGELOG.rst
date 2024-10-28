@@ -4,7 +4,7 @@ Changelog
 0.3.0
 -----
 
-*Release date: TBD*
+*Release date: 2024-10-27*
 
 - Make toctree graph collapsible
 - Show the reference directionality in link graph
