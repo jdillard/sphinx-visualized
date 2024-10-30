@@ -3,7 +3,7 @@
 A Sphinx extension to generate interactive visualizations.
 
 [![PyPI version](https://img.shields.io/pypi/v/sphinx-visualized.svg)](https://pypi.python.org/pypi/sphinx-visualized)
-![Parallel safe](https://img.shields.io/badge/parallel%20safe-false-red)
+![Parallel safe](https://img.shields.io/badge/parallel%20safe-true-brightgreen)
 
 ## Documentation
 
