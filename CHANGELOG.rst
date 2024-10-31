@@ -4,7 +4,7 @@ Changelog
 0.4.0
 -----
 
-*Release date: TBD*
+*Release date: 2024-10-30*
 
 - Add parallel support
 
