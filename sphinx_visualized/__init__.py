@@ -37,14 +37,13 @@ def create_objects(app):
 
     manager = Manager()
     builder.env.app.pages = manager.dict() # an index of page names
-    builder.env.app.references = manager.Queue() # a list of every internal reference made between pages
+    builder.env.app.references = manager.Queue() # a queue of every internal reference made between pages
 
 
 def get_links(app, doctree, docname):
     """
     Gather internal link connections
     """
-    references = [] # a list of every internal reference made between pages
 
     #TODO handle troctree entries?
     #TODO get targets
@@ -102,10 +101,7 @@ def create_json(app, exception):
     """
     Create and copy static files for visualizations
     """
-    page_list = list(app.env.app.pages.keys())
-    nodes = []
-    reference_list = []
-    links = []
+    page_list = list(app.env.app.pages.keys()) # list of pages with references
 
     # create directory in _static and over static assets
     os.makedirs(Path(app.outdir) / "_static" / "sphinx-visualized", exist_ok=True)
@@ -125,6 +121,7 @@ def create_json(app, exception):
         )
 
     # convert pages and groups to lists
+    nodes = [] # a list of nodes and their metadata
     for page in page_list:
         if app.env.titles.get(page[1:-5]):
             title = app.env.titles.get(page[1:-5]).astext()
@@ -137,10 +134,13 @@ def create_json(app, exception):
             "path": f"../../..{page}",
         })
 
-    # create object that links references between pages
+    # convert queue to list
+    reference_list = []
     while not app.env.app.references.empty():
         reference_list.append(app.env.app.references.get())
 
+    # create object that links references between pages
+    links = [] # a list of links between pages
     references_counts = Counter(reference_list)
     for ref, count in references_counts.items():
         links.append({
