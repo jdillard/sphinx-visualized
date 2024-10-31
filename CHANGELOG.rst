@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.4.0
+-----
+
+*Release date: TBD*
+
+- Add parallel support
+
 0.3.0
 -----
 
