@@ -7,3 +7,4 @@ build/
 # Environments
 .venv
 docs/_build
+node_modules
