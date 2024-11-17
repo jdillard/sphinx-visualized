@@ -1,0 +1,9 @@
+{
+    "nodes": [
+        {"id": "1", "label": "Alice"},
+        {"id": "2", "label": "Bob"}
+    ],
+    "edges": [
+        {"source": "1", "target": "2", "label": "Knows"}
+    ]
+}
