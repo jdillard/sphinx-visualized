@@ -25,5 +25,17 @@ async function loadGraph(fileUrl) {
 loadGraph('graph.json')
     .then(graph => {
         const container = document.getElementById("graph-container");
-        new Sigma(graph, container);
+
+        const sigmaInstance = new Sigma(graph,container, {
+            // Enable zooming and panning
+            zoomingRatio: 1.1,  // Sets the zoom ratio when zooming in or out
+            minZoom: 0.1,
+            maxZoom: 10,
+            mouseWheelZoom: true,
+            touchEnabled: true,
+            }
+        );
+
+        // Optionally, set the initial zoom level programmatically
+        sigmaInstance.camera.goTo({ zoom: 2 });
     });
