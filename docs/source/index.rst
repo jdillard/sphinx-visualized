@@ -9,6 +9,8 @@ A `Sphinx`_ extension to generate interactive visualizations.
    :maxdepth: 2
 
    getting-started
+   advanced-configuration
+   configuration-values
    example/index
    changelog
 

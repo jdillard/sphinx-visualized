@@ -3,6 +3,15 @@
 
 import forceAtlas2 from 'https://cdn.skypack.dev/graphology-layout-forceatlas2';
 
+// Default color palette inspired by sigmajs.org
+const DEFAULT_COLORS = [
+  '#331A00', '#663000', '#996136', '#CC9B7A',
+  '#D9AF98', '#F2DACE', '#CCFDFF', '#99F8FF',
+  '#66F0FF', '#33E4FF', '#00AACC', '#5A88B8',
+  '#E96463', '#24B086', '#FF6B6B', '#4ECDC4',
+  '#45B7D1', '#96CEB4', '#FFEAA7', '#DFE6E9'
+];
+
 window.addEventListener('DOMContentLoaded', async () => {
   // Fetch the GraphSON data
   let graphsonData;
@@ -22,16 +31,38 @@ window.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
+  // Process cluster configuration
+  const clusterConfig = graphsonData.clusters || [];
+  const clusterColorMap = {};
+  const clusterColors = {};
+
+  // Assign colors to clusters
+  clusterConfig.forEach((cluster, index) => {
+    const color = cluster.color || DEFAULT_COLORS[index % DEFAULT_COLORS.length];
+    clusterColors[cluster.name] = color;
+    clusterColorMap[cluster.name] = {
+      color: color,
+      patterns: cluster.patterns || []
+    };
+  });
+
   // Create a new graphology graph
   const graph = new graphology.Graph();
 
   // Add nodes from GraphSON vertices with random initial positions
   graphsonData.vertices.forEach((vertex, index) => {
+    const cluster = vertex.properties.cluster;
+    const nodeColor = cluster && clusterColors[cluster]
+      ? clusterColors[cluster]
+      : '#5A88B8'; // Default color if no cluster
+
     graph.addNode(String(vertex.id), {
       label: vertex.properties.name,
       path: vertex.properties.path,
+      cluster: cluster,
       size: 5,
-      color: '#5A88B8',
+      color: nodeColor,
+      originalColor: nodeColor,
       x: Math.random() * 100,
       y: Math.random() * 100
     });
@@ -136,7 +167,8 @@ window.addEventListener('DOMContentLoaded', async () => {
 
       // Reset all nodes and edges to default state
       graph.forEachNode((node) => {
-        graph.setNodeAttribute(node, 'color', '#5A88B8');
+        const nodeData = graph.getNodeAttributes(node);
+        graph.setNodeAttribute(node, 'color', nodeData.originalColor);
         graph.setNodeAttribute(node, 'highlighted', false);
       });
 
@@ -145,6 +177,117 @@ window.addEventListener('DOMContentLoaded', async () => {
         graph.setEdgeAttribute(edge, 'highlighted', false);
       });
     });
+
+    // Cluster legend functionality (similar to sigma.js demo)
+    const legendContainer = document.getElementById('cluster-panel');
+    if (clusterConfig.length > 0) {
+      if (legendContainer) {
+        // Calculate nodes per cluster
+        const nodesPerCluster = {};
+        let maxNodesPerCluster = 0;
+        graph.forEachNode((node) => {
+          const nodeData = graph.getNodeAttributes(node);
+          const cluster = nodeData.cluster || 'uncategorized';
+          nodesPerCluster[cluster] = (nodesPerCluster[cluster] || 0) + 1;
+          maxNodesPerCluster = Math.max(maxNodesPerCluster, nodesPerCluster[cluster]);
+        });
+
+        // Track which clusters are visible
+        const visibleClusters = {};
+        clusterConfig.forEach(cluster => {
+          visibleClusters[cluster.name] = true;
+        });
+
+        const updateGraph = () => {
+          graph.forEachNode((node) => {
+            const nodeData = graph.getNodeAttributes(node);
+            const cluster = nodeData.cluster;
+
+            if (!cluster || visibleClusters[cluster]) {
+              graph.setNodeAttribute(node, 'color', nodeData.originalColor);
+              graph.setNodeAttribute(node, 'hidden', false);
+            } else {
+              graph.setNodeAttribute(node, 'hidden', true);
+            }
+          });
+        };
+
+        const renderLegend = () => {
+          const visibleCount = Object.values(visibleClusters).filter(v => v).length;
+
+          legendContainer.innerHTML = `
+            <h3 style="margin-top: 0; font-size: 1.3em; margin-bottom: 0.5em;">
+              Clusters
+              ${visibleCount < clusterConfig.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${clusterConfig.length})</span>` : ''}
+            </h3>
+            <p style="color: #666; font-style: italic; font-size: 0.9em;">Click a cluster to show/hide related pages from the network.</p>
+            <p class="cluster-buttons">
+              <button id="check-all-btn" class="cluster-btn">☑ Check all</button>
+              <button id="uncheck-all-btn" class="cluster-btn">☐ Uncheck all</button>
+            </p>
+            <ul style="list-style: none; padding: 0; margin: 0;"></ul>
+          `;
+
+          const list = legendContainer.querySelector('ul');
+
+          // Sort clusters by node count
+          const sortedClusters = [...clusterConfig].sort((a, b) =>
+            (nodesPerCluster[b.name] || 0) - (nodesPerCluster[a.name] || 0)
+          );
+
+          sortedClusters.forEach((cluster, index) => {
+            const color = clusterColors[cluster.name];
+            const count = nodesPerCluster[cluster.name] || 0;
+            const isChecked = visibleClusters[cluster.name];
+            const barWidth = (100 * count) / maxNodesPerCluster;
+
+            const li = document.createElement('li');
+            li.className = 'caption-row';
+            li.title = `${count} page${count !== 1 ? 's' : ''}`;
+            li.innerHTML = `
+              <input type="checkbox" ${isChecked ? 'checked' : ''} id="cluster-${index}" />
+              <label for="cluster-${index}">
+                <span class="circle" style="background-color: ${color}; border-color: ${color};"></span>
+                <div class="node-label">
+                  <span>${cluster.name}</span>
+                  <div class="bar" style="width: ${barWidth}%;"></div>
+                </div>
+              </label>
+            `;
+
+            li.querySelector('input').addEventListener('change', (e) => {
+              visibleClusters[cluster.name] = e.target.checked;
+              updateGraph();
+              renderLegend();
+            });
+
+            list.appendChild(li);
+          });
+
+          // Add button handlers
+          document.getElementById('check-all-btn').addEventListener('click', () => {
+            clusterConfig.forEach(cluster => {
+              visibleClusters[cluster.name] = true;
+            });
+            updateGraph();
+            renderLegend();
+          });
+
+          document.getElementById('uncheck-all-btn').addEventListener('click', () => {
+            clusterConfig.forEach(cluster => {
+              visibleClusters[cluster.name] = false;
+            });
+            updateGraph();
+            renderLegend();
+          });
+        };
+
+        renderLegend();
+      }
+    } else if (legendContainer) {
+      // Hide the cluster panel if no clusters configured
+      legendContainer.style.display = 'none';
+    }
 
     // Search functionality
     const searchInput = document.getElementById('search');
@@ -156,14 +299,14 @@ window.addEventListener('DOMContentLoaded', async () => {
         const matches = nodeData.label.toLowerCase().includes(searchTerm);
 
         if (searchTerm === '') {
-          graph.setNodeAttribute(node, 'color', '#5A88B8');
-          graph.setNodeAttribute(node, 'size', 3);
+          graph.setNodeAttribute(node, 'color', nodeData.originalColor);
+          graph.setNodeAttribute(node, 'size', 5);
         } else if (matches) {
           graph.setNodeAttribute(node, 'color', '#24B086');
-          graph.setNodeAttribute(node, 'size', 5);
+          graph.setNodeAttribute(node, 'size', 7);
         } else {
           graph.setNodeAttribute(node, 'color', '#cccccc');
-          graph.setNodeAttribute(node, 'size', 1.5);
+          graph.setNodeAttribute(node, 'size', 2);
         }
       });
     });

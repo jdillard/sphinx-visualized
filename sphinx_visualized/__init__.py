@@ -11,11 +11,13 @@ from collections import Counter
 from pathlib import Path
 from docutils import nodes as docutils_nodes
 from multiprocessing import Manager, Queue
+from fnmatch import fnmatch
 
 __version__ = "0.5.0"
 
 
 def setup(app):
+    app.add_config_value("visualized_clusters", [], "html")
     app.connect("builder-inited", create_objects)
     app.connect("doctree-resolved", get_links)
     app.connect("build-finished", create_json)
@@ -25,6 +27,31 @@ def setup(app):
         "parallel_read_safe": True,
         "parallel_write_safe": True,
     }
+
+
+def get_page_cluster(page_path, clusters_config):
+    """
+    Determine which cluster a page belongs to based on glob patterns.
+
+    Args:
+        page_path: Path to the page (e.g., "/example/lorem.html")
+        clusters_config: List of cluster configurations from conf.py
+
+    Returns:
+        Cluster name if matched, None otherwise
+    """
+    # Remove leading slash and .html extension for pattern matching
+    normalized_path = page_path.lstrip('/').rstrip('.html')
+
+    for cluster in clusters_config:
+        name = cluster.get('name')
+        patterns = cluster.get('patterns', [])
+
+        for pattern in patterns:
+            if fnmatch(normalized_path, pattern):
+                return name
+
+    return None
 
 
 def create_objects(app):
@@ -97,7 +124,7 @@ def build_toctree_hierarchy(app):
     return node_map[app.builder.config.root_doc]
 
 
-def create_graphson(nodes, links, page_list):
+def create_graphson(nodes, links, page_list, clusters_config):
     """
     Create GraphSON format for TinkerPop/sigma.js compatibility.
     Converts the nodes and links data into GraphSON v3.0 format.
@@ -115,6 +142,11 @@ def create_graphson(nodes, links, page_list):
                 "path": node["path"]
             }
         }
+
+        # Add cluster information if available
+        if "cluster" in node and node["cluster"] is not None:
+            vertex["properties"]["cluster"] = node["cluster"]
+
         vertices.append(vertex)
 
     # Create edges (links)
@@ -133,10 +165,16 @@ def create_graphson(nodes, links, page_list):
         }
         edges.append(edge)
 
-    return {
+    # Include cluster configuration metadata
+    graphson = {
         "vertices": vertices,
         "edges": edges
     }
+
+    if clusters_config:
+        graphson["clusters"] = clusters_config
+
+    return graphson
 
 
 def create_json(app, exception):
@@ -144,6 +182,7 @@ def create_json(app, exception):
     Create and copy static files for visualizations
     """
     page_list = list(app.env.app.pages.keys()) # list of pages with references
+    clusters_config = app.config.visualized_clusters
 
     # create directory in _static and over static assets
     os.makedirs(Path(app.outdir) / "_static" / "sphinx-visualized", exist_ok=True)
@@ -170,10 +209,14 @@ def create_json(app, exception):
         else:
             title = page
 
+        # Determine cluster for this page
+        cluster = get_page_cluster(page, clusters_config)
+
         nodes.append({
             "id": page_list.index(page),
             "label": title,
             "path": f"../../..{page}",
+            "cluster": cluster,
         })
 
     # convert queue to list
@@ -206,7 +249,7 @@ def create_json(app, exception):
         json_file.write(f'var toctree = {json.dumps(build_toctree_hierarchy(app), indent=4)};')
 
     # Create GraphSON format for TinkerPop/sigma.js compatibility
-    graphson = create_graphson(nodes, links, page_list)
+    graphson = create_graphson(nodes, links, page_list, clusters_config)
     filename = Path(app.outdir) / "_static" / "sphinx-visualized" / "graphson.json"
     with open(filename, "w") as json_file:
         json.dump(graphson, json_file, indent=2)
