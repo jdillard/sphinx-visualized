@@ -112,14 +112,6 @@ visualized_clusters = [
     {
         "name": "Examples",
         "patterns": ["example/*"]
-    },
-    {
-        "name": "Dolor Section",
-        "patterns": ["example/dolor/*"]
-    },
-    {
-        "name": "Changelog",
-        "patterns": ["changelog"]
     }
 ]
 

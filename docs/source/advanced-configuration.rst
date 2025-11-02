@@ -1,7 +1,7 @@
 Advanced Configuration
 ======================
 
-This page covers advanced configuration options for the sphinx-visualized extension.
+This page covers advanced configuration options for the sphinx-visualized extension. For basic setup, see :doc:`getting-started`.
 
 .. _configuring_clusters:
 

@@ -4,7 +4,7 @@ Changelog
 0.5.0
 -----
 
-- Replace custom link graph with sigma.js implmenetation
+- Replace custom link graph with sigma.js implementation
 
 0.4.0
 -----

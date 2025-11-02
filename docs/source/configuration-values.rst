@@ -1,7 +1,7 @@
 Configuration Values
 ====================
 
-This page documents all configuration values available in sphinx-visualized.
+This page documents all configuration values available in sphinx-visualized. For installation instructions, see :doc:`getting-started`. For advanced usage, see :doc:`advanced-configuration`.
 
 .. confval:: visualized_clusters
 

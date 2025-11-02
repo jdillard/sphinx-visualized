@@ -24,7 +24,7 @@ After building the docs, view by opening the following page:
 
 - ``/_static/sphinx-visualized/index.html``
 
-.. note:: You can see generated examples of each page in :doc:`example/index`.
+.. note:: You can see generated examples of each page in :doc:`example/index`. Also check out :doc:`example/lorem` for a detailed example.
 
 Visualization Options
 ---------------------
