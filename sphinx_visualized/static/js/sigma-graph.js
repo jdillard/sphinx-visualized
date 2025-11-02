@@ -1,6 +1,8 @@
 // Sigma.js Graph Visualization
 // This script loads GraphSON data and renders it using sigma.js
 
+import forceAtlas2 from 'https://cdn.skypack.dev/graphology-layout-forceatlas2';
+
 window.addEventListener('DOMContentLoaded', async () => {
   // Fetch the GraphSON data
   let graphsonData;
@@ -23,20 +25,15 @@ window.addEventListener('DOMContentLoaded', async () => {
   // Create a new graphology graph
   const graph = new graphology.Graph();
 
-  // Calculate circular layout positions
-  const nodeCount = graphsonData.vertices.length;
-  const radius = Math.max(100, nodeCount * 5);
-
-  // Add nodes from GraphSON vertices with initial positions
+  // Add nodes from GraphSON vertices with random initial positions
   graphsonData.vertices.forEach((vertex, index) => {
-    const angle = (index * 2 * Math.PI) / nodeCount;
     graph.addNode(String(vertex.id), {
       label: vertex.properties.name,
       path: vertex.properties.path,
-      size: 10,
+      size: 5,
       color: '#5A88B8',
-      x: Math.cos(angle) * radius,
-      y: Math.sin(angle) * radius
+      x: Math.random() * 100,
+      y: Math.random() * 100
     });
   });
 
@@ -52,6 +49,25 @@ window.addEventListener('DOMContentLoaded', async () => {
     } catch (e) {
       // Skip duplicate edges
       console.warn('Skipping duplicate edge:', edge);
+    }
+  });
+
+  // Apply ForceAtlas2 layout
+  const settings = forceAtlas2.inferSettings(graph);
+
+  // Run the layout algorithm with settings optimized for spread
+  forceAtlas2.assign(graph, {
+    iterations: 200,
+    settings: {
+      ...settings,
+      gravity: 0.05,
+      scalingRatio: 50,
+      slowDown: 1,
+      barnesHutOptimize: true,
+      barnesHutTheta: 0.5,
+      strongGravityMode: false,
+      outboundAttractionDistribution: false,
+      linLogMode: false
     }
   });
 
@@ -140,13 +156,13 @@ window.addEventListener('DOMContentLoaded', async () => {
 
         if (searchTerm === '') {
           graph.setNodeAttribute(node, 'color', '#5A88B8');
-          graph.setNodeAttribute(node, 'size', 10);
+          graph.setNodeAttribute(node, 'size', 3);
         } else if (matches) {
           graph.setNodeAttribute(node, 'color', '#24B086');
-          graph.setNodeAttribute(node, 'size', 15);
+          graph.setNodeAttribute(node, 'size', 5);
         } else {
           graph.setNodeAttribute(node, 'color', '#cccccc');
-          graph.setNodeAttribute(node, 'size', 5);
+          graph.setNodeAttribute(node, 'size', 1.5);
         }
       });
     });
