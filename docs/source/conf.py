@@ -101,6 +101,17 @@ ogp_image = "https://sphinx-visualized.readthedocs.io/en/latest/_static/graph-ic
 
 html_baseurl = "https://sphinx-visualized.readthedocs.org/"
 
+visualized_clusters = [
+    {
+        "name": "Getting Started",
+        "patterns": ["index", "getting-started"]
+    },
+    {
+        "name": "Examples",
+        "patterns": ["example/*"]
+    }
+]
+
 def setup(app):
     app.add_object_type(
         "confval",

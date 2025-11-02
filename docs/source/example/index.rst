@@ -10,6 +10,12 @@ This demonstrates the generated `sphinx-visualized`_ pages.
    dolor/index
    sit
    amet
+   tempor
+   veniam
+   labore
+   laboris
+   magna
+   laborum
    glossary
 
 .. _sphinx-visualized: ../_static/sphinx-visualized/html/index.html
