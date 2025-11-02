@@ -127,7 +127,8 @@ def create_graphson(nodes, links, page_list):
             "inV": link["target"],
             "outV": link["source"],
             "properties": {
-                "strength": link.get("strength", 1)
+                "strength": link.get("strength", 1),
+                "reference_count": link.get("reference_count", 1)
             }
         }
         edges.append(edge)
@@ -187,7 +188,8 @@ def create_json(app, exception):
         links.append({
             "target": page_list.index(ref[1]),
             "source": page_list.index(ref[0]),
-            "strength": count,
+            "strength": 1,
+            "reference_count": count,
             "type": ref[2],
         })
 

@@ -43,7 +43,8 @@ window.addEventListener('DOMContentLoaded', async () => {
       graph.addEdge(String(edge.outV), String(edge.inV), {
         label: edge.label,
         strength: edge.properties.strength,
-        size: Math.min(edge.properties.strength / 2, 5),
+        reference_count: edge.properties.reference_count,
+        size: 1,
         type: 'arrow'
       });
     } catch (e) {
