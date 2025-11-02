@@ -101,9 +101,6 @@ ogp_image = "https://sphinx-visualized.readthedocs.io/en/latest/_static/graph-ic
 
 html_baseurl = "https://sphinx-visualized.readthedocs.org/"
 
-# Sphinx Visualized cluster configuration
-# Define clusters with glob patterns to group related pages
-# Colors are automatically assigned from a preset palette
 visualized_clusters = [
     {
         "name": "Getting Started",
