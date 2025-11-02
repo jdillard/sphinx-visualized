@@ -1,14 +1,86 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Sphinx Link Graph</title>
-  <script src="https://d3js.org/d3.v6.min.js"></script>
-  <script src="../js/nodes.js"></script>
-  <script src="../js/links.js"></script>
-  <script src="../js/link-graph.js"></script>
+  <title>Link Graph Visualization</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 20px 0 10px 0;
+    }
+
+    .nav {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .nav a {
+      margin: 0 10px;
+    }
+
+    #graph-container {
+      width: 100vw;
+      height: calc(100vh - 100px);
+      background: #f5f5f5;
+    }
+
+    #controls {
+      position: absolute;
+      top: 80px;
+      right: 20px;
+      background: white;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+
+    #controls button {
+      display: block;
+      width: 100%;
+      margin: 5px 0;
+      padding: 8px 12px;
+      cursor: pointer;
+      background: #5A88B8;
+      color: white;
+      border: none;
+      border-radius: 3px;
+    }
+
+    #controls button:hover {
+      background: #4a7098;
+    }
+
+    #search {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+    }
+  </style>
+  <script src="https://unpkg.com/graphology/dist/graphology.umd.min.js"></script>
+  <script src="https://unpkg.com/sigma@2.4.0/build/sigma.min.js"></script>
+  <script src="../js/sigma-graph.js"></script>
 </head>
 <body>
-  <h1 style="text-align: center;">Sphinx Link Graph</h1>
-  <p style="text-align: center;"><a href="../../../">back home</a> | <a href="toctree-graph.html">Sphinx Toctree Graph</a></p>
-  <svg width="960" height="600"></svg>
+  <h1>Link Graph Visualization</h1>
+  <p class="nav">
+    <a href="index.html">Sphinx Visualized</a>
+  </p>
+
+  <div id="controls">
+    <input type="text" id="search" placeholder="Search nodes..." />
+    <button id="reset-zoom">Reset View</button>
+    <button id="export-json">Export GraphSON</button>
+  </div>
+
+  <div id="graph-container"></div>
 </body>
+</html>

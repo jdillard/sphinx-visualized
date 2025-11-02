@@ -97,6 +97,47 @@ def build_toctree_hierarchy(app):
     return node_map[app.builder.config.root_doc]
 
 
+def create_graphson(nodes, links, page_list):
+    """
+    Create GraphSON format for TinkerPop/sigma.js compatibility.
+    Converts the nodes and links data into GraphSON v3.0 format.
+    """
+    vertices = []
+    edges = []
+
+    # Create vertices (nodes)
+    for node in nodes:
+        vertex = {
+            "id": node["id"],
+            "label": "page",
+            "properties": {
+                "name": node["label"],
+                "path": node["path"]
+            }
+        }
+        vertices.append(vertex)
+
+    # Create edges (links)
+    for idx, link in enumerate(links):
+        edge = {
+            "id": idx,
+            "label": link.get("type", "ref"),
+            "inVLabel": "page",
+            "outVLabel": "page",
+            "inV": link["target"],
+            "outV": link["source"],
+            "properties": {
+                "strength": link.get("strength", 1)
+            }
+        }
+        edges.append(edge)
+
+    return {
+        "vertices": vertices,
+        "edges": edges
+    }
+
+
 def create_json(app, exception):
     """
     Create and copy static files for visualizations
@@ -161,3 +202,9 @@ def create_json(app, exception):
     filename = Path(app.outdir) / "_static" / "sphinx-visualized" / "js" / "toctree.js"
     with open(filename, "w") as json_file:
         json_file.write(f'var toctree = {json.dumps(build_toctree_hierarchy(app), indent=4)};')
+
+    # Create GraphSON format for TinkerPop/sigma.js compatibility
+    graphson = create_graphson(nodes, links, page_list)
+    filename = Path(app.outdir) / "_static" / "sphinx-visualized" / "graphson.json"
+    with open(filename, "w") as json_file:
+        json.dump(graphson, json_file, indent=2)
