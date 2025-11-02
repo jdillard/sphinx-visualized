@@ -12,7 +12,7 @@ from pathlib import Path
 from docutils import nodes as docutils_nodes
 from multiprocessing import Manager, Queue
 
-__version__ = "0.4.0"
+__version__ = "0.5.0"
 
 
 def setup(app):

@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.5.0
+-----
+
+- Replace custom link graph with sigma.js implmenetation
+
 0.4.0
 -----
 
