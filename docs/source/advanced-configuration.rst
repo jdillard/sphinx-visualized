@@ -5,10 +5,10 @@ This page covers advanced configuration options for the sphinx-visualized extens
 
 .. _configuring_clusters:
 
-Configuring Clusters
-^^^^^^^^^^^^^^^^^^^^
+Configuring Link Clusters
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Clusters allow you to group and color-code pages in the link graph visualization based on glob patterns, similar to the sigma.js demo.
+Clusters allow you to group pages in the link graph visualization based on glob patterns.
 
 .. _basic_cluster_setup:
 
@@ -30,7 +30,7 @@ Add cluster configuration to your ``conf.py``:
        },
        {
            "name": "Examples",
-           "patterns": ["example/*", "examples/*"]
+           "patterns": ["tutorials/*", "examples/*"]
        }
    ]
 
@@ -49,36 +49,6 @@ Patterns use standard glob syntax to match page paths:
 - **Exact match**: ``"index"`` matches only the index page
 - **Wildcard**: ``"api/*"`` matches all direct children of the api directory
 - **Recursive**: ``"docs/**/*"`` matches all pages under docs recursively
-- **Multiple patterns**: Each cluster can have multiple patterns
-
-Paths are matched without the leading ``/`` or trailing ``.html``:
-
-.. code-block:: python
-
-   # Page path: /api/core/functions.html
-   # Pattern should be: "api/core/functions" or "api/core/*" or "api/**/*"
-
-.. _cluster_behavior:
-
-Cluster Behavior
-~~~~~~~~~~~~~~~~
-
-- **First match wins**: If a page matches multiple cluster patterns, it's assigned to the first matching cluster
+- **First match wins**: If a page matches multiple patterns, it's assigned to the first matching cluster
 - **Unclustered pages**: Pages that don't match any pattern use the default color
-- **Pattern order**: More specific patterns should come before general ones
-
-Example with pattern precedence:
-
-.. code-block:: python
-
-   visualized_clusters = [
-       {
-           "name": "Special API",
-           "patterns": ["api/core/*"]  # More specific
-       },
-       {
-           "name": "All API",
-           "patterns": ["api/*"]  # Less specific
-       }
-   ]
 
