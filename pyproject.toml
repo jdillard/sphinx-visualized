@@ -1,7 +1,7 @@
 
 [build-system]
 requires = [
-    "setuptools",
+    "setuptools>=61.0,<70.0",
 ]
 build-backend = "setuptools.build_meta"
 
@@ -25,9 +25,11 @@ classifiers = [
 ]
 license = {text = "MIT"}
 readme = "README.md"
+dependencies = [
+    "sphinx>=1.2",
+]
 dynamic = [
     "version",
-    "dependencies",
     "optional-dependencies",
 ]
 
@@ -37,7 +39,12 @@ download = "https://pypi.org/project/sphinx-visualized/"
 source = "https://github.com/jdillard/sphinx-visualized"
 changelog = "https://github.com/jdillard/sphinx-visualized/blob/master/CHANGELOG.rst"
 
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["sphinx_visualized*"]
+
 [tool.setuptools.dynamic]
+version = {attr = "sphinx_visualized.__version__"}
 optional-dependencies = {dev = { file = ["requirements_dev.txt"] }}
 
 [tool.isort]
