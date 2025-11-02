@@ -52,3 +52,16 @@ Patterns use standard glob syntax to match page paths:
 - **First match wins**: If a page matches multiple patterns, it's assigned to the first matching cluster
 - **Unclustered pages**: Pages that don't match any pattern use the default color
 
+GraphSON Export
+^^^^^^^^^^^^^^^
+
+The extension automatically generates a GraphSON format file compatible with Apache TinkerPop and graph analysis tools:
+
+- ``/_static/sphinx-visualized/graphson.json``
+
+This file can be used with:
+
+- Apache TinkerPop graph computing framework
+- Graph analysis and visualization tools
+- Custom graph processing applications
+
