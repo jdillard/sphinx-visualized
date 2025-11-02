@@ -248,7 +248,7 @@ def create_json(app, exception):
     with open(filename, "w") as json_file:
         json_file.write(f'var toctree = {json.dumps(build_toctree_hierarchy(app), indent=4)};')
 
-    # Create GraphSON format for TinkerPop/sigma.js compatibility
+    # Create GraphSON format
     graphson = create_graphson(nodes, links, page_list, clusters_config)
     filename = Path(app.outdir) / "_static" / "sphinx-visualized" / "graphson.json"
     with open(filename, "w") as json_file:
