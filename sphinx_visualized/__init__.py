@@ -54,6 +54,49 @@ def get_page_cluster(page_path, clusters_config):
     return None
 
 
+def get_intersphinx_project(app, url):
+    """
+    Get the intersphinx project name for a URL.
+
+    Args:
+        app: Sphinx application object
+        url: The URL to check
+
+    Returns:
+        Project name if the URL matches an intersphinx mapping, None otherwise
+    """
+    # Get intersphinx_mapping from config
+    intersphinx_mapping = getattr(app.config, 'intersphinx_mapping', {})
+
+    for project_name, project_info in intersphinx_mapping.items():
+        # Sphinx processes intersphinx_mapping into: {name: (name, (url, (inventory,)))}
+        # or the original format: {name: (url, inventory)}
+        base_url = None
+
+        if isinstance(project_info, tuple):
+            if len(project_info) >= 2 and isinstance(project_info[1], tuple):
+                # Processed format: ('sphinx', ('https://...', (None,)))
+                base_url = project_info[1][0] if len(project_info[1]) > 0 else None
+            elif len(project_info) >= 1:
+                # Original format: ('https://...', None)
+                base_url = project_info[0]
+        else:
+            base_url = project_info
+
+        # Normalize base_url (remove trailing slash for comparison)
+        if isinstance(base_url, str):
+            base_url_normalized = base_url.rstrip('/')
+            url_normalized = url.rstrip('/')
+
+            # Check if URL matches this project's base URL
+            # Either exact match or URL starts with base_url followed by /
+            if (url_normalized == base_url_normalized or
+                url_normalized.startswith(base_url_normalized + '/')):
+                return project_name
+
+    return None
+
+
 def create_objects(app):
     """
     Create objects when builder is initiated
@@ -69,7 +112,7 @@ def create_objects(app):
 
 def get_links(app, doctree, docname):
     """
-    Gather internal link connections
+    Gather internal and external link connections
     """
 
     #TODO handle troctree entries?
@@ -78,21 +121,42 @@ def get_links(app, doctree, docname):
     #     print(vars(node))
 
     for node in doctree.traverse(docutils_nodes.reference):
-        # add internal references
-        if node.tagname == 'reference' and node.get('internal') and node.get('refuri'):
-            # calulate path of the referenced page in relation to docname
-            ref = node.attributes['refuri'].split("#")[0]
-            refname = os.path.abspath(os.path.join(os.path.dirname(f"/{docname}.html"), ref))[1:-5]
+        if node.tagname == 'reference' and node.get('refuri'):
+            refuri = node.attributes['refuri']
 
-            #TODO some how get ref/doc/term for type?
-            # add each link as an individual reference
-            app.env.app.references.put((f"/{docname}.html", f"/{refname}.html", "ref"))
+            # Handle internal references
+            if node.get('internal'):
+                # calulate path of the referenced page in relation to docname
+                ref = refuri.split("#")[0]
+                refname = os.path.abspath(os.path.join(os.path.dirname(f"/{docname}.html"), ref))[1:-5]
 
-            docname_page = f"/{docname}.html"
-            app.env.app.pages[docname_page] = True
+                #TODO some how get ref/doc/term for type?
+                # add each link as an individual reference
+                app.env.app.references.put((f"/{docname}.html", f"/{refname}.html", "ref"))
 
-            refname_page = f"/{refname}.html"
-            app.env.app.pages[refname_page] = True
+                docname_page = f"/{docname}.html"
+                app.env.app.pages[docname_page] = True
+
+                refname_page = f"/{refname}.html"
+                app.env.app.pages[refname_page] = True
+
+            # Handle external references (only intersphinx links)
+            else:
+                # Extract domain/URL for external links
+                external_url = refuri.split("#")[0]  # Remove fragment
+
+                # Only capture intersphinx links, skip regular external links
+                project_name = get_intersphinx_project(app, external_url)
+                if project_name:
+                    # Store intersphinx link with project name and URL
+                    target_key = f"external:{project_name}:{external_url}"
+                    app.env.app.references.put((f"/{docname}.html", target_key, "intersphinx"))
+
+                    docname_page = f"/{docname}.html"
+                    app.env.app.pages[docname_page] = True
+
+                    # Add external URL as a "page" with special prefix including project name
+                    app.env.app.pages[target_key] = True
 
 
 def build_toctree_hierarchy(app):
@@ -134,9 +198,17 @@ def create_graphson(nodes, links, page_list, clusters_config):
 
     # Create vertices (nodes)
     for node in nodes:
+        # Determine the vertex label based on node type
+        if node.get("is_intersphinx"):
+            vertex_label = "intersphinx"
+        elif node.get("is_external"):
+            vertex_label = "external"
+        else:
+            vertex_label = "page"
+
         vertex = {
             "id": node["id"],
-            "label": "page",
+            "label": vertex_label,
             "properties": {
                 "name": node["label"],
                 "path": node["path"]
@@ -146,6 +218,14 @@ def create_graphson(nodes, links, page_list, clusters_config):
         # Add cluster information if available
         if "cluster" in node and node["cluster"] is not None:
             vertex["properties"]["cluster"] = node["cluster"]
+
+        # Mark external nodes
+        if node.get("is_external"):
+            vertex["properties"]["is_external"] = True
+
+        # Mark intersphinx nodes
+        if node.get("is_intersphinx"):
+            vertex["properties"]["is_intersphinx"] = True
 
         vertices.append(vertex)
 
@@ -201,28 +281,53 @@ def create_json(app, exception):
             os.path.join(app.builder.outdir, '_static', "sphinx-visualized"),
         )
 
-    # convert pages and groups to lists
-    nodes = [] # a list of nodes and their metadata
-    for page in page_list:
-        if app.env.titles.get(page[1:-5]):
-            title = app.env.titles.get(page[1:-5]).astext()
-        else:
-            title = page
-
-        # Determine cluster for this page
-        cluster = get_page_cluster(page, clusters_config)
-
-        nodes.append({
-            "id": page_list.index(page),
-            "label": title,
-            "path": f"../../..{page}",
-            "cluster": cluster,
-        })
-
     # convert queue to list
     reference_list = []
     while not app.env.app.references.empty():
         reference_list.append(app.env.app.references.get())
+
+    # convert queue to list (only contains internal refs and intersphinx links)
+    # convert pages and groups to lists
+    nodes = [] # a list of nodes and their metadata
+    for page in page_list:
+        # Check if this is an intersphinx link (format: "external:project_name:URL")
+        if page.startswith("external:"):
+            # Parse the format "external:project_name:URL"
+            parts = page.split(":", 2)  # Split into at most 3 parts
+            if len(parts) >= 3:
+                project_name = parts[1]
+                url = parts[2]
+            else:
+                # Fallback for old format "external:URL"
+                url = page[9:]
+                from urllib.parse import urlparse
+                parsed = urlparse(url)
+                project_name = parsed.netloc or url
+
+            nodes.append({
+                "id": page_list.index(page),
+                "label": project_name,  # Use project name instead of domain
+                "path": url,  # Use full URL as path
+                "cluster": None,  # Intersphinx links don't belong to clusters
+                "is_external": True,
+                "is_intersphinx": True,
+            })
+        else:
+            # Handle internal pages
+            if app.env.titles.get(page[1:-5]):
+                title = app.env.titles.get(page[1:-5]).astext()
+            else:
+                title = page
+
+            # Determine cluster for this page
+            cluster = get_page_cluster(page, clusters_config)
+
+            nodes.append({
+                "id": page_list.index(page),
+                "label": title,
+                "path": f"../../..{page}",
+                "cluster": cluster,
+            })
 
     # create object that links references between pages
     links = [] # a list of links between pages
