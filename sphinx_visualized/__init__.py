@@ -109,6 +109,88 @@ def get_intersphinx_project(app, url):
     return None
 
 
+def get_intersphinx_display_name(app, url, project_name):
+    """
+    Get the display name for an intersphinx URL from the inventory.
+
+    Args:
+        app: Sphinx application object
+        url: The full URL to the external page
+        project_name: The intersphinx project name
+
+    Returns:
+        Display name from inventory if found, otherwise None
+    """
+    # Access the intersphinx inventory from the environment
+    env = app.env
+
+    # Check if intersphinx inventory is available
+    if not hasattr(env, 'intersphinx_named_inventory'):
+        return None
+
+    named_inventory = env.intersphinx_named_inventory
+
+    # Get the inventory for this specific project
+    if project_name not in named_inventory:
+        return None
+
+    project_inventory = named_inventory[project_name]
+
+    # Normalize the URL for comparison (remove trailing slash)
+    url_normalized = url.rstrip('/')
+    url_no_fragment = url_normalized.split('#')[0]
+
+    # Prioritize certain object types for page-level matches
+    # std:doc and std:label usually have the best display names for pages
+    priority_types = ['std:doc', 'std:label']
+    fallback_match = None
+
+    # Search through all object types in the inventory
+    # inventory structure: inventory[objtype][target] = (proj, version, uri, dispname)
+    for objtype in priority_types:
+        if objtype in project_inventory:
+            objects = project_inventory[objtype]
+            for target, (proj, version, uri, dispname) in objects.items():
+                # Normalize the URI from inventory
+                uri_normalized = uri.rstrip('/')
+                uri_no_fragment = uri_normalized.split('#')[0]
+
+                # Try matching: exact match or match without fragment
+                if url_normalized == uri_normalized or url_no_fragment == uri_no_fragment:
+                    # Use dispname if available (dispname is '-' when it equals the target)
+                    if dispname and dispname != '-':
+                        return dispname
+                    else:
+                        # Use the target name
+                        if '.' in target:
+                            return target.split('.')[-1]
+                        return target
+
+    # If no priority match, search all other types
+    for objtype, objects in project_inventory.items():
+        if objtype in priority_types:
+            continue  # Skip priority types as we already checked them
+
+        for target, (proj, version, uri, dispname) in objects.items():
+            # Normalize the URI from inventory
+            uri_normalized = uri.rstrip('/')
+            uri_no_fragment = uri_normalized.split('#')[0]
+
+            # Try matching: exact match or match without fragment
+            if url_normalized == uri_normalized or url_no_fragment == uri_no_fragment:
+                # Save the first match as fallback
+                if fallback_match is None:
+                    if dispname and dispname != '-':
+                        fallback_match = dispname
+                    else:
+                        if '.' in target:
+                            fallback_match = target.split('.')[-1]
+                        else:
+                            fallback_match = target
+
+    return fallback_match
+
+
 def create_objects(app):
     """
     Create objects when builder is initiated
@@ -154,14 +236,23 @@ def get_links(app, doctree, docname):
 
             # Handle external references (only intersphinx links)
             else:
-                # Extract domain/URL for external links
-                external_url = refuri.split("#")[0]  # Remove fragment
+                # Extract domain/URL for external links (keep fragment for accurate matching)
+                external_url = refuri  # Keep the full URL including fragment
 
                 # Only capture intersphinx links, skip regular external links
-                project_name = get_intersphinx_project(app, external_url)
+                project_name = get_intersphinx_project(app, external_url.split("#")[0])
                 if project_name:
-                    # Store intersphinx link with project name and URL
-                    target_key = f"external:{project_name}:{external_url}"
+                    # Try to get the display name from the intersphinx inventory
+                    display_name = get_intersphinx_display_name(app, external_url, project_name)
+
+                    # Store intersphinx link with project name, URL, and display name
+                    # Use a special separator that won't appear in URLs: "|||"
+                    if display_name:
+                        target_key = f"external|||{project_name}|||{external_url}|||{display_name}"
+                    else:
+                        # Fallback to old format if no display name found
+                        target_key = f"external|||{project_name}|||{external_url}"
+
                     app.env.app.references.put((f"/{docname}.html", target_key, "intersphinx"))
 
                     docname_page = f"/{docname}.html"
@@ -321,25 +412,54 @@ def create_json(app, exception):
     # convert pages and groups to lists
     nodes = [] # a list of nodes and their metadata
     for page in page_list:
-        # Check if this is an intersphinx link (format: "external:project_name:URL")
-        if page.startswith("external:"):
-            # Parse the format "external:project_name:URL"
-            parts = page.split(":", 2)  # Split into at most 3 parts
+        # Check if this is an intersphinx link
+        # Format: "external|||project_name|||URL" or "external|||project_name|||URL|||display_name"
+        if page.startswith("external|||"):
+            # Parse the format using ||| separator
+            parts = page.split("|||")
+            if len(parts) >= 4:
+                # New format with display name: "external|||project_name|||URL|||display_name"
+                project_name = parts[1]
+                url = parts[2]
+                display_name = parts[3]
+            elif len(parts) >= 3:
+                # Format without display name: "external|||project_name|||URL"
+                project_name = parts[1]
+                url = parts[2]
+                display_name = project_name  # Fallback to project name
+            else:
+                # Malformed, skip
+                continue
+
+            nodes.append({
+                "id": page_list.index(page),
+                "label": display_name,  # Use display name from inventory
+                "path": url,  # Use full URL as path
+                "cluster": f"{project_name} (external)",  # Add (external) suffix to cluster name
+                "is_external": True,
+                "is_intersphinx": True,
+            })
+        # Check for old format with colon separator (backward compatibility)
+        elif page.startswith("external:"):
+            # Parse the old format
+            parts = page.split(":", 3)
             if len(parts) >= 3:
                 project_name = parts[1]
                 url = parts[2]
+                display_name = parts[3] if len(parts) >= 4 else project_name
             else:
-                # Fallback for old format "external:URL"
+                # Very old format "external:URL"
                 url = page[9:]
                 from urllib.parse import urlparse
                 parsed = urlparse(url)
                 project_name = parsed.netloc or url
+                display_name = project_name
 
             nodes.append({
                 "id": page_list.index(page),
-                "label": project_name,  # Use project name instead of domain
-                "path": url,  # Use full URL as path
-                "cluster": None,  # Intersphinx links don't belong to clusters
+                "label": display_name,
+                "path": url,
+                "cluster": f"{project_name} (external)",  # Add (external) suffix to cluster name
                 "is_external": True,
                 "is_intersphinx": True,
             })
