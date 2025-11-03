@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.6.0
+-----
+
+- Add support for intersphinx links #14
+
 0.5.0
 -----
 

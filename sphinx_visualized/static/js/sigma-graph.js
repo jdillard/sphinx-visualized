@@ -46,23 +46,43 @@ window.addEventListener('DOMContentLoaded', async () => {
     };
   });
 
+  // Define category colors (for node types, not clusters)
+  const CATEGORY_COLORS = {
+    'Internal Pages': '#5A88B8',
+    'Intersphinx Pages': '#9B59B6'
+  };
+
   // Create a new graphology graph
   const graph = new graphology.Graph();
 
   // Add nodes from GraphSON vertices with random initial positions
   graphsonData.vertices.forEach((vertex, index) => {
     const cluster = vertex.properties.cluster;
-    const nodeColor = cluster && clusterColors[cluster]
-      ? clusterColors[cluster]
-      : '#5A88B8'; // Default color if no cluster
+    const isIntersphinx = vertex.label === 'intersphinx' || vertex.properties.is_intersphinx;
+
+    // Determine category based on node type
+    const category = isIntersphinx ? 'Intersphinx Pages' : 'Internal Pages';
+
+    // Use different colors for different node types
+    let nodeColor;
+    if (isIntersphinx) {
+      nodeColor = CATEGORY_COLORS['Intersphinx Pages'];
+    } else if (cluster && clusterColors[cluster]) {
+      nodeColor = clusterColors[cluster];
+    } else {
+      nodeColor = CATEGORY_COLORS['Internal Pages'];
+    }
 
     graph.addNode(String(vertex.id), {
       label: vertex.properties.name,
       path: vertex.properties.path,
       cluster: cluster,
-      size: 5,
+      category: category,
+      size: isIntersphinx ? 4 : 5, // Slightly smaller for intersphinx nodes
       color: nodeColor,
       originalColor: nodeColor,
+      isExternal: vertex.properties.is_external,
+      isIntersphinx: isIntersphinx,
       x: Math.random() * 100,
       y: Math.random() * 100
     });
@@ -123,7 +143,12 @@ window.addEventListener('DOMContentLoaded', async () => {
     renderer.on('clickNode', ({ node }) => {
       const nodeData = graph.getNodeAttributes(node);
       if (nodeData.path) {
-        window.location.href = nodeData.path;
+        // Open external links in new tab, navigate internal links in current tab
+        if (nodeData.isExternal) {
+          window.open(nodeData.path, '_blank', 'noopener,noreferrer');
+        } else {
+          window.location.href = nodeData.path;
+        }
       }
     });
 
@@ -178,20 +203,123 @@ window.addEventListener('DOMContentLoaded', async () => {
       });
     });
 
-    // Cluster legend functionality (similar to sigma.js demo)
-    const legendContainer = document.getElementById('cluster-panel');
-    if (clusterConfig.length > 0) {
-      if (legendContainer) {
-        // Calculate nodes per cluster
-        const nodesPerCluster = {};
-        let maxNodesPerCluster = 0;
+    // Category panel functionality (for node types)
+    const categoryContainer = document.getElementById('category-panel');
+    if (categoryContainer) {
+      // Calculate nodes per category
+      const nodesPerCategory = {};
+      graph.forEachNode((node) => {
+        const nodeData = graph.getNodeAttributes(node);
+        const category = nodeData.category || 'Internal Pages';
+        nodesPerCategory[category] = (nodesPerCategory[category] || 0) + 1;
+      });
+
+      // Track which categories are visible
+      const visibleCategories = {
+        'Internal Pages': true,
+        'Intersphinx Pages': true
+      };
+
+      const updateGraphByCategory = () => {
         graph.forEachNode((node) => {
           const nodeData = graph.getNodeAttributes(node);
-          const cluster = nodeData.cluster || 'uncategorized';
-          nodesPerCluster[cluster] = (nodesPerCluster[cluster] || 0) + 1;
-          maxNodesPerCluster = Math.max(maxNodesPerCluster, nodesPerCluster[cluster]);
+          const category = nodeData.category || 'Internal Pages';
+
+          if (visibleCategories[category]) {
+            graph.setNodeAttribute(node, 'hidden', false);
+          } else {
+            graph.setNodeAttribute(node, 'hidden', true);
+          }
+        });
+      };
+
+      const renderCategoryPanel = () => {
+        const categories = Object.keys(CATEGORY_COLORS);
+        const visibleCount = categories.filter(c => visibleCategories[c]).length;
+
+        // Calculate max nodes for progress bar scaling
+        const maxNodesPerCategory = Math.max(...categories.map(c => nodesPerCategory[c] || 0));
+
+        categoryContainer.innerHTML = `
+          <h3 style="margin-top: 0; font-size: 1.3em; margin-bottom: 0.5em;">
+            Categories
+            ${visibleCount < categories.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${categories.length})</span>` : ''}
+          </h3>
+          <p style="color: #666; font-style: italic; font-size: 0.9em;">Click a category to show/hide related pages from the network.</p>
+          <p class="cluster-buttons">
+            <button id="check-all-categories-btn" class="cluster-btn">☑ Check all</button>
+            <button id="uncheck-all-categories-btn" class="cluster-btn">☐ Uncheck all</button>
+          </p>
+          <ul style="list-style: none; padding: 0; margin: 0;"></ul>
+        `;
+
+        const list = categoryContainer.querySelector('ul');
+
+        categories.forEach((category, index) => {
+          const color = CATEGORY_COLORS[category];
+          const count = nodesPerCategory[category] || 0;
+          const isChecked = visibleCategories[category];
+          const barWidth = maxNodesPerCategory > 0 ? (100 * count) / maxNodesPerCategory : 0;
+
+          const li = document.createElement('li');
+          li.className = 'caption-row';
+          li.title = `${count} node${count !== 1 ? 's' : ''}`;
+          li.innerHTML = `
+            <input type="checkbox" ${isChecked ? 'checked' : ''} id="category-${index}" />
+            <label for="category-${index}">
+              <span class="circle" style="background-color: ${color}; border-color: ${color};"></span>
+              <div class="node-label">
+                <span>${category}</span>
+                <div class="bar" style="width: ${barWidth}%;"></div>
+              </div>
+            </label>
+          `;
+
+          li.querySelector('input').addEventListener('change', (e) => {
+            visibleCategories[category] = e.target.checked;
+            updateGraphByCategory();
+            renderCategoryPanel();
+          });
+
+          list.appendChild(li);
         });
 
+        // Add button handlers
+        document.getElementById('check-all-categories-btn').addEventListener('click', () => {
+          categories.forEach(category => {
+            visibleCategories[category] = true;
+          });
+          updateGraphByCategory();
+          renderCategoryPanel();
+        });
+
+        document.getElementById('uncheck-all-categories-btn').addEventListener('click', () => {
+          categories.forEach(category => {
+            visibleCategories[category] = false;
+          });
+          updateGraphByCategory();
+          renderCategoryPanel();
+        });
+      };
+
+      renderCategoryPanel();
+    }
+
+    // Cluster legend functionality (similar to sigma.js demo)
+    const legendContainer = document.getElementById('cluster-panel');
+
+    // Calculate nodes per cluster
+    const nodesPerCluster = {};
+    let maxNodesPerCluster = 0;
+    graph.forEachNode((node) => {
+      const nodeData = graph.getNodeAttributes(node);
+      const cluster = nodeData.cluster || 'uncategorized';
+      nodesPerCluster[cluster] = (nodesPerCluster[cluster] || 0) + 1;
+      maxNodesPerCluster = Math.max(maxNodesPerCluster, nodesPerCluster[cluster]);
+    });
+
+    if (clusterConfig.length > 0) {
+      if (legendContainer) {
         // Track which clusters are visible
         const visibleClusters = {};
         clusterConfig.forEach(cluster => {
