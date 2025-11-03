@@ -18,6 +18,7 @@ __version__ = "0.6.0"
 
 def setup(app):
     app.add_config_value("visualized_clusters", [], "html")
+    app.add_config_value("visualized_auto_cluster", False, "html")
     app.connect("builder-inited", create_objects)
     app.connect("doctree-resolved", get_links)
     app.connect("build-finished", create_json)
@@ -29,13 +30,15 @@ def setup(app):
     }
 
 
-def get_page_cluster(page_path, clusters_config):
+def get_page_cluster(page_path, clusters_config, auto_cluster_by_directory=False):
     """
-    Determine which cluster a page belongs to based on glob patterns.
+    Determine which cluster a page belongs to based on glob patterns or directory structure.
 
     Args:
         page_path: Path to the page (e.g., "/example/lorem.html")
         clusters_config: List of cluster configurations from conf.py
+        auto_cluster_by_directory: If True, automatically assign cluster names based on
+                                   the first subdirectory in the path
 
     Returns:
         Cluster name if matched, None otherwise
@@ -43,6 +46,7 @@ def get_page_cluster(page_path, clusters_config):
     # Remove leading slash and .html extension for pattern matching
     normalized_path = page_path.lstrip('/').rstrip('.html')
 
+    # First, check manual cluster configurations
     for cluster in clusters_config:
         name = cluster.get('name')
         patterns = cluster.get('patterns', [])
@@ -50,6 +54,14 @@ def get_page_cluster(page_path, clusters_config):
         for pattern in patterns:
             if fnmatch(normalized_path, pattern):
                 return name
+
+    # If no manual cluster matched and auto-clustering is enabled, use directory name
+    if auto_cluster_by_directory:
+        # Split the path and get the first directory component
+        path_parts = normalized_path.split('/')
+        if len(path_parts) > 1:
+            # Page is in a subdirectory, use the first directory as cluster name
+            return path_parts[0]
 
     return None
 
@@ -245,14 +257,32 @@ def create_graphson(nodes, links, page_list, clusters_config):
         }
         edges.append(edge)
 
+    # Collect all unique cluster names from nodes
+    cluster_names = set()
+    for node in nodes:
+        if node.get("cluster") is not None:
+            cluster_names.add(node["cluster"])
+
+    # Build complete cluster list: manual configs + auto-generated clusters
+    all_clusters = list(clusters_config) if clusters_config else []
+    manual_cluster_names = {c.get("name") for c in clusters_config} if clusters_config else set()
+
+    # Add auto-generated clusters that aren't already in manual config
+    for cluster_name in cluster_names:
+        if cluster_name not in manual_cluster_names:
+            all_clusters.append({
+                "name": cluster_name,
+                "patterns": []  # Auto-generated clusters don't have patterns
+            })
+
     # Include cluster configuration metadata
     graphson = {
         "vertices": vertices,
         "edges": edges
     }
 
-    if clusters_config:
-        graphson["clusters"] = clusters_config
+    if all_clusters:
+        graphson["clusters"] = all_clusters
 
     return graphson
 
@@ -263,6 +293,7 @@ def create_json(app, exception):
     """
     page_list = list(app.env.app.pages.keys()) # list of pages with references
     clusters_config = app.config.visualized_clusters
+    auto_cluster_by_directory = app.config.visualized_auto_cluster
 
     # create directory in _static and over static assets
     os.makedirs(Path(app.outdir) / "_static" / "sphinx-visualized", exist_ok=True)
@@ -320,7 +351,7 @@ def create_json(app, exception):
                 title = page
 
             # Determine cluster for this page
-            cluster = get_page_cluster(page, clusters_config)
+            cluster = get_page_cluster(page, clusters_config, auto_cluster_by_directory)
 
             nodes.append({
                 "id": page_list.index(page),
