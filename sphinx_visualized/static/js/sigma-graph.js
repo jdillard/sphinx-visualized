@@ -245,7 +245,7 @@ window.addEventListener('DOMContentLoaded', async () => {
             Categories
             ${visibleCount < categories.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${categories.length})</span>` : ''}
           </h3>
-          <p style="color: #666; font-style: italic; font-size: 0.9em;">Click a category to show/hide node types from the network.</p>
+          <p style="color: #666; font-style: italic; font-size: 0.9em;">Click a category to show/hide related pages from the network.</p>
           <p class="cluster-buttons">
             <button id="check-all-categories-btn" class="cluster-btn">☑ Check all</button>
             <button id="uncheck-all-categories-btn" class="cluster-btn">☐ Uncheck all</button>
