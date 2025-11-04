@@ -1,0 +1,13 @@
+{
+  "name": "example-project",
+  "version": "1.0.0",
+  "settings": {
+    "debug": false,
+    "timeout": 30,
+    "retries": 3
+  },
+  "features": {
+    "feature_a": true,
+    "feature_b": false
+  }
+}

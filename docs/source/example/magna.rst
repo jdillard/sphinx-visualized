@@ -7,3 +7,20 @@ Duis aute irure dolor in reprehenderit in :term:`voluptate` velit esse cillum do
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 For more information, see :doc:`lorem` and :doc:`dolor/index`.
+
+Example Usage
+-------------
+
+Here's how to use the functions:
+
+.. literalinclude:: _code/example.py
+   :language: python
+   :pyobject: calculate_sum
+
+Full Example
+------------
+
+.. literalinclude:: _code/example.py
+   :language: python
+
+.. include:: _shared/warning-experimental.rsti
