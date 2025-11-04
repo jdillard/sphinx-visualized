@@ -516,18 +516,12 @@ def create_json(app, exception):
     if hasattr(app.env, 'dependencies'):
         for docname, deps in app.env.dependencies.items():
             for included_file in deps:
-                # Determine inclusion type based on file extension
-                if included_file.endswith(('.rst', '.md', '.txt')):
-                    inclusion_type = 'include'
-                else:
-                    inclusion_type = 'literalinclude'
-
-                # Store as (source_doc, included_file, inclusion_type)
-                inclusion_list.append((f"/{docname}.html", included_file, inclusion_type))
+                # Store as (source_doc, included_file)
+                inclusion_list.append((f"/{docname}.html", included_file))
 
     # Build inclusion nodes and links
     inclusion_files = set()  # Track all files involved in inclusions
-    for source_doc, included_file, inclusion_type in inclusion_list:
+    for source_doc, included_file in inclusion_list:
         inclusion_files.add(source_doc)
         inclusion_files.add(included_file)
 
@@ -545,12 +539,9 @@ def create_json(app, exception):
                 label = os.path.basename(file_path)
             node_type = "document"
         else:
-            # This is an included file
+            # This is an included file - all same type
             label = os.path.basename(file_path)
-            if file_path.endswith(('.rst', '.md', '.txt')):
-                node_type = "include"
-            else:
-                node_type = "literalinclude"
+            node_type = "include"
 
         inclusion_nodes.append({
             "id": inclusion_file_list.index(file_path),
@@ -562,11 +553,11 @@ def create_json(app, exception):
     # Create links for inclusion graph
     inclusion_links = []
     inclusions_counts = Counter(inclusion_list)
-    for (source_doc, included_file, inclusion_type), count in inclusions_counts.items():
+    for (source_doc, included_file), count in inclusions_counts.items():
         inclusion_links.append({
             "source": inclusion_file_list.index(source_doc),
             "target": inclusion_file_list.index(included_file),
-            "type": inclusion_type,
+            "type": "include",
             "count": count,
         })
 
