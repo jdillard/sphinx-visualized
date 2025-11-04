@@ -1,7 +1,7 @@
 Labore
 ======
 
-.. include:: _shared/note-compatibility.rsti
+.. include:: _includes/note-compatibility.rsti
 
 :doc:`lorem` :doc:`ipsum` dolor :doc:`sit` :doc:`amet`, consectetur :doc:`dolor/adipiscing` :doc:`dolor/elit`, sed do :doc:`dolor/eiusmod` :doc:`tempor` :doc:`dolor/incididunt` ut labore et dolore :doc:`magna` aliqua.
 Ut enim ad minim :doc:`veniam`, quis nostrud exercitation ullamco :doc:`laboris` nisi ut aliquip ex ea commodo consequat.
@@ -10,4 +10,4 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
 
 For additional context, see :doc:`dolor/consectetur` and :doc:`magna`.
 
-.. include:: _shared/footer-links.rsti
+.. include:: _includes/footer-links.rsti

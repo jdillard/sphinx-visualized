@@ -13,14 +13,14 @@ Example Usage
 
 Here's how to use the functions:
 
-.. literalinclude:: _code/example.py
+.. literalinclude:: _includes/example.py
    :language: python
    :pyobject: calculate_sum
 
 Full Example
 ------------
 
-.. literalinclude:: _code/example.py
+.. literalinclude:: _includes/example.py
    :language: python
 
-.. include:: _shared/warning-experimental.rsti
+.. include:: _includes/warning-experimental.rsti
