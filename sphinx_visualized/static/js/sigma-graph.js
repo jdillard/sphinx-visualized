@@ -13,6 +13,31 @@ const DEFAULT_COLORS = [
 ];
 
 window.addEventListener('DOMContentLoaded', async () => {
+  // Load SVG icons for control buttons
+  const loadControlIcons = async () => {
+    const controls = [
+      { id: 'zoom-in', svg: '../svg/magnifying-glass-plus.svg' },
+      { id: 'zoom-out', svg: '../svg/magnifying-glass-minus.svg' },
+      { id: 'zoom-reset', svg: '../svg/viewfinder.svg' },
+      { id: 'toggle-legend', svg: '../svg/map.svg' }
+    ];
+
+    for (const control of controls) {
+      try {
+        const response = await fetch(control.svg);
+        const svgContent = await response.text();
+        const button = document.getElementById(control.id);
+        if (button) {
+          button.innerHTML = svgContent;
+        }
+      } catch (error) {
+        console.error(`Error loading icon for ${control.id}:`, error);
+      }
+    }
+  };
+
+  await loadControlIcons();
+
   // Fetch the GraphSON data
   let graphsonData;
   try {
@@ -494,10 +519,32 @@ window.addEventListener('DOMContentLoaded', async () => {
       });
     });
 
-    // Reset zoom button
-    document.getElementById('reset-zoom').addEventListener('click', () => {
+    // Zoom controls in lower left
+    document.getElementById('zoom-in').addEventListener('click', () => {
+      const camera = renderer.getCamera();
+      const currentRatio = camera.ratio;
+      camera.animate({ ratio: currentRatio / 1.5 }, { duration: 200 });
+    });
+
+    document.getElementById('zoom-out').addEventListener('click', () => {
+      const camera = renderer.getCamera();
+      const currentRatio = camera.ratio;
+      camera.animate({ ratio: currentRatio * 1.5 }, { duration: 200 });
+    });
+
+    document.getElementById('zoom-reset').addEventListener('click', () => {
       const camera = renderer.getCamera();
       camera.animate({ x: 0.5, y: 0.5, ratio: 1 }, { duration: 500 });
+    });
+
+    // Toggle legend (panels) visibility
+    document.getElementById('toggle-legend').addEventListener('click', () => {
+      const panels = document.getElementById('panels');
+      if (panels.style.display === 'none') {
+        panels.style.display = 'block';
+      } else {
+        panels.style.display = 'none';
+      }
     });
 
     // Export GraphSON button
