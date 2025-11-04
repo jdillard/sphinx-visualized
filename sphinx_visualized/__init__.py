@@ -509,3 +509,72 @@ def create_json(app, exception):
     filename = Path(app.outdir) / "_static" / "sphinx-visualized" / "graphson.json"
     with open(filename, "w") as json_file:
         json.dump(graphson, json_file, indent=2)
+
+    # Process inclusions for inclusion graph
+    # Collect from env.dependencies which is populated after all documents are processed
+    inclusion_list = []
+    if hasattr(app.env, 'dependencies'):
+        for docname, deps in app.env.dependencies.items():
+            for included_file in deps:
+                # Determine inclusion type based on file extension
+                if included_file.endswith(('.rst', '.md', '.txt')):
+                    inclusion_type = 'include'
+                else:
+                    inclusion_type = 'literalinclude'
+
+                # Store as (source_doc, included_file, inclusion_type)
+                inclusion_list.append((f"/{docname}.html", included_file, inclusion_type))
+
+    # Build inclusion nodes and links
+    inclusion_files = set()  # Track all files involved in inclusions
+    for source_doc, included_file, inclusion_type in inclusion_list:
+        inclusion_files.add(source_doc)
+        inclusion_files.add(included_file)
+
+    # Create nodes for inclusion graph
+    inclusion_nodes = []
+    inclusion_file_list = sorted(list(inclusion_files))
+    for file_path in inclusion_file_list:
+        # Check if this is a documentation page or an included file
+        if file_path.endswith('.html'):
+            # This is a source document
+            docname = file_path[1:-5]  # Remove leading / and .html
+            if app.env.titles.get(docname):
+                label = app.env.titles.get(docname).astext()
+            else:
+                label = os.path.basename(file_path)
+            node_type = "document"
+        else:
+            # This is an included file
+            label = os.path.basename(file_path)
+            if file_path.endswith(('.rst', '.md', '.txt')):
+                node_type = "include"
+            else:
+                node_type = "literalinclude"
+
+        inclusion_nodes.append({
+            "id": inclusion_file_list.index(file_path),
+            "label": label,
+            "path": file_path,
+            "type": node_type,
+        })
+
+    # Create links for inclusion graph
+    inclusion_links = []
+    inclusions_counts = Counter(inclusion_list)
+    for (source_doc, included_file, inclusion_type), count in inclusions_counts.items():
+        inclusion_links.append({
+            "source": inclusion_file_list.index(source_doc),
+            "target": inclusion_file_list.index(included_file),
+            "type": inclusion_type,
+            "count": count,
+        })
+
+    # Write inclusion data files
+    filename = Path(app.outdir) / "_static" / "sphinx-visualized" / "js" / "inclusion-nodes.js"
+    with open(filename, "w") as json_file:
+        json_file.write(f'var inclusion_nodes_data = {json.dumps(inclusion_nodes, indent=4)};')
+
+    filename = Path(app.outdir) / "_static" / "sphinx-visualized" / "js" / "inclusion-links.js"
+    with open(filename, "w") as json_file:
+        json_file.write(f'var inclusion_links_data = {json.dumps(inclusion_links, indent=4)};')
