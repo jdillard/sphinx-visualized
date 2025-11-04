@@ -6,6 +6,7 @@ Changelog
 
 - Add support for intersphinx links
 - Add support for auto cluster naming with :confval:`visualized_auto_cluster`
+- Add Statistics page
 
 0.5.0
 -----
