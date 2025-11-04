@@ -13,6 +13,31 @@ const DEFAULT_COLORS = [
 ];
 
 window.addEventListener('DOMContentLoaded', async () => {
+  // Load SVG icons for control buttons
+  const loadControlIcons = async () => {
+    const controls = [
+      { id: 'zoom-in', svg: '../svg/magnifying-glass-plus.svg' },
+      { id: 'zoom-out', svg: '../svg/magnifying-glass-minus.svg' },
+      { id: 'zoom-reset', svg: '../svg/viewfinder.svg' },
+      { id: 'toggle-legend', svg: '../svg/map.svg' }
+    ];
+
+    for (const control of controls) {
+      try {
+        const response = await fetch(control.svg);
+        const svgContent = await response.text();
+        const button = document.getElementById(control.id);
+        if (button) {
+          button.innerHTML = svgContent;
+        }
+      } catch (error) {
+        console.error(`Error loading icon for ${control.id}:`, error);
+      }
+    }
+  };
+
+  await loadControlIcons();
+
   // Fetch the GraphSON data
   let graphsonData;
   try {
@@ -46,23 +71,49 @@ window.addEventListener('DOMContentLoaded', async () => {
     };
   });
 
+  // Define category colors and icons (for node types, not clusters)
+  const GRAY_COLOR = '#999999';
+  const CATEGORY_CONFIG = {
+    'Internal Pages': {
+      color: GRAY_COLOR,
+      icon: '../svg/document.svg'
+    },
+    'Intersphinx Pages': {
+      color: GRAY_COLOR,
+      icon: '../svg/external.svg'
+    }
+  };
+
   // Create a new graphology graph
   const graph = new graphology.Graph();
 
   // Add nodes from GraphSON vertices with random initial positions
   graphsonData.vertices.forEach((vertex, index) => {
     const cluster = vertex.properties.cluster;
-    const nodeColor = cluster && clusterColors[cluster]
-      ? clusterColors[cluster]
-      : '#5A88B8'; // Default color if no cluster
+    const isIntersphinx = vertex.label === 'intersphinx' || vertex.properties.is_intersphinx;
+
+    // Determine category based on node type
+    const category = isIntersphinx ? 'Intersphinx Pages' : 'Internal Pages';
+
+    // Use cluster colors for nodes
+    let nodeColor;
+    if (cluster && clusterColors[cluster]) {
+      nodeColor = clusterColors[cluster];
+    } else {
+      // Default color for nodes without a cluster
+      nodeColor = '#5A88B8';
+    }
 
     graph.addNode(String(vertex.id), {
       label: vertex.properties.name,
       path: vertex.properties.path,
       cluster: cluster,
-      size: 5,
+      category: category,
+      size: isIntersphinx ? 4 : 5, // Slightly smaller for intersphinx nodes
       color: nodeColor,
       originalColor: nodeColor,
+      isExternal: vertex.properties.is_external,
+      isIntersphinx: isIntersphinx,
       x: Math.random() * 100,
       y: Math.random() * 100
     });
@@ -123,7 +174,12 @@ window.addEventListener('DOMContentLoaded', async () => {
     renderer.on('clickNode', ({ node }) => {
       const nodeData = graph.getNodeAttributes(node);
       if (nodeData.path) {
-        window.location.href = nodeData.path;
+        // Open external links in new tab, navigate internal links in current tab
+        if (nodeData.isExternal) {
+          window.open(nodeData.path, '_blank', 'noopener,noreferrer');
+        } else {
+          window.location.href = nodeData.path;
+        }
       }
     });
 
@@ -178,20 +234,153 @@ window.addEventListener('DOMContentLoaded', async () => {
       });
     });
 
-    // Cluster legend functionality (similar to sigma.js demo)
-    const legendContainer = document.getElementById('cluster-panel');
-    if (clusterConfig.length > 0) {
-      if (legendContainer) {
-        // Calculate nodes per cluster
-        const nodesPerCluster = {};
-        let maxNodesPerCluster = 0;
+    // Category panel functionality (for node types)
+    const categoryContainer = document.getElementById('category-panel');
+    if (categoryContainer) {
+      // Calculate nodes per category
+      const nodesPerCategory = {};
+      graph.forEachNode((node) => {
+        const nodeData = graph.getNodeAttributes(node);
+        const category = nodeData.category || 'Internal Pages';
+        nodesPerCategory[category] = (nodesPerCategory[category] || 0) + 1;
+      });
+
+      // Track which categories are visible
+      const visibleCategories = {
+        'Internal Pages': true,
+        'Intersphinx Pages': true
+      };
+
+      const updateGraphByCategory = () => {
         graph.forEachNode((node) => {
           const nodeData = graph.getNodeAttributes(node);
-          const cluster = nodeData.cluster || 'uncategorized';
-          nodesPerCluster[cluster] = (nodesPerCluster[cluster] || 0) + 1;
-          maxNodesPerCluster = Math.max(maxNodesPerCluster, nodesPerCluster[cluster]);
+          const category = nodeData.category || 'Internal Pages';
+
+          if (visibleCategories[category]) {
+            graph.setNodeAttribute(node, 'hidden', false);
+          } else {
+            graph.setNodeAttribute(node, 'hidden', true);
+          }
+        });
+      };
+
+      const renderCategoryPanel = async () => {
+        const categories = Object.keys(CATEGORY_CONFIG);
+        const visibleCount = categories.filter(c => visibleCategories[c]).length;
+
+        // Calculate max nodes for progress bar scaling
+        const maxNodesPerCategory = Math.max(...categories.map(c => nodesPerCategory[c] || 0));
+
+        // Load chevron SVG
+        const response = await fetch('../svg/chevron-down.svg');
+        const chevronSvg = await response.text();
+
+        categoryContainer.innerHTML = `
+          <div class="panel-header" id="category-panel-header">
+            <h3 style="margin: 0; font-size: 1.3em;">
+              Categories
+              ${visibleCount < categories.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${categories.length})</span>` : ''}
+            </h3>
+            <span class="collapse-icon">${chevronSvg}</span>
+          </div>
+          <div class="panel-content" id="category-panel-content">
+            <p style="color: #666; font-style: italic; font-size: 0.9em; margin-top: 0.5em;">Click a category to show/hide related pages from the network.</p>
+            <p class="cluster-buttons">
+              <button id="check-all-categories-btn" class="cluster-btn">☑ Check all</button>
+              <button id="uncheck-all-categories-btn" class="cluster-btn">☐ Uncheck all</button>
+            </p>
+            <ul style="list-style: none; padding: 0; margin: 0;"></ul>
+          </div>
+        `;
+
+        const list = categoryContainer.querySelector('ul');
+
+        // Load and render categories with icons
+        for (let index = 0; index < categories.length; index++) {
+          const category = categories[index];
+          const config = CATEGORY_CONFIG[category];
+          const count = nodesPerCategory[category] || 0;
+          const isChecked = visibleCategories[category];
+          const barWidth = maxNodesPerCategory > 0 ? (100 * count) / maxNodesPerCategory : 0;
+
+          // Fetch SVG content
+          let svgContent = '';
+          try {
+            const response = await fetch(config.icon);
+            svgContent = await response.text();
+          } catch (error) {
+            console.error(`Error loading icon for ${category}:`, error);
+          }
+
+          const li = document.createElement('li');
+          li.className = 'caption-row';
+          li.title = `${count} node${count !== 1 ? 's' : ''}`;
+          li.innerHTML = `
+            <input type="checkbox" ${isChecked ? 'checked' : ''} id="category-${index}" />
+            <label for="category-${index}">
+              <span class="icon-container">${svgContent}</span>
+              <div class="node-label">
+                <span>${category}</span>
+                <div class="bar" style="width: ${barWidth}%;"></div>
+              </div>
+            </label>
+          `;
+
+          li.querySelector('input').addEventListener('change', (e) => {
+            visibleCategories[category] = e.target.checked;
+            updateGraphByCategory();
+            renderCategoryPanel();
+          });
+
+          list.appendChild(li);
+        }
+
+        // Add button handlers
+        document.getElementById('check-all-categories-btn').addEventListener('click', () => {
+          categories.forEach(category => {
+            visibleCategories[category] = true;
+          });
+          updateGraphByCategory();
+          renderCategoryPanel();
         });
 
+        document.getElementById('uncheck-all-categories-btn').addEventListener('click', () => {
+          categories.forEach(category => {
+            visibleCategories[category] = false;
+          });
+          updateGraphByCategory();
+          renderCategoryPanel();
+        });
+
+        // Add collapse/expand functionality
+        const panelHeader = document.getElementById('category-panel-header');
+        const panelContent = document.getElementById('category-panel-content');
+        const collapseIcon = panelHeader.querySelector('.collapse-icon');
+
+        panelHeader.addEventListener('click', () => {
+          panelContent.classList.toggle('collapsed');
+          collapseIcon.classList.toggle('collapsed');
+        });
+      };
+
+      renderCategoryPanel();
+    }
+
+    // Cluster legend functionality (similar to sigma.js demo)
+    const legendContainer = document.getElementById('cluster-panel');
+
+    // Calculate nodes per cluster
+    const nodesPerCluster = {};
+    let maxNodesPerCluster = 0;
+    graph.forEachNode((node) => {
+      const nodeData = graph.getNodeAttributes(node);
+      const cluster = nodeData.cluster || 'uncategorized';
+      nodesPerCluster[cluster] = (nodesPerCluster[cluster] || 0) + 1;
+      maxNodesPerCluster = Math.max(maxNodesPerCluster, nodesPerCluster[cluster]);
+    });
+
+    if (clusterConfig.length > 0) {
+      if (legendContainer) {
         // Track which clusters are visible
         const visibleClusters = {};
         clusterConfig.forEach(cluster => {
@@ -212,20 +401,29 @@ window.addEventListener('DOMContentLoaded', async () => {
           });
         };
 
-        const renderLegend = () => {
+        const renderLegend = async () => {
           const visibleCount = Object.values(visibleClusters).filter(v => v).length;
 
+          // Load chevron SVG
+          const response = await fetch('../svg/chevron-down.svg');
+          const chevronSvg = await response.text();
+
           legendContainer.innerHTML = `
-            <h3 style="margin-top: 0; font-size: 1.3em; margin-bottom: 0.5em;">
-              Clusters
-              ${visibleCount < clusterConfig.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${clusterConfig.length})</span>` : ''}
-            </h3>
-            <p style="color: #666; font-style: italic; font-size: 0.9em;">Click a cluster to show/hide related pages from the network.</p>
-            <p class="cluster-buttons">
-              <button id="check-all-btn" class="cluster-btn">☑ Check all</button>
-              <button id="uncheck-all-btn" class="cluster-btn">☐ Uncheck all</button>
-            </p>
-            <ul style="list-style: none; padding: 0; margin: 0;"></ul>
+            <div class="panel-header" id="cluster-panel-header">
+              <h3 style="margin: 0; font-size: 1.3em;">
+                Clusters
+                ${visibleCount < clusterConfig.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${clusterConfig.length})</span>` : ''}
+              </h3>
+              <span class="collapse-icon">${chevronSvg}</span>
+            </div>
+            <div class="panel-content" id="cluster-panel-content">
+              <p style="color: #666; font-style: italic; font-size: 0.9em; margin-top: 0.5em;">Click a cluster to show/hide related pages from the network.</p>
+              <p class="cluster-buttons">
+                <button id="check-all-btn" class="cluster-btn">☑ Check all</button>
+                <button id="uncheck-all-btn" class="cluster-btn">☐ Uncheck all</button>
+              </p>
+              <ul style="list-style: none; padding: 0; margin: 0;"></ul>
+            </div>
           `;
 
           const list = legendContainer.querySelector('ul');
@@ -280,6 +478,16 @@ window.addEventListener('DOMContentLoaded', async () => {
             updateGraph();
             renderLegend();
           });
+
+          // Add collapse/expand functionality
+          const panelHeader = document.getElementById('cluster-panel-header');
+          const panelContent = document.getElementById('cluster-panel-content');
+          const collapseIcon = panelHeader.querySelector('.collapse-icon');
+
+          panelHeader.addEventListener('click', () => {
+            panelContent.classList.toggle('collapsed');
+            collapseIcon.classList.toggle('collapsed');
+          });
         };
 
         renderLegend();
@@ -311,10 +519,32 @@ window.addEventListener('DOMContentLoaded', async () => {
       });
     });
 
-    // Reset zoom button
-    document.getElementById('reset-zoom').addEventListener('click', () => {
+    // Zoom controls in lower left
+    document.getElementById('zoom-in').addEventListener('click', () => {
+      const camera = renderer.getCamera();
+      const currentRatio = camera.ratio;
+      camera.animate({ ratio: currentRatio / 1.5 }, { duration: 200 });
+    });
+
+    document.getElementById('zoom-out').addEventListener('click', () => {
+      const camera = renderer.getCamera();
+      const currentRatio = camera.ratio;
+      camera.animate({ ratio: currentRatio * 1.5 }, { duration: 200 });
+    });
+
+    document.getElementById('zoom-reset').addEventListener('click', () => {
       const camera = renderer.getCamera();
       camera.animate({ x: 0.5, y: 0.5, ratio: 1 }, { duration: 500 });
+    });
+
+    // Toggle legend (panels) visibility
+    document.getElementById('toggle-legend').addEventListener('click', () => {
+      const panels = document.getElementById('panels');
+      if (panels.style.display === 'none') {
+        panels.style.display = 'block';
+      } else {
+        panels.style.display = 'none';
+      }
     });
 
     // Export GraphSON button

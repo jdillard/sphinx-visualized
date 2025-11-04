@@ -1,14 +1,15 @@
 Advanced Configuration
 ======================
 
-This page covers advanced configuration options for the sphinx-visualized extension. For basic setup, see :doc:`getting-started`.
+This page covers advanced configuration options for the sphinx-visualized extension.
+For basic setup, see :doc:`getting-started`.
 
 .. _configuring_clusters:
 
 Configuring Link Clusters
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Clusters allow you to group pages in the link graph visualization based on glob patterns.
+Clusters allow you to group pages in the link graph visualization based on glob patterns or directory structure. Pages in the same cluster are colored identically in the visualization, making it easy to understand the organization of your documentation.
 
 .. _basic_cluster_setup:
 
@@ -49,19 +50,40 @@ Patterns use standard glob syntax to match page paths:
 - **Exact match**: ``"index"`` matches only the index page
 - **Wildcard**: ``"api/*"`` matches all direct children of the api directory
 - **Recursive**: ``"docs/**/*"`` matches all pages under docs recursively
-- **First match wins**: If a page matches multiple patterns, it's assigned to the first matching cluster
+- **First match wins**: If a page matches multiple patterns across different clusters, it's assigned to the first matching cluster
 - **Unclustered pages**: Pages that don't match any pattern use the default color
+
+.. _auto_clustering:
+
+Automatic Clustering
+~~~~~~~~~~~~~~~~~~~~
+
+For projects with a clear directory structure, you can enable automatic clustering instead of manually defining patterns:
+
+.. code-block:: python
+
+   visualized_auto_cluster = True
+
+With auto-clustering enabled:
+
+- Pages in subdirectories are automatically grouped by their first directory component
+- For example, ``tutorials/intro.html`` and ``tutorials/advanced.html`` both get assigned to a cluster named "tutorials"
+- Root-level pages (like ``index.html``) remain unclustered
+- You can combine auto-clustering with manual clusters - manual patterns take precedence
 
 GraphSON Export
 ^^^^^^^^^^^^^^^
 
-The extension automatically generates a GraphSON format file compatible with Apache TinkerPop and graph analysis tools:
+The extension automatically generates a GraphSON v3.0 format file compatible with Apache TinkerPop and graph analysis tools:
 
 - ``/_static/sphinx-visualized/graphson.json``
 
-This file can be used with:
 
-- Apache TinkerPop graph computing framework
-- Graph analysis and visualization tools
-- Custom graph processing applications
+**Use Cases**:
+
+- Import into Apache TinkerPop for advanced graph queries
+- Analyze documentation structure with graph algorithms
+- Custom visualization with other graph libraries
+- Integration with graph databases
+- Documentation metrics and analytics
 

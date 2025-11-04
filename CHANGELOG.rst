@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.6.0
+-----
+
+- Add support for intersphinx links
+- Add support for auto cluster naming with :confval:`visualized_auto_cluster`
+
 0.5.0
 -----
 

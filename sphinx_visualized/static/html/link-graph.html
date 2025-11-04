@@ -54,6 +54,48 @@
       margin-bottom: 0.5em;
     }
 
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .panel-header:hover {
+      opacity: 0.8;
+    }
+
+    .collapse-icon {
+      width: 1.2em;
+      height: 1.2em;
+      transition: transform 0.2s ease;
+      margin-left: 0.5em;
+      flex-shrink: 0;
+    }
+
+    .collapse-icon svg {
+      width: 100%;
+      height: 100%;
+      stroke: #666;
+    }
+
+    .collapse-icon.collapsed {
+      transform: rotate(180deg);
+    }
+
+    .panel-content {
+      max-height: 1000px;
+      overflow: hidden;
+      transition: max-height 0.3s ease, opacity 0.3s ease;
+      opacity: 1;
+    }
+
+    .panel-content.collapsed {
+      max-height: 0;
+      opacity: 0;
+    }
+
     #search {
       width: 100%;
       padding: 0.8em;
@@ -141,6 +183,35 @@
       border: 3px solid #666;
     }
 
+    .caption-row label .icon-container {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.5em;
+      height: 1.5em;
+      margin-right: 0.5em;
+      margin-top: 0;
+      background-color: #999;
+      border-radius: 50%;
+      padding: 0.25em;
+      box-sizing: border-box;
+    }
+
+    .caption-row label .icon-container svg {
+      width: 100%;
+      height: 100%;
+      stroke: white;
+    }
+
+    .caption-row input[type="checkbox"]:not(:checked) + label .icon-container {
+      background-color: #ddd;
+    }
+
+    .caption-row input[type="checkbox"]:not(:checked) + label .icon-container svg {
+      stroke: #999;
+    }
+
     .caption-row label .node-label {
       flex-grow: 1;
       min-width: 0;
@@ -166,6 +237,42 @@
       background: #666;
       transition: all ease-out 300ms;
     }
+
+    #graph-controls {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 1000;
+    }
+
+    .control-btn {
+      width: 40px;
+      height: 40px;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: background-color 0.2s, box-shadow 0.2s;
+    }
+
+    .control-btn:hover {
+      background: #f5f5f5;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .control-btn svg {
+      width: 100%;
+      height: 100%;
+      stroke: #333;
+    }
   </style>
   <script src="https://unpkg.com/graphology/dist/graphology.umd.min.js"></script>
   <script src="https://unpkg.com/sigma@2.4.0/build/sigma.min.js"></script>
@@ -184,13 +291,21 @@
 
     <div class="panel" id="cluster-panel"></div>
 
+    <div class="panel" id="category-panel"></div>
+
     <div class="panel" id="controls-panel">
       <h3>Controls</h3>
-      <button id="reset-zoom">Reset View</button>
       <button id="export-json">Export GraphSON</button>
     </div>
   </div>
 
   <div id="graph-container"></div>
+
+  <div id="graph-controls">
+    <button id="zoom-in" class="control-btn" title="Zoom in"></button>
+    <button id="zoom-out" class="control-btn" title="Zoom out"></button>
+    <button id="zoom-reset" class="control-btn" title="See whole graph"></button>
+    <button id="toggle-legend" class="control-btn" title="Toggle legend"></button>
+  </div>
 </body>
 </html>
