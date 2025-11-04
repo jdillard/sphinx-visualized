@@ -246,17 +246,26 @@ window.addEventListener('DOMContentLoaded', async () => {
         // Calculate max nodes for progress bar scaling
         const maxNodesPerCategory = Math.max(...categories.map(c => nodesPerCategory[c] || 0));
 
+        // Load chevron SVG
+        const response = await fetch('../svg/chevron-down.svg');
+        const chevronSvg = await response.text();
+
         categoryContainer.innerHTML = `
-          <h3 style="margin-top: 0; font-size: 1.3em; margin-bottom: 0.5em;">
-            Categories
-            ${visibleCount < categories.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${categories.length})</span>` : ''}
-          </h3>
-          <p style="color: #666; font-style: italic; font-size: 0.9em;">Click a category to show/hide related pages from the network.</p>
-          <p class="cluster-buttons">
-            <button id="check-all-categories-btn" class="cluster-btn">☑ Check all</button>
-            <button id="uncheck-all-categories-btn" class="cluster-btn">☐ Uncheck all</button>
-          </p>
-          <ul style="list-style: none; padding: 0; margin: 0;"></ul>
+          <div class="panel-header" id="category-panel-header">
+            <h3 style="margin: 0; font-size: 1.3em;">
+              Categories
+              ${visibleCount < categories.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${categories.length})</span>` : ''}
+            </h3>
+            <span class="collapse-icon">${chevronSvg}</span>
+          </div>
+          <div class="panel-content" id="category-panel-content">
+            <p style="color: #666; font-style: italic; font-size: 0.9em; margin-top: 0.5em;">Click a category to show/hide related pages from the network.</p>
+            <p class="cluster-buttons">
+              <button id="check-all-categories-btn" class="cluster-btn">☑ Check all</button>
+              <button id="uncheck-all-categories-btn" class="cluster-btn">☐ Uncheck all</button>
+            </p>
+            <ul style="list-style: none; padding: 0; margin: 0;"></ul>
+          </div>
         `;
 
         const list = categoryContainer.querySelector('ul');
@@ -317,6 +326,16 @@ window.addEventListener('DOMContentLoaded', async () => {
           updateGraphByCategory();
           renderCategoryPanel();
         });
+
+        // Add collapse/expand functionality
+        const panelHeader = document.getElementById('category-panel-header');
+        const panelContent = document.getElementById('category-panel-content');
+        const collapseIcon = panelHeader.querySelector('.collapse-icon');
+
+        panelHeader.addEventListener('click', () => {
+          panelContent.classList.toggle('collapsed');
+          collapseIcon.classList.toggle('collapsed');
+        });
       };
 
       renderCategoryPanel();
@@ -357,20 +376,29 @@ window.addEventListener('DOMContentLoaded', async () => {
           });
         };
 
-        const renderLegend = () => {
+        const renderLegend = async () => {
           const visibleCount = Object.values(visibleClusters).filter(v => v).length;
 
+          // Load chevron SVG
+          const response = await fetch('../svg/chevron-down.svg');
+          const chevronSvg = await response.text();
+
           legendContainer.innerHTML = `
-            <h3 style="margin-top: 0; font-size: 1.3em; margin-bottom: 0.5em;">
-              Clusters
-              ${visibleCount < clusterConfig.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${clusterConfig.length})</span>` : ''}
-            </h3>
-            <p style="color: #666; font-style: italic; font-size: 0.9em;">Click a cluster to show/hide related pages from the network.</p>
-            <p class="cluster-buttons">
-              <button id="check-all-btn" class="cluster-btn">☑ Check all</button>
-              <button id="uncheck-all-btn" class="cluster-btn">☐ Uncheck all</button>
-            </p>
-            <ul style="list-style: none; padding: 0; margin: 0;"></ul>
+            <div class="panel-header" id="cluster-panel-header">
+              <h3 style="margin: 0; font-size: 1.3em;">
+                Clusters
+                ${visibleCount < clusterConfig.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${clusterConfig.length})</span>` : ''}
+              </h3>
+              <span class="collapse-icon">${chevronSvg}</span>
+            </div>
+            <div class="panel-content" id="cluster-panel-content">
+              <p style="color: #666; font-style: italic; font-size: 0.9em; margin-top: 0.5em;">Click a cluster to show/hide related pages from the network.</p>
+              <p class="cluster-buttons">
+                <button id="check-all-btn" class="cluster-btn">☑ Check all</button>
+                <button id="uncheck-all-btn" class="cluster-btn">☐ Uncheck all</button>
+              </p>
+              <ul style="list-style: none; padding: 0; margin: 0;"></ul>
+            </div>
           `;
 
           const list = legendContainer.querySelector('ul');
@@ -424,6 +452,16 @@ window.addEventListener('DOMContentLoaded', async () => {
             });
             updateGraph();
             renderLegend();
+          });
+
+          // Add collapse/expand functionality
+          const panelHeader = document.getElementById('cluster-panel-header');
+          const panelContent = document.getElementById('cluster-panel-content');
+          const collapseIcon = panelHeader.querySelector('.collapse-icon');
+
+          panelHeader.addEventListener('click', () => {
+            panelContent.classList.toggle('collapsed');
+            collapseIcon.classList.toggle('collapsed');
           });
         };
 

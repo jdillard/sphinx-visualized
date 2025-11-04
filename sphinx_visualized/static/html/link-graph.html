@@ -54,6 +54,48 @@
       margin-bottom: 0.5em;
     }
 
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .panel-header:hover {
+      opacity: 0.8;
+    }
+
+    .collapse-icon {
+      width: 1.2em;
+      height: 1.2em;
+      transition: transform 0.2s ease;
+      margin-left: 0.5em;
+      flex-shrink: 0;
+    }
+
+    .collapse-icon svg {
+      width: 100%;
+      height: 100%;
+      stroke: #666;
+    }
+
+    .collapse-icon.collapsed {
+      transform: rotate(180deg);
+    }
+
+    .panel-content {
+      max-height: 1000px;
+      overflow: hidden;
+      transition: max-height 0.3s ease, opacity 0.3s ease;
+      opacity: 1;
+    }
+
+    .panel-content.collapsed {
+      max-height: 0;
+      opacity: 0;
+    }
+
     #search {
       width: 100%;
       padding: 0.8em;
@@ -211,9 +253,9 @@
       <input type="text" id="search" placeholder="Search nodes..." />
     </div>
 
-    <div class="panel" id="category-panel"></div>
-
     <div class="panel" id="cluster-panel"></div>
+
+    <div class="panel" id="category-panel"></div>
 
     <div class="panel" id="controls-panel">
       <h3>Controls</h3>
