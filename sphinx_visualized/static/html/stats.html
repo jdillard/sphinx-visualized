@@ -167,14 +167,28 @@
         <div class="label">Total References</div>
       </div>
       <div class="stat-card">
-        <div class="value" id="avg-references">-</div>
-        <div class="label">Avg References/Page</div>
+        <div class="value" id="total-intersphinx">-</div>
+        <div class="label">Intersphinx Links</div>
       </div>
     </div>
 
     <div class="section" id="clusters-section">
       <h2>Cluster Distribution</h2>
       <div class="cluster-stats" id="cluster-stats"></div>
+    </div>
+
+    <div class="section" id="intersphinx-section">
+      <h2>Intersphinx Links by Project</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Project</th>
+            <th>External Pages</th>
+            <th>Total References</th>
+          </tr>
+        </thead>
+        <tbody id="intersphinx-stats"></tbody>
+      </table>
     </div>
 
     <div class="section">
@@ -226,12 +240,15 @@
     const totalPages = nodes.length;
     const totalLinks = links.length;
     const totalReferences = links.reduce((sum, link) => sum + (link.reference_count || 1), 0);
-    const avgReferences = totalPages > 0 ? (totalReferences / totalPages).toFixed(1) : 0;
+
+    // Count intersphinx nodes
+    const intersphinxNodes = nodes.filter(node => node.is_intersphinx);
+    const totalIntersphinx = intersphinxNodes.length;
 
     document.getElementById('total-pages').textContent = totalPages;
     document.getElementById('total-links').textContent = totalLinks;
     document.getElementById('total-references').textContent = totalReferences;
-    document.getElementById('avg-references').textContent = avgReferences;
+    document.getElementById('total-intersphinx').textContent = totalIntersphinx;
 
     // Calculate inbound and outbound references for each page
     const pageStats = nodes.map(node => ({
@@ -278,6 +295,59 @@
       });
     } else {
       clusterStatsDiv.innerHTML = '<div class="no-data">No clusters configured</div>';
+    }
+
+    // Intersphinx statistics by project
+    const intersphinxByProject = {};
+
+    // Count pages by project
+    intersphinxNodes.forEach(node => {
+      // Extract project name from cluster (format: "project_name (external)")
+      let projectName = node.cluster;
+      if (projectName && projectName.endsWith(' (external)')) {
+        projectName = projectName.slice(0, -11); // Remove " (external)" suffix
+      }
+
+      if (!intersphinxByProject[projectName]) {
+        intersphinxByProject[projectName] = {
+          pageCount: 0,
+          referenceCount: 0
+        };
+      }
+      intersphinxByProject[projectName].pageCount++;
+    });
+
+    // Count references to intersphinx pages
+    links.forEach(link => {
+      const targetNode = nodes[link.target];
+      if (targetNode && targetNode.is_intersphinx) {
+        let projectName = targetNode.cluster;
+        if (projectName && projectName.endsWith(' (external)')) {
+          projectName = projectName.slice(0, -11);
+        }
+        if (intersphinxByProject[projectName]) {
+          intersphinxByProject[projectName].referenceCount += (link.reference_count || 1);
+        }
+      }
+    });
+
+    const intersphinxStatsTbody = document.getElementById('intersphinx-stats');
+    const intersphinxSection = document.getElementById('intersphinx-section');
+
+    if (Object.keys(intersphinxByProject).length > 0) {
+      Object.entries(intersphinxByProject)
+        .sort((a, b) => b[1].referenceCount - a[1].referenceCount)
+        .forEach(([project, stats]) => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${project}</td>
+            <td>${stats.pageCount}</td>
+            <td>${stats.referenceCount}</td>
+          `;
+          intersphinxStatsTbody.appendChild(row);
+        });
+    } else {
+      intersphinxSection.style.display = 'none';
     }
 
     // Most referenced pages (top 10)
