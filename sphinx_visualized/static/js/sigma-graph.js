@@ -5,11 +5,10 @@ import forceAtlas2 from 'https://cdn.skypack.dev/graphology-layout-forceatlas2';
 
 // Default color palette inspired by sigmajs.org
 const DEFAULT_COLORS = [
-  '#331A00', '#663000', '#996136', '#CC9B7A',
-  '#D9AF98', '#F2DACE', '#CCFDFF', '#99F8FF',
-  '#66F0FF', '#33E4FF', '#00AACC', '#5A88B8',
-  '#E96463', '#24B086', '#FF6B6B', '#4ECDC4',
-  '#45B7D1', '#96CEB4', '#FFEAA7', '#DFE6E9'
+  '#6c3e81', '#57a835', '#7145cd', '#579f5f',
+  '#d043c4', '#477028', '#b174cb', '#a4923a',
+  '#5f83cc', '#db4139', '#379982', '#c94c83',
+  '#7c5d28', '#a54a49', '#cf7435'
 ];
 
 window.addEventListener('DOMContentLoaded', async () => {
