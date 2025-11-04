@@ -46,10 +46,17 @@ window.addEventListener('DOMContentLoaded', async () => {
     };
   });
 
-  // Define category colors (for node types, not clusters)
-  const CATEGORY_COLORS = {
-    'Internal Pages': '#5A88B8',
-    'Intersphinx Pages': '#9B59B6'
+  // Define category colors and icons (for node types, not clusters)
+  const GRAY_COLOR = '#999999';
+  const CATEGORY_CONFIG = {
+    'Internal Pages': {
+      color: GRAY_COLOR,
+      icon: '../svg/document.svg'
+    },
+    'Intersphinx Pages': {
+      color: GRAY_COLOR,
+      icon: '../svg/external.svg'
+    }
   };
 
   // Create a new graphology graph
@@ -63,14 +70,13 @@ window.addEventListener('DOMContentLoaded', async () => {
     // Determine category based on node type
     const category = isIntersphinx ? 'Intersphinx Pages' : 'Internal Pages';
 
-    // Use different colors for different node types
+    // Use cluster colors for nodes
     let nodeColor;
-    if (isIntersphinx) {
-      nodeColor = CATEGORY_COLORS['Intersphinx Pages'];
-    } else if (cluster && clusterColors[cluster]) {
+    if (cluster && clusterColors[cluster]) {
       nodeColor = clusterColors[cluster];
     } else {
-      nodeColor = CATEGORY_COLORS['Internal Pages'];
+      // Default color for nodes without a cluster
+      nodeColor = '#5A88B8';
     }
 
     graph.addNode(String(vertex.id), {
@@ -233,8 +239,8 @@ window.addEventListener('DOMContentLoaded', async () => {
         });
       };
 
-      const renderCategoryPanel = () => {
-        const categories = Object.keys(CATEGORY_COLORS);
+      const renderCategoryPanel = async () => {
+        const categories = Object.keys(CATEGORY_CONFIG);
         const visibleCount = categories.filter(c => visibleCategories[c]).length;
 
         // Calculate max nodes for progress bar scaling
@@ -255,11 +261,22 @@ window.addEventListener('DOMContentLoaded', async () => {
 
         const list = categoryContainer.querySelector('ul');
 
-        categories.forEach((category, index) => {
-          const color = CATEGORY_COLORS[category];
+        // Load and render categories with icons
+        for (let index = 0; index < categories.length; index++) {
+          const category = categories[index];
+          const config = CATEGORY_CONFIG[category];
           const count = nodesPerCategory[category] || 0;
           const isChecked = visibleCategories[category];
           const barWidth = maxNodesPerCategory > 0 ? (100 * count) / maxNodesPerCategory : 0;
+
+          // Fetch SVG content
+          let svgContent = '';
+          try {
+            const response = await fetch(config.icon);
+            svgContent = await response.text();
+          } catch (error) {
+            console.error(`Error loading icon for ${category}:`, error);
+          }
 
           const li = document.createElement('li');
           li.className = 'caption-row';
@@ -267,7 +284,7 @@ window.addEventListener('DOMContentLoaded', async () => {
           li.innerHTML = `
             <input type="checkbox" ${isChecked ? 'checked' : ''} id="category-${index}" />
             <label for="category-${index}">
-              <span class="circle" style="background-color: ${color}; border-color: ${color};"></span>
+              <span class="icon-container">${svgContent}</span>
               <div class="node-label">
                 <span>${category}</span>
                 <div class="bar" style="width: ${barWidth}%;"></div>
@@ -282,7 +299,7 @@ window.addEventListener('DOMContentLoaded', async () => {
           });
 
           list.appendChild(li);
-        });
+        }
 
         // Add button handlers
         document.getElementById('check-all-categories-btn').addEventListener('click', () => {

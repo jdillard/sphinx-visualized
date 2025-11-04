@@ -141,6 +141,35 @@
       border: 3px solid #666;
     }
 
+    .caption-row label .icon-container {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.5em;
+      height: 1.5em;
+      margin-right: 0.5em;
+      margin-top: 0;
+      background-color: #999;
+      border-radius: 50%;
+      padding: 0.25em;
+      box-sizing: border-box;
+    }
+
+    .caption-row label .icon-container svg {
+      width: 100%;
+      height: 100%;
+      stroke: white;
+    }
+
+    .caption-row input[type="checkbox"]:not(:checked) + label .icon-container {
+      background-color: #ddd;
+    }
+
+    .caption-row input[type="checkbox"]:not(:checked) + label .icon-container svg {
+      stroke: #999;
+    }
+
     .caption-row label .node-label {
       flex-grow: 1;
       min-width: 0;
