@@ -33,4 +33,5 @@ sphinx-visualized provides three different visualization options:
 
 1. **Link Graph** - Interactive graph visualization using sigma.js with search and zoom controls
 2. **Toctree Graph** - Hierarchical visualization of your documentation's table of contents structure
+3. **Statistics** - Statistical overview of your documentation including page counts, reference counts, cluster distribution, and more
 
