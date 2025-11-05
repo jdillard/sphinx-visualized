@@ -215,6 +215,28 @@
       height: 100%;
       stroke: #333;
     }
+
+    .expand-collapse-buttons {
+      display: flex;
+      gap: 0.5em;
+      margin-top: 0.5em;
+    }
+
+    .expand-collapse-btn {
+      flex: 1;
+      padding: 0.6em 1em;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: background-color 0.2s, box-shadow 0.2s;
+    }
+
+    .expand-collapse-btn:hover {
+      background: #f5f5f5;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
   </style>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="../js/toctree.js"></script>
@@ -231,7 +253,13 @@
       <input type="text" id="search" placeholder="Search pages..." />
     </div>
 
-    <div class="panel" id="depth-panel"></div>
+    <div class="panel" id="controls-panel">
+      <h3>Controls</h3>
+      <div class="expand-collapse-buttons">
+        <button id="expand-all-btn" class="expand-collapse-btn">Expand All</button>
+        <button id="collapse-all-btn" class="expand-collapse-btn">Collapse All</button>
+      </div>
+    </div>
   </div>
 
   <div id="graph-container"></div>

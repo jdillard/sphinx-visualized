@@ -96,7 +96,12 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     // Enter any new nodes at the parent's previous position
     const nodeEnter = node.enter().append("g")
-        .attr("transform", d => `translate(${source.y0},${source.x0})`)
+        .attr("transform", d => {
+          const parent = d.parent;
+          const x = parent ? (parent.x0 !== undefined ? parent.x0 : parent.x) : source.x0;
+          const y = parent ? (parent.y0 !== undefined ? parent.y0 : parent.y) : source.y0;
+          return `translate(${y},${x})`;
+        })
         .attr("fill-opacity", 0)
         .attr("stroke-opacity", 0)
         .on("click", (event, d) => {
@@ -124,8 +129,15 @@ window.addEventListener('DOMContentLoaded', async () => {
         .attr("stroke", "white")
         .attr("paint-order", "stroke")
         .text(d => d.data.label)
-        .style("fill", d => (d.data.path && !d._children && !d.children) ? "#0066cc" : "#000")
-        .style("cursor", d => (d.data.path && !d._children && !d.children) ? "pointer" : "default");
+        .style("fill", "#000")
+        .style("cursor", d => d.data.path ? "pointer" : "default")
+        .on("click", (event, d) => {
+          // If this node has a path, navigate to it and stop propagation
+          if (d.data.path) {
+            event.stopPropagation();
+            window.location.href = d.data.path;
+          }
+        });
 
     // Transition nodes to their new position
     const nodeUpdate = node.merge(nodeEnter).transition()
@@ -218,6 +230,38 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
+  // Helper function to expand all nodes recursively
+  function expandAll(d) {
+    if (d._children) {
+      d.children = d._children;
+    }
+    if (d.children) {
+      d.children.forEach(expandAll);
+    }
+  }
+
+  // Helper function to collapse all nodes recursively (except root)
+  function collapseAll(d) {
+    if (d.children) {
+      d.children.forEach(collapseAll);
+    }
+    if (d.children && d.depth > 0) {
+      d.children = null;
+    }
+  }
+
+  // Expand all nodes
+  document.getElementById('expand-all-btn')?.addEventListener('click', () => {
+    expandAll(root);
+    update(null, root);
+  });
+
+  // Collapse all nodes (except root)
+  document.getElementById('collapse-all-btn')?.addEventListener('click', () => {
+    collapseAll(root);
+    update(null, root);
+  });
+
   // Search functionality
   const searchInput = document.getElementById('search');
   if (searchInput) {
@@ -231,7 +275,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
         if (!searchTerm) {
           // Reset highlighting when search is cleared
-          element.select("text").style("fill", (d.data.path && !d._children && !d.children) ? "#0066cc" : "#000");
+          element.select("text").style("fill", "#000");
           element.select("circle").attr("fill", d._children ? "#5A88B8" : "#24B086");
         } else if (matches) {
           // Highlight matching nodes
