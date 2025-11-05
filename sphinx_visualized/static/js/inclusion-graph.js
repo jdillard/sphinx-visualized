@@ -16,7 +16,8 @@ window.addEventListener('DOMContentLoaded', async () => {
     const controls = [
       { id: 'zoom-in', svg: '../svg/magnifying-glass-plus.svg' },
       { id: 'zoom-out', svg: '../svg/magnifying-glass-minus.svg' },
-      { id: 'zoom-reset', svg: '../svg/viewfinder.svg' }
+      { id: 'zoom-reset', svg: '../svg/viewfinder.svg' },
+      { id: 'toggle-legend', svg: '../svg/map.svg' }
     ];
 
     for (const control of controls) {
@@ -87,7 +88,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   // Add edges
   window.inclusion_links_data.forEach((link, index) => {
     try {
-      graph.addEdge(String(link.source), String(link.target), {
+      graph.addEdge(String(link.target), String(link.source), {
         type: 'arrow',
         size: 2,
         inclusionType: link.type,
@@ -132,6 +133,15 @@ window.addEventListener('DOMContentLoaded', async () => {
     // State for tracking hover
     let hoveredNode = null;
     let hoveredNeighbors = new Set();
+
+    // Handle node clicks to navigate to pages
+    renderer.on('clickNode', ({ node }) => {
+      const nodeData = graph.getNodeAttributes(node);
+      if (nodeData.path && nodeData.fileType === 'document') {
+        // Only navigate for document nodes (not include/literalinclude)
+        window.location.href = nodeData.path;
+      }
+    });
 
     // Hover effect - highlight node, connected edges, and neighbor nodes
     renderer.on('enterNode', ({ node }) => {
@@ -336,6 +346,16 @@ window.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('zoom-reset')?.addEventListener('click', () => {
       const camera = renderer.getCamera();
       camera.animatedReset({ duration: 200 });
+    });
+
+    // Toggle legend (panels) visibility
+    document.getElementById('toggle-legend')?.addEventListener('click', () => {
+      const panels = document.getElementById('panels');
+      if (panels.style.display === 'none') {
+        panels.style.display = 'block';
+      } else {
+        panels.style.display = 'none';
+      }
     });
 
   } catch (error) {
