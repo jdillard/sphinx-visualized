@@ -1,4 +1,4 @@
-// Inclusion Graph Visualization
+// Includes Graph Visualization
 // This script visualizes file inclusions (include and literalinclude directives)
 
 import forceAtlas2 from 'https://cdn.skypack.dev/graphology-layout-forceatlas2';
@@ -48,20 +48,20 @@ window.addEventListener('DOMContentLoaded', async () => {
   };
 
   try {
-    await loadScript('../js/inclusion-nodes.js');
-    await loadScript('../js/inclusion-links.js');
+    await loadScript('../js/includes-nodes.js');
+    await loadScript('../js/includes-links.js');
   } catch (error) {
     console.error('Error loading data files:', error);
     document.getElementById('graph-container').innerHTML =
-      '<div style="padding: 50px; text-align: center;">Error loading inclusion data. Make sure to build your documentation first.</div>';
+      '<div style="padding: 50px; text-align: center;">Error loading includes data. Make sure to build your documentation first.</div>';
     return;
   }
 
   const container = document.getElementById('graph-container');
 
   // Check if we have data
-  if (!window.inclusion_nodes_data || window.inclusion_nodes_data.length === 0) {
-    container.innerHTML = '<div style="padding: 50px; text-align: center;">No inclusion data available. Use .. include:: or .. literalinclude:: directives in your documentation.</div>';
+  if (!window.includes_nodes_data || window.includes_nodes_data.length === 0) {
+    container.innerHTML = '<div style="padding: 50px; text-align: center;">No includes data available. Use .. include:: or .. literalinclude:: directives in your documentation.</div>';
     return;
   }
 
@@ -69,7 +69,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   const graph = new graphology.Graph();
 
   // Add nodes with random initial positions
-  window.inclusion_nodes_data.forEach((node) => {
+  window.includes_nodes_data.forEach((node) => {
     const nodeType = node.type || 'document';
     const nodeColor = TYPE_COLORS[nodeType] || TYPE_COLORS['document'];
 
@@ -86,7 +86,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   });
 
   // Add edges
-  window.inclusion_links_data.forEach((link, index) => {
+  window.includes_links_data.forEach((link, index) => {
     try {
       graph.addEdge(String(link.target), String(link.source), {
         type: 'arrow',
