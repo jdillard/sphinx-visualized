@@ -5,6 +5,7 @@ Changelog
 -----
 
 - Add includes graph and statistics
+- Improve toctree graph to match other graphs
 
 0.6.0
 -----
