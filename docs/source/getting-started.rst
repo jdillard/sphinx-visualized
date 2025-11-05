@@ -29,9 +29,10 @@ After building the docs, view by opening the following page:
 Visualization Options
 ---------------------
 
-sphinx-visualized provides three different visualization options:
+sphinx-visualized provides four different visualization options:
 
-1. **Link Graph** - Interactive graph visualization using sigma.js with search and zoom controls
-2. **Toctree Graph** - Hierarchical visualization of your documentation's table of contents structure
-3. **Statistics** - Statistical overview of your documentation including page counts, reference counts, cluster distribution, and more
+1. **Statistics** - Statistical overview of your documentation
+2. **Link Graph** - Interactive graph visualization of hyperlinks
+3. **Toctree Graph** - Hierarchical visualization of your documentation's table of contents structure
+4. **Includes Graph** - Visualization of file inclusion relationships showing which documents include other files
 
