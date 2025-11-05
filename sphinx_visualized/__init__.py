@@ -13,7 +13,7 @@ from docutils import nodes as docutils_nodes
 from multiprocessing import Manager, Queue
 from fnmatch import fnmatch
 
-__version__ = "0.6.0"
+__version__ = "0.7.0"
 
 
 def setup(app):
@@ -509,3 +509,63 @@ def create_json(app, exception):
     filename = Path(app.outdir) / "_static" / "sphinx-visualized" / "graphson.json"
     with open(filename, "w") as json_file:
         json.dump(graphson, json_file, indent=2)
+
+    # Process inclusions for includes graph
+    # Collect from env.dependencies which is populated after all documents are processed
+    includes_list = []
+    if hasattr(app.env, 'dependencies'):
+        for docname, deps in app.env.dependencies.items():
+            for included_file in deps:
+                # Store as (source_doc, included_file)
+                includes_list.append((f"/{docname}.html", included_file))
+
+    # Build includes nodes and links
+    includes_files = set()  # Track all files involved in inclusions
+    for source_doc, included_file in includes_list:
+        includes_files.add(source_doc)
+        includes_files.add(included_file)
+
+    # Create nodes for includes graph
+    includes_nodes = []
+    includes_file_list = sorted(list(includes_files))
+    for file_path in includes_file_list:
+        # Check if this is a documentation page or an included file
+        if file_path.endswith('.html'):
+            # This is a source document
+            docname = file_path[1:-5]  # Remove leading / and .html
+            if app.env.titles.get(docname):
+                label = app.env.titles.get(docname).astext()
+            else:
+                label = os.path.basename(file_path)
+            node_type = "document"
+        else:
+            # This is an included file - all same type
+            label = os.path.basename(file_path)
+            node_type = "include"
+
+        includes_nodes.append({
+            "id": includes_file_list.index(file_path),
+            "label": label,
+            "path": file_path,
+            "type": node_type,
+        })
+
+    # Create links for includes graph
+    includes_links = []
+    includes_counts = Counter(includes_list)
+    for (source_doc, included_file), count in includes_counts.items():
+        includes_links.append({
+            "source": includes_file_list.index(source_doc),
+            "target": includes_file_list.index(included_file),
+            "type": "include",
+            "count": count,
+        })
+
+    # Write includes data files
+    filename = Path(app.outdir) / "_static" / "sphinx-visualized" / "js" / "includes-nodes.js"
+    with open(filename, "w") as json_file:
+        json_file.write(f'var includes_nodes_data = {json.dumps(includes_nodes, indent=4)};')
+
+    filename = Path(app.outdir) / "_static" / "sphinx-visualized" / "js" / "includes-links.js"
+    with open(filename, "w") as json_file:
+        json_file.write(f'var includes_links_data = {json.dumps(includes_links, indent=4)};')

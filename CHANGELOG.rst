@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.7.0
+-----
+
+- Add includes graph and statistics
+
 0.6.0
 -----
 

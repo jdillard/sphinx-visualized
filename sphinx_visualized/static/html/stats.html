@@ -145,6 +145,8 @@
   </style>
   <script src="../js/nodes.js"></script>
   <script src="../js/links.js"></script>
+  <script src="../js/includes-nodes.js"></script>
+  <script src="../js/includes-links.js"></script>
 </head>
 <body>
   <h1>Documentation Statistics</h1>
@@ -169,6 +171,18 @@
       <div class="stat-card">
         <div class="value" id="total-intersphinx">-</div>
         <div class="label">Intersphinx Links</div>
+      </div>
+      <div class="stat-card">
+        <div class="value" id="total-included-files">-</div>
+        <div class="label">Included Files</div>
+      </div>
+      <div class="stat-card">
+        <div class="value" id="total-include-directives">-</div>
+        <div class="label">Include Directives</div>
+      </div>
+      <div class="stat-card">
+        <div class="value" id="docs-with-includes">-</div>
+        <div class="label">Docs Using Includes</div>
       </div>
     </div>
 
@@ -227,6 +241,32 @@
           </tr>
         </thead>
         <tbody id="isolated-pages"></tbody>
+      </table>
+    </div>
+
+    <div class="section" id="most-included-section">
+      <h2>Most Included Files</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>File</th>
+            <th>Times Included</th>
+          </tr>
+        </thead>
+        <tbody id="most-included-files"></tbody>
+      </table>
+    </div>
+
+    <div class="section" id="most-includes-section">
+      <h2>Documents with Most Includes</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Document</th>
+            <th>Include Count</th>
+          </tr>
+        </thead>
+        <tbody id="most-includes-docs"></tbody>
       </table>
     </div>
   </div>
@@ -404,6 +444,97 @@
       });
     } else {
       isolatedSection.style.display = 'none';
+    }
+
+    // ========== Include Statistics ==========
+    const includesNodes = includes_nodes_data || [];
+    const includesLinks = includes_links_data || [];
+
+    // Calculate basic include statistics
+    const includedFiles = includesNodes.filter(node => node.type === 'include' || node.type === 'literalinclude');
+    const totalIncludedFiles = includedFiles.length;
+    const totalIncludeDirectives = includesLinks.reduce((sum, link) => sum + (link.count || 1), 0);
+
+    // Count unique documents that use includes
+    const docsUsingIncludes = new Set(includesLinks.map(link => link.source)).size;
+
+    // Update summary cards
+    document.getElementById('total-included-files').textContent = totalIncludedFiles;
+    document.getElementById('total-include-directives').textContent = totalIncludeDirectives;
+    document.getElementById('docs-with-includes').textContent = docsUsingIncludes;
+
+    // Most included files
+    const includeStats = {};
+
+    includesLinks.forEach(link => {
+      const targetNode = includesNodes[link.target];
+      if (targetNode && (targetNode.type === 'include' || targetNode.type === 'literalinclude')) {
+        if (!includeStats[link.target]) {
+          includeStats[link.target] = {
+            label: targetNode.label,
+            path: targetNode.path,
+            count: 0
+          };
+        }
+        includeStats[link.target].count += (link.count || 1);
+      }
+    });
+
+    const mostIncludedFiles = Object.values(includeStats)
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 10);
+
+    const mostIncludedTbody = document.getElementById('most-included-files');
+    const mostIncludedSection = document.getElementById('most-included-section');
+
+    if (mostIncludedFiles.length > 0) {
+      mostIncludedFiles.forEach(file => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${file.label}</td>
+          <td>${file.count}</td>
+        `;
+        mostIncludedTbody.appendChild(row);
+      });
+    } else {
+      mostIncludedSection.style.display = 'none';
+    }
+
+    // Documents with most includes
+    const docIncludeStats = {};
+
+    includesLinks.forEach(link => {
+      const sourceNode = includesNodes[link.source];
+      if (sourceNode) {
+        if (!docIncludeStats[link.source]) {
+          docIncludeStats[link.source] = {
+            label: sourceNode.label,
+            path: sourceNode.path,
+            count: 0
+          };
+        }
+        docIncludeStats[link.source].count += (link.count || 1);
+      }
+    });
+
+    const mostIncludesDocs = Object.values(docIncludeStats)
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 10);
+
+    const mostIncludesDocsTbody = document.getElementById('most-includes-docs');
+    const mostIncludesSection = document.getElementById('most-includes-section');
+
+    if (mostIncludesDocs.length > 0) {
+      mostIncludesDocs.forEach(doc => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><a href="${doc.path}" target="_blank">${doc.label}</a></td>
+          <td>${doc.count}</td>
+        `;
+        mostIncludesDocsTbody.appendChild(row);
+      });
+    } else {
+      mostIncludesSection.style.display = 'none';
     }
   </script>
 </body>
