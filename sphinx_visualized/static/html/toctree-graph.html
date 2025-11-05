@@ -1,33 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>Sphinx Toctree Graph</title>
-    <script src="https://d3js.org/d3.v6.min.js"></script>
-    <script src="../js/toctree.js"></script>
-    <script src="../js/toctree-graph.js"></script>
-    <style>
-      .node circle {
-        fill: #999;
-        stroke: steelblue;
-        stroke-width: 3px;
-      }
+<head>
+  <meta charset="utf-8">
+  <title>Toctree Graph Visualization</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+    }
 
-      .node text {
-        font: 12px sans-serif;
-      }
+    h1 {
+      text-align: center;
+      margin: 20px 0 10px 0;
+    }
 
-      .link {
-        fill: none;
-        stroke: #555;
-        stroke-width: 2px;
-      }
-    </style>
-  </head>
-  <body>
-    <h1 style="text-align: center;">Sphinx Toctree Graph</h1>
-    <p style="text-align: center;"><a href="index.html">Sphinx Visualized</a></p>
-    <svg width="960" height="600"></svg>
-  </body>
+    .nav {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .nav a {
+      margin: 0 10px;
+    }
+
+    #graph-container {
+      width: 100vw;
+      height: calc(100vh - 100px);
+      background: #f5f5f5;
+    }
+
+    #panels {
+      position: absolute;
+      top: 80px;
+      right: 20px;
+      width: 350px;
+      max-height: calc(100vh - 120px);
+      overflow-y: auto;
+      z-index: 1000;
+    }
+
+    .panel {
+      background: white;
+      padding: 1em;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin-bottom: 0.5em;
+    }
+
+    .panel h3 {
+      margin-top: 0;
+      font-size: 1.3em;
+      margin-bottom: 0.5em;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .panel-header:hover {
+      opacity: 0.8;
+    }
+
+    .collapse-icon {
+      width: 1.2em;
+      height: 1.2em;
+      transition: transform 0.2s ease;
+      margin-left: 0.5em;
+      flex-shrink: 0;
+    }
+
+    .collapse-icon svg {
+      width: 100%;
+      height: 100%;
+      stroke: #666;
+    }
+
+    .collapse-icon.collapsed {
+      transform: rotate(180deg);
+    }
+
+    .panel-content {
+      max-height: 1000px;
+      overflow: hidden;
+      transition: max-height 0.3s ease, opacity 0.3s ease;
+      opacity: 1;
+    }
+
+    .panel-content.collapsed {
+      max-height: 0;
+      opacity: 0;
+    }
+
+    #search {
+      width: 100%;
+      padding: 0.8em;
+      margin-bottom: 0.5em;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      font-size: 1em;
+      box-sizing: border-box;
+    }
+
+    .caption-row {
+      margin: 0.3em 0;
+    }
+
+    .caption-row input[type="checkbox"] {
+      display: none;
+    }
+
+    .caption-row input[type="checkbox"]:not(:checked) + label {
+      color: #666;
+    }
+
+    .caption-row input[type="checkbox"]:not(:checked) + label .circle {
+      background-color: white !important;
+    }
+
+    .caption-row label {
+      display: flex;
+      flex-direction: row;
+      cursor: pointer;
+      align-items: flex-start;
+    }
+
+    .caption-row label:hover {
+      opacity: 0.7;
+    }
+
+    .caption-row label .circle {
+      flex-shrink: 0;
+      display: inline-block;
+      width: 1.2em;
+      height: 1.2em;
+      border-radius: 1.2em;
+      box-sizing: border-box;
+      margin-right: 0.5em;
+      margin-top: 0.1em;
+      transition: all ease-out 300ms;
+      border: 3px solid #666;
+    }
+
+    .caption-row label .icon-container {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.5em;
+      height: 1.5em;
+      margin-right: 0.5em;
+      margin-top: 0;
+      background-color: #999;
+      border-radius: 50%;
+      padding: 0.25em;
+      box-sizing: border-box;
+    }
+
+    .caption-row label .icon-container svg {
+      width: 100%;
+      height: 100%;
+      stroke: white;
+    }
+
+    .caption-row input[type="checkbox"]:not(:checked) + label .icon-container {
+      background-color: #ddd;
+    }
+
+    .caption-row input[type="checkbox"]:not(:checked) + label .icon-container svg {
+      stroke: #999;
+    }
+
+    .caption-row label .node-label {
+      flex-grow: 1;
+      min-width: 0;
+    }
+
+    #graph-controls {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 1000;
+    }
+
+    .control-btn {
+      width: 40px;
+      height: 40px;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: background-color 0.2s, box-shadow 0.2s;
+    }
+
+    .control-btn:hover {
+      background: #f5f5f5;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .control-btn svg {
+      width: 100%;
+      height: 100%;
+      stroke: #333;
+    }
+  </style>
+  <script src="https://unpkg.com/graphology/dist/graphology.umd.min.js"></script>
+  <script src="https://unpkg.com/sigma@2.4.0/build/sigma.min.js"></script>
+  <script src="../js/toctree.js"></script>
+  <script type="module" src="../js/toctree-graph.js"></script>
+</head>
+<body>
+  <h1>Toctree Graph Visualization</h1>
+  <p class="nav">
+    <a href="index.html">Sphinx Visualized</a>
+  </p>
+
+  <div id="panels">
+    <div class="panel" id="search-panel">
+      <input type="text" id="search" placeholder="Search pages..." />
+    </div>
+
+    <div class="panel" id="depth-panel"></div>
+  </div>
+
+  <div id="graph-container"></div>
+
+  <div id="graph-controls">
+    <button id="zoom-in" class="control-btn" title="Zoom in"></button>
+    <button id="zoom-out" class="control-btn" title="Zoom out"></button>
+    <button id="zoom-reset" class="control-btn" title="See whole graph"></button>
+    <button id="toggle-legend" class="control-btn" title="Toggle legend"></button>
+  </div>
+</body>
 </html>
 

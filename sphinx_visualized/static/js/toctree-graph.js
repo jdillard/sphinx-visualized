@@ -1,148 +1,363 @@
-window.onload = function() {
-  // Specify the charts’ dimensions. The height is variable, depending on the layout.
-  const width = 1200;
-  const marginTop = 10;
-  const marginRight = 10;
-  const marginBottom = 10;
-  const marginLeft = 40;
+// Toctree Graph Visualization using Sigma.js
+// This script visualizes the documentation table of contents structure
 
-  // Rows are separated by dx pixels, columns by dy pixels. These names can be counter-intuitive
-  // (dx is a height, and dy a width). This because the tree must be viewed with the root at the
-  // “bottom”, in the data domain. The width of a column is based on the tree’s height.
-  const root = d3.hierarchy(toctree);
-  const dx = 20; // spaces graph out vertically
-  const dy = (width - marginRight - marginLeft) / (1 + root.height);
+window.addEventListener('DOMContentLoaded', async () => {
+  // Load SVG icons for control buttons
+  const loadControlIcons = async () => {
+    const controls = [
+      { id: 'zoom-in', svg: '../svg/magnifying-glass-plus.svg' },
+      { id: 'zoom-out', svg: '../svg/magnifying-glass-minus.svg' },
+      { id: 'zoom-reset', svg: '../svg/viewfinder.svg' },
+      { id: 'toggle-legend', svg: '../svg/map.svg' }
+    ];
 
-  // Define the tree layout and the shape for links.
-  const tree = d3.tree().nodeSize([dx, dy]);
-  const diagonal = d3.linkHorizontal().x(d => d.y).y(d => d.x);
+    for (const control of controls) {
+      try {
+        const response = await fetch(control.svg);
+        const svgContent = await response.text();
+        const button = document.getElementById(control.id);
+        if (button) {
+          button.innerHTML = svgContent;
+        }
+      } catch (error) {
+        console.error(`Error loading icon for ${control.id}:`, error);
+      }
+    }
+  };
 
-  // Create the SVG container, a layer for the links and a layer for the nodes.
-  const svg = d3.select("svg")
-      .attr("width", width)
-      .attr("height", dx)
-      .attr("viewBox", [-marginLeft, -marginTop, width, dx])
-      .attr("style", "max-width: 100%; height: auto; font: 12px sans-serif; user-select: none;");
+  await loadControlIcons();
 
-  const gLink = svg.append("g")
-      .attr("fill", "none")
-      .attr("stroke", "#555")
-      .attr("stroke-opacity", 0.4)
-      .attr("stroke-width", 1.5);
+  const container = document.getElementById('graph-container');
 
-  const gNode = svg.append("g")
-      .attr("cursor", "pointer")
-      .attr("pointer-events", "all");
-
-  function update(event, source) {
-    const duration = event?.altKey ? 2500 : 250; // hold the alt key to slow down the transition
-    const nodes = root.descendants().reverse();
-    const links = root.links();
-
-    // Compute the new tree layout.
-    tree(root);
-
-    let left = root;
-    let right = root;
-    root.eachBefore(node => {
-      if (node.x < left.x) left = node;
-      if (node.x > right.x) right = node;
-    });
-
-    const height = right.x - left.x + marginTop + marginBottom;
-
-    const transition = svg.transition()
-        .duration(duration)
-        .attr("height", height)
-        .attr("viewBox", [-marginLeft, left.x - marginTop, width, height])
-        .tween("resize", window.ResizeObserver ? null : () => () => svg.dispatch("toggle"));
-
-    // Update the nodes…
-    const node = gNode.selectAll("g")
-      .data(nodes, d => d.id);
-
-    // Enter any new nodes at the parent's previous position.
-    const nodeEnter = node.enter().append("g")
-        .attr("transform", d => `translate(${source.y0},${source.x0})`)
-        .attr("fill-opacity", 0)
-        .attr("stroke-opacity", 0)
-        .on("click", (event, d) => {
-          d.children = d.children ? null : d._children;
-          update(event, d);
-        });
-
-    nodeEnter.append("circle")
-        .attr("r", 2.5)
-        .attr("fill", d => d._children ? "#555" : "#999")
-        .attr("stroke-width", 10);
-
-    nodeEnter.append("text")
-        .attr("dy", d => d.depth === 0 ? "-0.6em" : "0.31em")
-        .attr("x", d => d.depth === 0 ? 50 : (d.children ? -6 : 6))
-        .attr("text-anchor", d => d.depth === 0 ? "middle" : (d.children ? "end" : "start"))
-        .attr("stroke-linejoin", "round")
-        .attr("stroke-width", 3)
-        .attr("stroke", "white")
-        .attr("paint-order", "stroke")
-        .each(function(d) {
-              if (!d._children) {
-                  d3.select(this).append("a")
-                      .attr("href", d.data.path)
-                      .text(d.data.label);
-              } else {
-                  d3.select(this).text(d.data.label);
-              }
-          })
-
-    // Transition nodes to their new position.
-    const nodeUpdate = node.merge(nodeEnter).transition(transition)
-        .attr("transform", d => `translate(${d.y},${d.x})`)
-        .attr("fill-opacity", 1)
-        .attr("stroke-opacity", 1);
-
-    // Transition exiting nodes to the parent's new position.
-    const nodeExit = node.exit().transition(transition).remove()
-        .attr("transform", d => `translate(${source.y},${source.x})`)
-        .attr("fill-opacity", 0)
-        .attr("stroke-opacity", 0);
-
-    // Update the links…
-    const link = gLink.selectAll("path")
-      .data(links, d => d.target.id);
-
-    // Enter any new links at the parent's previous position.
-    const linkEnter = link.enter().append("path")
-        .attr("d", d => {
-          const o = {x: source.x0, y: source.y0};
-          return diagonal({source: o, target: o});
-        });
-
-    // Transition links to their new position.
-    link.merge(linkEnter).transition(transition)
-        .attr("d", diagonal);
-
-    // Transition exiting nodes to the parent's new position.
-    link.exit().transition(transition).remove()
-        .attr("d", d => {
-          const o = {x: source.x, y: source.y};
-          return diagonal({source: o, target: o});
-        });
-
-    // Stash the old positions for transition.
-    root.eachBefore(d => {
-      d.x0 = d.x;
-      d.y0 = d.y;
-    });
+  // Check if we have data
+  if (!window.toctree || !window.toctree.label) {
+    container.innerHTML = '<div style="padding: 50px; text-align: center;">No toctree data available.</div>';
+    return;
   }
 
-  // Do the first update to the initial configuration of the tree — where a number of nodes
-  // are open (arbitrarily selected as the root, plus nodes with 7 letters).
-  root.x0 = dy / 2;
-  root.y0 = 0;
-  root.descendants().forEach((d, i) => {
-    d.id = i;
-    d._children = d.children;
-  });
+  // Create a new graphology graph
+  const graph = new graphology.Graph();
 
-  update(null, root);
-}
+  // Convert hierarchical data to flat nodes and edges
+  let nodeId = 0;
+  const nodeMap = new Map();
+
+  // Depth-based colors - lighter colors for deeper levels
+  const DEPTH_COLORS = [
+    '#5A88B8',  // Level 0 - Root (blue)
+    '#24B086',  // Level 1 (green)
+    '#C3BD0C',  // Level 2 (yellow)
+    '#E96463',  // Level 3 (red)
+    '#7CC4CC',  // Level 4 (cyan)
+    '#C67194',  // Level 5+ (pink)
+  ];
+
+  const getColorForDepth = (depth) => {
+    return DEPTH_COLORS[Math.min(depth, DEPTH_COLORS.length - 1)];
+  };
+
+  // Recursively traverse the tree to add nodes and edges
+  const traverseTree = (node, parentId = null, depth = 0, x = 0, y = 0) => {
+    const currentId = String(nodeId++);
+    const color = getColorForDepth(depth);
+
+    // Calculate size based on depth (root is largest)
+    const size = depth === 0 ? 12 : Math.max(5, 10 - depth);
+
+    // Add node to graph
+    graph.addNode(currentId, {
+      label: node.label,
+      path: node.path || '',
+      depth: depth,
+      size: size,
+      color: color,
+      originalColor: color,
+      x: x,
+      y: y,
+      hasChildren: node.children && node.children.length > 0
+    });
+
+    nodeMap.set(currentId, { node, depth });
+
+    // Add edge from parent if exists
+    if (parentId !== null) {
+      graph.addEdge(parentId, currentId, {
+        type: 'arrow',
+        size: 2,
+        color: '#999'
+      });
+    }
+
+    // Recursively process children
+    if (node.children && node.children.length > 0) {
+      const childSpacing = 150;
+      const childStartX = x - (node.children.length - 1) * childSpacing / 2;
+
+      node.children.forEach((child, index) => {
+        const childX = childStartX + index * childSpacing;
+        const childY = y + 100; // Vertical spacing between levels
+        traverseTree(child, currentId, depth + 1, childX, childY);
+      });
+    }
+
+    return currentId;
+  };
+
+  // Start traversing from root
+  traverseTree(window.toctree, null, 0, 0, 0);
+
+  // Create the sigma instance
+  try {
+    const renderer = new Sigma(graph, container, {
+      renderEdgeLabels: false,
+      defaultNodeColor: '#5A88B8',
+      defaultEdgeColor: '#999',
+      labelFont: 'Arial',
+      labelSize: 12,
+      labelWeight: 'normal',
+      labelColor: { color: '#000' }
+    });
+
+    // State for tracking hover
+    let hoveredNode = null;
+    let hoveredNeighbors = new Set();
+
+    // Handle node clicks to navigate to pages
+    renderer.on('clickNode', ({ node }) => {
+      const nodeData = graph.getNodeAttributes(node);
+      if (nodeData.path) {
+        window.location.href = nodeData.path;
+      }
+    });
+
+    // Hover effect - highlight node, connected edges, and neighbor nodes
+    renderer.on('enterNode', ({ node }) => {
+      hoveredNode = node;
+      hoveredNeighbors.clear();
+
+      // Set all nodes and edges to reduced visibility first
+      graph.forEachNode((n) => {
+        if (n !== node) {
+          graph.setNodeAttribute(n, 'color', '#E2E2E2');
+          graph.setNodeAttribute(n, 'highlighted', false);
+        }
+      });
+
+      graph.forEachEdge((edge) => {
+        graph.setEdgeAttribute(edge, 'color', '#E2E2E2');
+        graph.setEdgeAttribute(edge, 'highlighted', false);
+      });
+
+      // Highlight the hovered node
+      graph.setNodeAttribute(node, 'color', '#E96463');
+      graph.setNodeAttribute(node, 'highlighted', true);
+
+      // Highlight connected edges and neighbor nodes
+      graph.forEachEdge(node, (edge, attributes, source, target) => {
+        graph.setEdgeAttribute(edge, 'color', '#5A88B8');
+        graph.setEdgeAttribute(edge, 'highlighted', true);
+
+        const neighbor = source === node ? target : source;
+        hoveredNeighbors.add(neighbor);
+        graph.setNodeAttribute(neighbor, 'color', '#24B086');
+        graph.setNodeAttribute(neighbor, 'highlighted', true);
+      });
+    });
+
+    renderer.on('leaveNode', () => {
+      hoveredNode = null;
+      hoveredNeighbors.clear();
+
+      // Reset all nodes and edges to default state
+      graph.forEachNode((node) => {
+        const nodeData = graph.getNodeAttributes(node);
+        graph.setNodeAttribute(node, 'color', nodeData.originalColor);
+        graph.setNodeAttribute(node, 'highlighted', false);
+      });
+
+      graph.forEachEdge((edge) => {
+        graph.setEdgeAttribute(edge, 'color', '#999');
+        graph.setEdgeAttribute(edge, 'highlighted', false);
+      });
+    });
+
+    // Depth filter panel functionality
+    const depthContainer = document.getElementById('depth-panel');
+    if (depthContainer) {
+      // Find max depth
+      let maxDepth = 0;
+      graph.forEachNode((node) => {
+        const nodeData = graph.getNodeAttributes(node);
+        maxDepth = Math.max(maxDepth, nodeData.depth);
+      });
+
+      // Count nodes per depth
+      const nodesPerDepth = {};
+      for (let i = 0; i <= maxDepth; i++) {
+        nodesPerDepth[i] = 0;
+      }
+      graph.forEachNode((node) => {
+        const nodeData = graph.getNodeAttributes(node);
+        nodesPerDepth[nodeData.depth]++;
+      });
+
+      // Track which depths are visible
+      const visibleDepths = {};
+      for (let i = 0; i <= maxDepth; i++) {
+        visibleDepths[i] = true;
+      }
+
+      const updateGraphByDepth = () => {
+        graph.forEachNode((node) => {
+          const nodeData = graph.getNodeAttributes(node);
+          const depth = nodeData.depth;
+
+          if (visibleDepths[depth]) {
+            graph.setNodeAttribute(node, 'hidden', false);
+          } else {
+            graph.setNodeAttribute(node, 'hidden', true);
+          }
+        });
+      };
+
+      const renderDepthPanel = () => {
+        const depths = Object.keys(nodesPerDepth).map(Number);
+        const visibleCount = depths.filter(d => visibleDepths[d]).length;
+
+        const depthLabels = [
+          'Root',
+          'Level 1',
+          'Level 2',
+          'Level 3',
+          'Level 4',
+          'Level 5+'
+        ];
+
+        depthContainer.innerHTML = `
+          <h3>
+            Tree Depth
+            ${visibleCount < depths.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${depths.length})</span>` : ''}
+          </h3>
+          <div class="panel-content">
+            <p style="color: #666; font-style: italic; font-size: 0.9em; margin-top: 0.5em;">
+              Click a level to show/hide nodes.
+            </p>
+            <ul style="list-style: none; padding: 0; margin: 0;"></ul>
+          </div>
+        `;
+
+        const list = depthContainer.querySelector('ul');
+
+        depths.forEach((depth, index) => {
+          const count = nodesPerDepth[depth] || 0;
+          if (count === 0) return; // Skip depths with no nodes
+
+          const isChecked = visibleDepths[depth];
+          const color = getColorForDepth(depth);
+          const label = depthLabels[Math.min(depth, depthLabels.length - 1)];
+
+          const li = document.createElement('li');
+          li.className = 'caption-row';
+          li.title = `${count} node${count !== 1 ? 's' : ''}`;
+          li.innerHTML = `
+            <input type="checkbox" ${isChecked ? 'checked' : ''} id="depth-${index}" />
+            <label for="depth-${index}">
+              <span class="circle" style="background-color: ${color}; border-color: ${color};"></span>
+              <div class="node-label">
+                <span>${label} (${count})</span>
+              </div>
+            </label>
+          `;
+
+          li.querySelector('input').addEventListener('change', (e) => {
+            visibleDepths[depth] = e.target.checked;
+            updateGraphByDepth();
+            renderDepthPanel();
+          });
+
+          list.appendChild(li);
+        });
+      };
+
+      renderDepthPanel();
+    }
+
+    // Search functionality
+    const searchInput = document.getElementById('search');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+
+        if (!searchTerm) {
+          // Reset all nodes when search is cleared
+          graph.forEachNode((node) => {
+            const nodeData = graph.getNodeAttributes(node);
+            graph.setNodeAttribute(node, 'color', nodeData.originalColor);
+            graph.setNodeAttribute(node, 'highlighted', false);
+          });
+          graph.forEachEdge((edge) => {
+            graph.setEdgeAttribute(edge, 'color', '#999');
+            graph.setEdgeAttribute(edge, 'highlighted', false);
+          });
+          return;
+        }
+
+        // Dim all nodes and edges first
+        graph.forEachNode((node) => {
+          graph.setNodeAttribute(node, 'color', '#E2E2E2');
+          graph.setNodeAttribute(node, 'highlighted', false);
+        });
+        graph.forEachEdge((edge) => {
+          graph.setEdgeAttribute(edge, 'color', '#E2E2E2');
+          graph.setEdgeAttribute(edge, 'highlighted', false);
+        });
+
+        // Highlight matching nodes
+        graph.forEachNode((node) => {
+          const nodeData = graph.getNodeAttributes(node);
+          if (nodeData.label.toLowerCase().includes(searchTerm) ||
+              nodeData.path.toLowerCase().includes(searchTerm)) {
+            graph.setNodeAttribute(node, 'color', '#E96463');
+            graph.setNodeAttribute(node, 'highlighted', true);
+
+            // Highlight connected edges
+            graph.forEachEdge(node, (edge) => {
+              graph.setEdgeAttribute(edge, 'color', '#5A88B8');
+              graph.setEdgeAttribute(edge, 'highlighted', true);
+            });
+          }
+        });
+      });
+    }
+
+    // Graph controls
+    document.getElementById('zoom-in')?.addEventListener('click', () => {
+      const camera = renderer.getCamera();
+      camera.animatedZoom({ duration: 200 });
+    });
+
+    document.getElementById('zoom-out')?.addEventListener('click', () => {
+      const camera = renderer.getCamera();
+      camera.animatedUnzoom({ duration: 200 });
+    });
+
+    document.getElementById('zoom-reset')?.addEventListener('click', () => {
+      const camera = renderer.getCamera();
+      camera.animatedReset({ duration: 200 });
+    });
+
+    // Toggle legend (panels) visibility
+    document.getElementById('toggle-legend')?.addEventListener('click', () => {
+      const panels = document.getElementById('panels');
+      if (panels.style.display === 'none') {
+        panels.style.display = 'block';
+      } else {
+        panels.style.display = 'none';
+      }
+    });
+
+  } catch (error) {
+    console.error('Error creating visualization:', error);
+    container.innerHTML = '<div style="padding: 50px; text-align: center;">Error creating visualization: ' + error.message + '</div>';
+  }
+});
