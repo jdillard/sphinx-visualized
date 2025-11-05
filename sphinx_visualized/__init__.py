@@ -13,7 +13,7 @@ from docutils import nodes as docutils_nodes
 from multiprocessing import Manager, Queue
 from fnmatch import fnmatch
 
-__version__ = "0.6.0"
+__version__ = "0.7.0"
 
 
 def setup(app):
