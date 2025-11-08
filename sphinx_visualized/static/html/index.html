@@ -1,53 +1,722 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>Sphinx visualized</title>
-    <style>
-      body, html {
-        height: 100%;
-        margin: 0;
-      }
-    
-      .container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 33vh;
-      }
+<head>
+  <meta charset="utf-8">
+  <title>Documentation Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f5f5f5;
+    }
 
-      #toc {
-        display: flex;
-        flex-direction: column;
-      }
+    h1 {
+      text-align: center;
+      margin: 20px 0;
+    }
 
-      #toc a {
-        display: block;
-        padding: 20px;
-        border: 1px solid black;
-        margin-bottom: 10px;
-        text-align: center;
-        text-decoration: none;
-        color: black;
-        width: 200px;
-      }
+    .nav {
+      text-align: center;
+      margin-bottom: 30px;
+    }
 
-      #toc a:hover {
-        background-color: #f0f0f0;
-      }
-    </style>
-  </head>
-  <body>
-    <h1 style="text-align: center;">Sphinx Visualized</h1>
-    <p style="text-align: center;"><a href="/">back home</a></p>
-    <div class="container">
-      <div id="toc">
-        <a href="link-graph.html">Link Graph</a>
-        <a href="toctree-graph.html">Toctree Graph</a>
-        <a href="includes-graph.html">Includes Graph</a>
-        <a href="stats.html">Statistics</a>
+    .nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #5A88B8;
+    }
+
+    .nav a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Summary sections with visual groupings */
+    .summary-section {
+      margin-bottom: 40px;
+    }
+
+    .summary-section-title {
+      font-size: 0.9em;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #666;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-top: 3px solid transparent;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .stat-card.clickable {
+      border-top-color: #5A88B8;
+    }
+
+    .stat-card .value {
+      font-size: 2.5em;
+      font-weight: bold;
+      color: #5A88B8;
+      margin: 10px 0;
+    }
+
+    .stat-card .sub-value {
+      font-size: 0.9em;
+      color: #888;
+      margin-top: 5px;
+    }
+
+    .stat-card .label {
+      font-size: 1em;
+      color: #666;
+    }
+
+    .stat-card.warning {
+      border-top-color: #f59e0b;
+    }
+
+    .stat-card.warning .value {
+      color: #f59e0b;
+    }
+
+    .stat-card.success {
+      border-top-color: #10b981;
+    }
+
+    .stat-card.success .value {
+      color: #10b981;
+    }
+
+    .stat-card.info {
+      border-top-color: #3b82f6;
+    }
+
+    .stat-card.info .value {
+      color: #3b82f6;
+    }
+
+    /* Tabs for detailed sections */
+    .tabs {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .tab-buttons {
+      display: flex;
+      border-bottom: 2px solid #e5e7eb;
+      background: #f9fafb;
+      overflow-x: auto;
+    }
+
+    .tab-button {
+      padding: 15px 25px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 0.95em;
+      font-weight: 500;
+      color: #6b7280;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .tab-button:hover {
+      background: rgba(90, 136, 184, 0.05);
+      color: #5A88B8;
+    }
+
+    .tab-button.active {
+      color: #5A88B8;
+      border-bottom-color: #5A88B8;
+      background: white;
+    }
+
+    .tab-content {
+      display: none;
+      padding: 25px;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .section {
+      background: white;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
+
+    .section h2 {
+      margin-top: 0;
+      color: #333;
+      border-bottom: 2px solid #5A88B8;
+      padding-bottom: 10px;
+      font-size: 1.4em;
+    }
+
+    .section h3 {
+      color: #555;
+      font-size: 1.1em;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    .table th {
+      background: #5A88B8;
+      color: white;
+      padding: 12px;
+      text-align: left;
+    }
+
+    .table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .table tr:hover {
+      background: #f9f9f9;
+    }
+
+    .table a {
+      color: #5A88B8;
+      text-decoration: none;
+    }
+
+    .table a:hover {
+      text-decoration: underline;
+    }
+
+    .cluster-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .cluster-item {
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 5px;
+      border-left: 4px solid #5A88B8;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .cluster-item .cluster-name {
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .cluster-item .cluster-count {
+      font-size: 1.5em;
+      color: #5A88B8;
+    }
+
+    .no-data {
+      text-align: center;
+      color: #999;
+      font-style: italic;
+      padding: 20px;
+    }
+
+    /* Graph Navigation Cards */
+    .graph-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .graph-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 30px;
+      border-radius: 12px;
+      text-decoration: none;
+      color: white;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .graph-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+    }
+
+    .graph-card:nth-child(2) {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      box-shadow: 0 4px 15px rgba(240, 147, 251, 0.4);
+    }
+
+    .graph-card:nth-child(2):hover {
+      box-shadow: 0 8px 25px rgba(240, 147, 251, 0.6);
+    }
+
+    .graph-card:nth-child(3) {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
+    }
+
+    .graph-card:nth-child(3):hover {
+      box-shadow: 0 8px 25px rgba(79, 172, 254, 0.6);
+    }
+
+    .graph-card-title {
+      font-size: 1.6em;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .graph-card-description {
+      font-size: 1em;
+      opacity: 0.9;
+      line-height: 1.5;
+    }
+  </style>
+  <script src="../js/nodes.js"></script>
+  <script src="../js/links.js"></script>
+  <script src="../js/includes-nodes.js"></script>
+  <script src="../js/includes-links.js"></script>
+</head>
+<body>
+  <h1>Documentation Dashboard</h1>
+
+  <div class="container">
+    <!-- Graph Navigation Cards -->
+    <div class="graph-cards">
+      <a href="link-graph.html" class="graph-card">
+        <div class="graph-card-title">Link Graph</div>
+        <div class="graph-card-description">Visualize page connections and references</div>
+      </a>
+      <a href="toctree-graph.html" class="graph-card">
+        <div class="graph-card-title">Toctree Graph</div>
+        <div class="graph-card-description">Explore document hierarchy structure</div>
+      </a>
+      <a href="includes-graph.html" class="graph-card">
+        <div class="graph-card-title">Includes Graph</div>
+        <div class="graph-card-description">See file inclusion relationships</div>
+      </a>
+    </div>
+    <!-- Tabbed Detailed Sections -->
+    <div class="tabs">
+      <div class="tab-buttons">
+        <button class="tab-button active" onclick="switchTab('structure')">Structure</button>
+        <button class="tab-button" onclick="switchTab('links')">Link Analysis</button>
+        <button class="tab-button" onclick="switchTab('reuse')">Content Reuse</button>
+      </div>
+
+      <!-- Structure Tab -->
+      <div id="tab-structure" class="tab-content active">
+        <!-- Summary card at top of tab -->
+        <div class="stats-grid" style="margin-bottom: 30px;">
+          <div class="stat-card">
+            <div class="value" id="total-pages-tab">-</div>
+            <div class="label">Total Pages</div>
+          </div>
+        </div>
+
+        <h3>Cluster Distribution</h3>
+        <div class="cluster-stats" id="cluster-stats"></div>
+      </div>
+
+      <!-- Link Analysis Tab -->
+      <div id="tab-links" class="tab-content">
+        <!-- Summary cards at top of tab -->
+        <div class="stats-grid" style="margin-bottom: 30px;">
+          <div class="stat-card">
+            <div class="value" id="total-links-tab">-</div>
+            <div class="label">Total Links</div>
+          </div>
+          <div class="stat-card">
+            <div class="value" id="total-references-tab">-</div>
+            <div class="label">Total References</div>
+          </div>
+        </div>
+
+        <h3>Most Referenced Pages</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Page</th>
+              <th>Inbound References</th>
+            </tr>
+          </thead>
+          <tbody id="most-referenced"></tbody>
+        </table>
+
+        <h3 style="margin-top: 30px;">Pages with Most Outbound Links</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Page</th>
+              <th>Outbound Links</th>
+            </tr>
+          </thead>
+          <tbody id="most-outbound"></tbody>
+        </table>
+
+        <div id="intersphinx-section" style="margin-top: 30px;">
+          <h3>Intersphinx Links by Project</h3>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Project</th>
+                <th>External Pages</th>
+                <th>Total References</th>
+              </tr>
+            </thead>
+            <tbody id="intersphinx-stats"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Content Reuse Tab -->
+      <div id="tab-reuse" class="tab-content">
+        <!-- Summary cards at top of tab -->
+        <div class="stats-grid" style="margin-bottom: 30px;">
+          <div class="stat-card">
+            <div class="value" id="total-include-directives-tab">-</div>
+            <div class="label">Include Directives</div>
+          </div>
+          <div class="stat-card">
+            <div class="value" id="total-included-files-tab">-</div>
+            <div class="label">Included Files</div>
+          </div>
+          <div class="stat-card">
+            <div class="value" id="docs-with-includes-tab">-</div>
+            <div class="label">Docs Using Includes</div>
+          </div>
+        </div>
+
+        <div id="most-included-section">
+          <h3>Most Included Files</h3>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>File</th>
+                <th>Times Included</th>
+              </tr>
+            </thead>
+            <tbody id="most-included-files"></tbody>
+          </table>
+        </div>
+
+        <div id="most-includes-section" style="margin-top: 30px;">
+          <h3>Documents with Most Includes</h3>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Document</th>
+                <th>Include Count</th>
+              </tr>
+            </thead>
+            <tbody id="most-includes-docs"></tbody>
+          </table>
+        </div>
       </div>
     </div>
-  </body>
-</html>
+  </div>
 
+  <script>
+    // Tab switching function
+    function switchTab(tabName) {
+      // Remove active class from all buttons and contents
+      document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+      // Add active class to selected tab
+      document.querySelector(`[onclick*="${tabName}"]`).classList.add('active');
+      document.getElementById(`tab-${tabName}`).classList.add('active');
+    }
+
+    // Calculate statistics
+    const nodes = nodes_data || [];
+    const links = links_data || [];
+
+    // Basic statistics
+    const totalPages = nodes.length;
+    const totalLinks = links.length;
+    const totalReferences = links.reduce((sum, link) => sum + (link.reference_count || 1), 0);
+
+    // Count intersphinx nodes and projects
+    const intersphinxNodes = nodes.filter(node => node.is_intersphinx);
+    const totalIntersphinx = intersphinxNodes.length;
+
+    // Calculate pages with at least one link
+    const pageStats = nodes.map(node => ({
+      id: node.id,
+      label: node.label,
+      path: node.path,
+      cluster: node.cluster,
+      inbound: 0,
+      outbound: 0
+    }));
+
+    links.forEach(link => {
+      if (pageStats[link.target]) {
+        pageStats[link.target].inbound += (link.reference_count || 1);
+      }
+      if (pageStats[link.source]) {
+        pageStats[link.source].outbound += (link.reference_count || 1);
+      }
+    });
+
+    // Update summary cards in tabs
+    document.getElementById('total-pages-tab').textContent = totalPages;
+    document.getElementById('total-links-tab').textContent = totalLinks;
+    document.getElementById('total-references-tab').textContent = totalReferences;
+
+    // Cluster distribution
+    const clusterCounts = {};
+    let hasUnclustered = false;
+
+    nodes.forEach(node => {
+      if (node.cluster) {
+        clusterCounts[node.cluster] = (clusterCounts[node.cluster] || 0) + 1;
+      } else {
+        hasUnclustered = true;
+        clusterCounts['Unclustered'] = (clusterCounts['Unclustered'] || 0) + 1;
+      }
+    });
+
+    const clusterStatsDiv = document.getElementById('cluster-stats');
+    if (Object.keys(clusterCounts).length > 0) {
+      Object.entries(clusterCounts).sort((a, b) => b[1] - a[1]).forEach(([cluster, count]) => {
+        const div = document.createElement('div');
+        div.className = 'cluster-item';
+        div.innerHTML = `
+          <div class="cluster-name">${cluster}</div>
+          <div class="cluster-count">${count} pages</div>
+        `;
+        clusterStatsDiv.appendChild(div);
+      });
+    } else {
+      clusterStatsDiv.innerHTML = '<div class="no-data">No clusters configured</div>';
+    }
+
+    // Intersphinx statistics by project
+    const intersphinxByProject = {};
+
+    // Count pages by project
+    intersphinxNodes.forEach(node => {
+      // Extract project name from cluster (format: "project_name (external)")
+      let projectName = node.cluster;
+      if (projectName && projectName.endsWith(' (external)')) {
+        projectName = projectName.slice(0, -11); // Remove " (external)" suffix
+      }
+
+      if (!intersphinxByProject[projectName]) {
+        intersphinxByProject[projectName] = {
+          pageCount: 0,
+          referenceCount: 0
+        };
+      }
+      intersphinxByProject[projectName].pageCount++;
+    });
+
+    // Count references to intersphinx pages
+    links.forEach(link => {
+      const targetNode = nodes[link.target];
+      if (targetNode && targetNode.is_intersphinx) {
+        let projectName = targetNode.cluster;
+        if (projectName && projectName.endsWith(' (external)')) {
+          projectName = projectName.slice(0, -11);
+        }
+        if (intersphinxByProject[projectName]) {
+          intersphinxByProject[projectName].referenceCount += (link.reference_count || 1);
+        }
+      }
+    });
+
+    const intersphinxStatsTbody = document.getElementById('intersphinx-stats');
+    const intersphinxSection = document.getElementById('intersphinx-section');
+
+    if (Object.keys(intersphinxByProject).length > 0) {
+      Object.entries(intersphinxByProject)
+        .sort((a, b) => b[1].referenceCount - a[1].referenceCount)
+        .forEach(([project, stats]) => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${project}</td>
+            <td>${stats.pageCount}</td>
+            <td>${stats.referenceCount}</td>
+          `;
+          intersphinxStatsTbody.appendChild(row);
+        });
+    } else {
+      intersphinxSection.style.display = 'none';
+    }
+
+    // Most referenced pages (top 10)
+    const mostReferenced = [...pageStats]
+      .filter(page => page.inbound > 0)
+      .sort((a, b) => b.inbound - a.inbound)
+      .slice(0, 10);
+
+    const mostReferencedTbody = document.getElementById('most-referenced');
+    if (mostReferenced.length > 0) {
+      mostReferenced.forEach(page => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><a href="${page.path}" target="_blank">${page.label}</a></td>
+          <td>${page.inbound}</td>
+        `;
+        mostReferencedTbody.appendChild(row);
+      });
+    } else {
+      mostReferencedTbody.innerHTML = '<tr><td colspan="2" class="no-data">No referenced pages</td></tr>';
+    }
+
+    // Pages with most outbound links (top 10)
+    const mostOutbound = [...pageStats]
+      .filter(page => page.outbound > 0)
+      .sort((a, b) => b.outbound - a.outbound)
+      .slice(0, 10);
+
+    const mostOutboundTbody = document.getElementById('most-outbound');
+    if (mostOutbound.length > 0) {
+      mostOutbound.forEach(page => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><a href="${page.path}" target="_blank">${page.label}</a></td>
+          <td>${page.outbound}</td>
+        `;
+        mostOutboundTbody.appendChild(row);
+      });
+    } else {
+      mostOutboundTbody.innerHTML = '<tr><td colspan="2" class="no-data">No pages with outbound links</td></tr>';
+    }
+
+    // ========== Include Statistics ==========
+    const includesNodes = includes_nodes_data || [];
+    const includesLinks = includes_links_data || [];
+
+    // Calculate basic include statistics
+    const includedFiles = includesNodes.filter(node => node.type === 'include' || node.type === 'literalinclude');
+    const totalIncludedFiles = includedFiles.length;
+    const totalIncludeDirectives = includesLinks.reduce((sum, link) => sum + (link.count || 1), 0);
+
+    // Count unique documents that use includes
+    const docsUsingIncludes = new Set(includesLinks.map(link => link.source)).size;
+
+    // Update summary cards in the Content Reuse tab
+    document.getElementById('total-included-files-tab').textContent = totalIncludedFiles;
+    document.getElementById('total-include-directives-tab').textContent = totalIncludeDirectives;
+    document.getElementById('docs-with-includes-tab').textContent = docsUsingIncludes;
+
+    // Most included files
+    const includeStats = {};
+
+    includesLinks.forEach(link => {
+      const targetNode = includesNodes[link.target];
+      if (targetNode && (targetNode.type === 'include' || targetNode.type === 'literalinclude')) {
+        if (!includeStats[link.target]) {
+          includeStats[link.target] = {
+            label: targetNode.label,
+            path: targetNode.path,
+            count: 0
+          };
+        }
+        includeStats[link.target].count += (link.count || 1);
+      }
+    });
+
+    const mostIncludedFiles = Object.values(includeStats)
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 10);
+
+    const mostIncludedTbody = document.getElementById('most-included-files');
+    const mostIncludedSection = document.getElementById('most-included-section');
+
+    if (mostIncludedFiles.length > 0) {
+      mostIncludedFiles.forEach(file => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${file.label}</td>
+          <td>${file.count}</td>
+        `;
+        mostIncludedTbody.appendChild(row);
+      });
+    } else {
+      mostIncludedSection.style.display = 'none';
+    }
+
+    // Documents with most includes
+    const docIncludeStats = {};
+
+    includesLinks.forEach(link => {
+      const sourceNode = includesNodes[link.source];
+      if (sourceNode) {
+        if (!docIncludeStats[link.source]) {
+          docIncludeStats[link.source] = {
+            label: sourceNode.label,
+            path: sourceNode.path,
+            count: 0
+          };
+        }
+        docIncludeStats[link.source].count += (link.count || 1);
+      }
+    });
+
+    const mostIncludesDocs = Object.values(docIncludeStats)
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 10);
+
+    const mostIncludesDocsTbody = document.getElementById('most-includes-docs');
+    const mostIncludesSection = document.getElementById('most-includes-section');
+
+    if (mostIncludesDocs.length > 0) {
+      mostIncludesDocs.forEach(doc => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><a href="${doc.path}" target="_blank">${doc.label}</a></td>
+          <td>${doc.count}</td>
+        `;
+        mostIncludesDocsTbody.appendChild(row);
+      });
+    } else {
+      mostIncludesSection.style.display = 'none';
+    }
+  </script>
+</body>
+</html>
