@@ -285,8 +285,8 @@ window.addEventListener('DOMContentLoaded', async () => {
           <div class="panel-content" id="category-panel-content">
             <p style="color: #666; font-style: italic; font-size: 0.9em; margin-top: 0.5em;">Click a category to show/hide related pages from the network.</p>
             <p class="cluster-buttons">
-              <button id="check-all-categories-btn" class="cluster-btn">☑ Check all</button>
-              <button id="uncheck-all-categories-btn" class="cluster-btn">☐ Uncheck all</button>
+              <button id="check-all-categories-btn" class="cluster-btn">Show All</button>
+              <button id="uncheck-all-categories-btn" class="cluster-btn">Hide All</button>
             </p>
             <ul style="list-style: none; padding: 0; margin: 0;"></ul>
           </div>
@@ -418,8 +418,8 @@ window.addEventListener('DOMContentLoaded', async () => {
             <div class="panel-content" id="cluster-panel-content">
               <p style="color: #666; font-style: italic; font-size: 0.9em; margin-top: 0.5em;">Click a cluster to show/hide related pages from the network.</p>
               <p class="cluster-buttons">
-                <button id="check-all-btn" class="cluster-btn">☑ Check all</button>
-                <button id="uncheck-all-btn" class="cluster-btn">☐ Uncheck all</button>
+                <button id="check-all-btn" class="cluster-btn">Show All</button>
+                <button id="uncheck-all-btn" class="cluster-btn">Hide All</button>
               </p>
               <ul style="list-style: none; padding: 0; margin: 0;"></ul>
             </div>
