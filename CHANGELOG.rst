@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.8.0
+-----
+
+- Add Glossary stats
+
 0.7.0
 -----
 
