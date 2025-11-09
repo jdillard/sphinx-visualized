@@ -125,6 +125,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         label: edge.label,
         strength: edge.properties.strength,
         reference_count: edge.properties.reference_count,
+        linkTypes: edge.properties.types || [edge.label],  // Store all link types for this edge
         size: 1,
         type: 'arrow'
       });
@@ -261,6 +262,11 @@ window.addEventListener('DOMContentLoaded', async () => {
             graph.setNodeAttribute(node, 'hidden', true);
           }
         });
+
+        // Update edge visibility based on link types after node visibility changes
+        if (typeof updateEdgeVisibilityByLinkType === 'function') {
+          updateEdgeVisibilityByLinkType();
+        }
       };
 
       const renderCategoryPanel = async () => {
@@ -280,9 +286,9 @@ window.addEventListener('DOMContentLoaded', async () => {
               Categories
               ${visibleCount < categories.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${categories.length})</span>` : ''}
             </h3>
-            <span class="collapse-icon">${chevronSvg}</span>
+            <span class="collapse-icon collapsed">${chevronSvg}</span>
           </div>
-          <div class="panel-content" id="category-panel-content">
+          <div class="panel-content collapsed" id="category-panel-content">
             <p style="color: #666; font-style: italic; font-size: 0.9em; margin-top: 0.5em;">Click a category to show/hide related pages from the network.</p>
             <p class="cluster-buttons">
               <button id="check-all-categories-btn" class="cluster-btn">Show All</button>
@@ -398,6 +404,11 @@ window.addEventListener('DOMContentLoaded', async () => {
               graph.setNodeAttribute(node, 'hidden', true);
             }
           });
+
+          // Update edge visibility based on link types after node visibility changes
+          if (typeof updateEdgeVisibilityByLinkType === 'function') {
+            updateEdgeVisibilityByLinkType();
+          }
         };
 
         const renderLegend = async () => {
@@ -413,9 +424,9 @@ window.addEventListener('DOMContentLoaded', async () => {
                 Clusters
                 ${visibleCount < clusterConfig.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${clusterConfig.length})</span>` : ''}
               </h3>
-              <span class="collapse-icon">${chevronSvg}</span>
+              <span class="collapse-icon collapsed">${chevronSvg}</span>
             </div>
-            <div class="panel-content" id="cluster-panel-content">
+            <div class="panel-content collapsed" id="cluster-panel-content">
               <p style="color: #666; font-style: italic; font-size: 0.9em; margin-top: 0.5em;">Click a cluster to show/hide related pages from the network.</p>
               <p class="cluster-buttons">
                 <button id="check-all-btn" class="cluster-btn">Show All</button>
@@ -494,6 +505,217 @@ window.addEventListener('DOMContentLoaded', async () => {
     } else if (legendContainer) {
       // Hide the cluster panel if no clusters configured
       legendContainer.style.display = 'none';
+    }
+
+    // Link Types panel functionality (for filtering by link type)
+    // Define link type configurations with colors
+    const LINK_TYPE_CONFIG = {
+      'ref': {
+        label: 'Internal (ref/doc)',
+        icon: '../svg/document.svg',
+        color: '#3b82f6'  // Blue - primary documentation color
+      },
+      'term': {
+        label: 'Term',
+        icon: '../svg/document.svg',
+        color: '#22c55e'  // Green - glossary/definition related
+      },
+      'intersphinx': {
+        label: 'External (intersphinx)',
+        icon: '../svg/external.svg',
+        color: '#f59e0b'  // Amber/orange - external/warning color
+      }
+    };
+
+    // Track which link types are visible (all visible by default)
+    const visibleLinkTypes = {
+      'ref': true,
+      'term': true,
+      'intersphinx': true
+    };
+
+    // Track which link type is actively being colored (null or type name)
+    let activeColoringType = null;
+
+    // Shared function to update edge visibility and coloring based on link types
+    const updateEdgeVisibilityByLinkType = () => {
+      const defaultEdgeColor = '#ccc';
+      const mutedEdgeColor = '#e5e5e5';
+
+      graph.forEachEdge((edge) => {
+        const edgeData = graph.getEdgeAttributes(edge);
+        const linkTypes = edgeData.linkTypes || [];
+
+        // Edge is visible if at least one of its link types is checked
+        const hasVisibleType = linkTypes.some(type => visibleLinkTypes[type]);
+
+        // Also check if both connected nodes are visible
+        const [source, target] = graph.extremities(edge);
+        const sourceHidden = graph.getNodeAttribute(source, 'hidden');
+        const targetHidden = graph.getNodeAttribute(target, 'hidden');
+
+        // Hide edge if no visible types OR if either node is hidden
+        if (!hasVisibleType || sourceHidden || targetHidden) {
+          graph.setEdgeAttribute(edge, 'hidden', true);
+        } else {
+          graph.setEdgeAttribute(edge, 'hidden', false);
+
+          // Handle edge coloring when a type is active
+          if (activeColoringType) {
+            // Check if this edge has the active type
+            if (linkTypes.includes(activeColoringType)) {
+              // Color this edge with the type's color
+              graph.setEdgeAttribute(edge, 'color', LINK_TYPE_CONFIG[activeColoringType].color);
+            } else {
+              // Mute edges that don't have the active type
+              graph.setEdgeAttribute(edge, 'color', mutedEdgeColor);
+            }
+          } else {
+            // No active coloring - return to default color
+            graph.setEdgeAttribute(edge, 'color', defaultEdgeColor);
+          }
+        }
+      });
+    };
+
+    const linkTypesContainer = document.getElementById('link-types-panel');
+    if (linkTypesContainer) {
+      // Calculate edges per link type
+      const edgesPerLinkType = {};
+      Object.keys(LINK_TYPE_CONFIG).forEach(type => {
+        edgesPerLinkType[type] = 0;
+      });
+
+      graph.forEachEdge((edge) => {
+        const edgeData = graph.getEdgeAttributes(edge);
+        const linkTypes = edgeData.linkTypes || [];
+        linkTypes.forEach(type => {
+          if (edgesPerLinkType[type] !== undefined) {
+            edgesPerLinkType[type]++;
+          }
+        });
+      });
+
+      const renderLinkTypesPanel = async () => {
+        const linkTypes = Object.keys(LINK_TYPE_CONFIG);
+        const visibleCount = linkTypes.filter(t => visibleLinkTypes[t]).length;
+
+        // Calculate max edges for progress bar scaling
+        const maxEdgesPerType = Math.max(...linkTypes.map(t => edgesPerLinkType[t] || 0));
+
+        // Load chevron SVG
+        const response = await fetch('../svg/chevron-down.svg');
+        const chevronSvg = await response.text();
+
+        linkTypesContainer.innerHTML = `
+          <div class="panel-header" id="link-types-panel-header">
+            <h3 style="margin: 0; font-size: 1.3em;">
+              Link Types
+              ${visibleCount < linkTypes.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${linkTypes.length})</span>` : ''}
+            </h3>
+            <span class="collapse-icon collapsed">${chevronSvg}</span>
+          </div>
+          <div class="panel-content collapsed" id="link-types-panel-content">
+            <p style="color: #666; font-style: italic; font-size: 0.9em; margin-top: 0.5em;">Click a link type to show/hide related links from the network.</p>
+            <p class="cluster-buttons">
+              <button id="check-all-link-types-btn" class="cluster-btn">Show All</button>
+              <button id="uncheck-all-link-types-btn" class="cluster-btn">Hide All</button>
+            </p>
+            <ul style="list-style: none; padding: 0; margin: 0;"></ul>
+          </div>
+        `;
+
+        const list = linkTypesContainer.querySelector('ul');
+
+        // Load and render link types with colored circles
+        for (let index = 0; index < linkTypes.length; index++) {
+          const linkType = linkTypes[index];
+          const config = LINK_TYPE_CONFIG[linkType];
+          const count = edgesPerLinkType[linkType] || 0;
+          const isChecked = visibleLinkTypes[linkType];
+          const barWidth = maxEdgesPerType > 0 ? (100 * count) / maxEdgesPerType : 0;
+
+          const li = document.createElement('li');
+          const isActive = activeColoringType === linkType;
+          li.className = 'caption-row' + (isActive ? ' active-coloring' : '');
+          li.title = `${count} edge${count !== 1 ? 's' : ''}. Click to highlight ${config.label.toLowerCase()} edges.`;
+
+          // Set the active color as a CSS custom property
+          if (isActive) {
+            li.style.setProperty('--active-color', config.color);
+          }
+
+          li.innerHTML = `
+            <input type="checkbox" ${isChecked ? 'checked' : ''} id="link-type-${index}" />
+            <label>
+              <span class="circle" style="background-color: ${config.color}; border-color: ${config.color};"></span>
+              <div class="node-label">
+                <span>${config.label}</span>
+                <div class="bar" style="width: ${barWidth}%;"></div>
+              </div>
+            </label>
+          `;
+
+          // Checkbox handler - for show/hide
+          li.querySelector('input').addEventListener('change', (e) => {
+            visibleLinkTypes[linkType] = e.target.checked;
+            updateEdgeVisibilityByLinkType();
+            renderLinkTypesPanel();
+          });
+
+          // Label click handler - for edge coloring
+          const label = li.querySelector('label');
+          label.addEventListener('click', (e) => {
+            // Don't trigger if clicking the checkbox itself
+            if (e.target.tagName === 'INPUT') {
+              return;
+            }
+
+            e.preventDefault();
+
+            // Toggle coloring: if this type is active, deactivate; otherwise activate it
+            if (activeColoringType === linkType) {
+              activeColoringType = null;
+            } else {
+              activeColoringType = linkType;
+            }
+
+            updateEdgeVisibilityByLinkType();
+            renderLinkTypesPanel();
+          });
+
+          list.appendChild(li);
+        }
+
+        // Add button handlers
+        document.getElementById('check-all-link-types-btn').addEventListener('click', () => {
+          linkTypes.forEach(type => {
+            visibleLinkTypes[type] = true;
+          });
+          updateEdgeVisibilityByLinkType();
+          renderLinkTypesPanel();
+        });
+
+        document.getElementById('uncheck-all-link-types-btn').addEventListener('click', () => {
+          linkTypes.forEach(type => {
+            visibleLinkTypes[type] = false;
+          });
+          updateEdgeVisibilityByLinkType();
+          renderLinkTypesPanel();
+        });
+
+        // Add collapse/expand functionality
+        const panelHeader = document.getElementById('link-types-panel-header');
+        const panelContent = document.getElementById('link-types-panel-content');
+        const collapseIcon = panelHeader.querySelector('.collapse-icon');
+
+        panelHeader.addEventListener('click', () => {
+          panelContent.classList.toggle('collapsed');
+          collapseIcon.classList.toggle('collapsed');
+        });
+      };
+
+      renderLinkTypesPanel();
     }
 
     // Search functionality

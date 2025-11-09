@@ -362,7 +362,8 @@ def create_graphson(nodes, links, page_list, clusters_config):
             "outV": link["source"],
             "properties": {
                 "strength": link.get("strength", 1),
-                "reference_count": link.get("reference_count", 1)
+                "reference_count": link.get("reference_count", 1),
+                "types": link.get("types", [link.get("type", "ref")])  # Store all link types
             }
         }
         edges.append(edge)
@@ -500,19 +501,54 @@ def create_json(app, exception):
             })
 
     # create object that links references between pages
-    links = [] # a list of links between pages
-    references_counts = Counter(reference_list)
-    for ref, count in references_counts.items():
-        # Skip term references as they include fragments and will be processed separately
-        if ref[2] == "term":
+    # Group references by (source, target) pair to aggregate link types
+    edge_data = {}  # {(source_idx, target_idx): {"types": set(), "count": int}}
+
+    for ref, count in Counter(reference_list).items():
+        source_page, target_page, ref_type = ref
+
+        # Strip fragments from URLs for internal pages only
+        # (e.g., "/glossary.html#term-foo" -> "/glossary.html")
+        # Don't strip from external pages which use "|||" separator
+        if not source_page.startswith("external"):
+            source_page_clean = source_page.split('#')[0]
+        else:
+            source_page_clean = source_page
+
+        if not target_page.startswith("external"):
+            target_page_clean = target_page.split('#')[0]
+        else:
+            target_page_clean = target_page
+
+        # Skip if either page is not in the page list
+        if source_page_clean not in page_list or target_page_clean not in page_list:
             continue
 
+        # Create edge key
+        source_idx = page_list.index(source_page_clean)
+        target_idx = page_list.index(target_page_clean)
+        edge_key = (source_idx, target_idx)
+
+        # Initialize or update edge data
+        if edge_key not in edge_data:
+            edge_data[edge_key] = {"types": set(), "count": 0}
+
+        edge_data[edge_key]["types"].add(ref_type)
+        edge_data[edge_key]["count"] += count
+
+    # Convert to links list
+    links = []
+    for (source_idx, target_idx), data in edge_data.items():
+        # Convert set to sorted list for consistent output
+        link_types = sorted(list(data["types"]))
+
         links.append({
-            "target": page_list.index(ref[1]),
-            "source": page_list.index(ref[0]),
+            "target": target_idx,
+            "source": source_idx,
             "strength": 1,
-            "reference_count": count,
-            "type": ref[2],
+            "reference_count": data["count"],
+            "type": link_types[0] if len(link_types) == 1 else "ref",  # Keep first type for backward compatibility
+            "types": link_types,  # New field: all link types for this edge
         })
 
     filename = Path(app.outdir) / "_static" / "sphinx-visualized" / "js" / "links.js"
