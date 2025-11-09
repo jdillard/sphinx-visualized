@@ -125,6 +125,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         label: edge.label,
         strength: edge.properties.strength,
         reference_count: edge.properties.reference_count,
+        linkTypes: edge.properties.types || [edge.label],  // Store all link types for this edge
         size: 1,
         type: 'arrow'
       });
@@ -261,6 +262,11 @@ window.addEventListener('DOMContentLoaded', async () => {
             graph.setNodeAttribute(node, 'hidden', true);
           }
         });
+
+        // Update edge visibility based on link types after node visibility changes
+        if (typeof updateEdgeVisibilityByLinkType === 'function') {
+          updateEdgeVisibilityByLinkType();
+        }
       };
 
       const renderCategoryPanel = async () => {
@@ -398,6 +404,11 @@ window.addEventListener('DOMContentLoaded', async () => {
               graph.setNodeAttribute(node, 'hidden', true);
             }
           });
+
+          // Update edge visibility based on link types after node visibility changes
+          if (typeof updateEdgeVisibilityByLinkType === 'function') {
+            updateEdgeVisibilityByLinkType();
+          }
         };
 
         const renderLegend = async () => {
@@ -494,6 +505,173 @@ window.addEventListener('DOMContentLoaded', async () => {
     } else if (legendContainer) {
       // Hide the cluster panel if no clusters configured
       legendContainer.style.display = 'none';
+    }
+
+    // Link Types panel functionality (for filtering by link type)
+    // Define link type configurations
+    const LINK_TYPE_CONFIG = {
+      'ref': {
+        label: 'Internal (ref/doc)',
+        icon: '../svg/document.svg'
+      },
+      'term': {
+        label: 'Term',
+        icon: '../svg/document.svg'
+      },
+      'intersphinx': {
+        label: 'External (intersphinx)',
+        icon: '../svg/external.svg'
+      }
+    };
+
+    // Track which link types are visible (all visible by default)
+    const visibleLinkTypes = {
+      'ref': true,
+      'term': true,
+      'intersphinx': true
+    };
+
+    // Shared function to update edge visibility based on link types
+    const updateEdgeVisibilityByLinkType = () => {
+      graph.forEachEdge((edge) => {
+        const edgeData = graph.getEdgeAttributes(edge);
+        const linkTypes = edgeData.linkTypes || [];
+
+        // Edge is visible if at least one of its link types is checked
+        const hasVisibleType = linkTypes.some(type => visibleLinkTypes[type]);
+
+        // Also check if both connected nodes are visible
+        const [source, target] = graph.extremities(edge);
+        const sourceHidden = graph.getNodeAttribute(source, 'hidden');
+        const targetHidden = graph.getNodeAttribute(target, 'hidden');
+
+        // Hide edge if no visible types OR if either node is hidden
+        if (!hasVisibleType || sourceHidden || targetHidden) {
+          graph.setEdgeAttribute(edge, 'hidden', true);
+        } else {
+          graph.setEdgeAttribute(edge, 'hidden', false);
+        }
+      });
+    };
+
+    const linkTypesContainer = document.getElementById('link-types-panel');
+    if (linkTypesContainer) {
+      // Calculate edges per link type
+      const edgesPerLinkType = {};
+      Object.keys(LINK_TYPE_CONFIG).forEach(type => {
+        edgesPerLinkType[type] = 0;
+      });
+
+      graph.forEachEdge((edge) => {
+        const edgeData = graph.getEdgeAttributes(edge);
+        const linkTypes = edgeData.linkTypes || [];
+        linkTypes.forEach(type => {
+          if (edgesPerLinkType[type] !== undefined) {
+            edgesPerLinkType[type]++;
+          }
+        });
+      });
+
+      const renderLinkTypesPanel = async () => {
+        const linkTypes = Object.keys(LINK_TYPE_CONFIG);
+        const visibleCount = linkTypes.filter(t => visibleLinkTypes[t]).length;
+
+        // Calculate max edges for progress bar scaling
+        const maxEdgesPerType = Math.max(...linkTypes.map(t => edgesPerLinkType[t] || 0));
+
+        // Load chevron SVG
+        const response = await fetch('../svg/chevron-down.svg');
+        const chevronSvg = await response.text();
+
+        linkTypesContainer.innerHTML = `
+          <div class="panel-header" id="link-types-panel-header">
+            <h3 style="margin: 0; font-size: 1.3em;">
+              Link Types
+              ${visibleCount < linkTypes.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${linkTypes.length})</span>` : ''}
+            </h3>
+            <span class="collapse-icon">${chevronSvg}</span>
+          </div>
+          <div class="panel-content" id="link-types-panel-content">
+            <p style="color: #666; font-style: italic; font-size: 0.9em; margin-top: 0.5em;">Click a link type to show/hide related edges from the network.</p>
+            <p class="cluster-buttons">
+              <button id="check-all-link-types-btn" class="cluster-btn">Show All</button>
+              <button id="uncheck-all-link-types-btn" class="cluster-btn">Hide All</button>
+            </p>
+            <ul style="list-style: none; padding: 0; margin: 0;"></ul>
+          </div>
+        `;
+
+        const list = linkTypesContainer.querySelector('ul');
+
+        // Load and render link types with icons
+        for (let index = 0; index < linkTypes.length; index++) {
+          const linkType = linkTypes[index];
+          const config = LINK_TYPE_CONFIG[linkType];
+          const count = edgesPerLinkType[linkType] || 0;
+          const isChecked = visibleLinkTypes[linkType];
+          const barWidth = maxEdgesPerType > 0 ? (100 * count) / maxEdgesPerType : 0;
+
+          // Fetch SVG content
+          let svgContent = '';
+          try {
+            const response = await fetch(config.icon);
+            svgContent = await response.text();
+          } catch (error) {
+            console.error(`Error loading icon for ${linkType}:`, error);
+          }
+
+          const li = document.createElement('li');
+          li.className = 'caption-row';
+          li.title = `${count} edge${count !== 1 ? 's' : ''}`;
+          li.innerHTML = `
+            <input type="checkbox" ${isChecked ? 'checked' : ''} id="link-type-${index}" />
+            <label for="link-type-${index}">
+              <span class="icon-container">${svgContent}</span>
+              <div class="node-label">
+                <span>${config.label}</span>
+                <div class="bar" style="width: ${barWidth}%;"></div>
+              </div>
+            </label>
+          `;
+
+          li.querySelector('input').addEventListener('change', (e) => {
+            visibleLinkTypes[linkType] = e.target.checked;
+            updateEdgeVisibilityByLinkType();
+            renderLinkTypesPanel();
+          });
+
+          list.appendChild(li);
+        }
+
+        // Add button handlers
+        document.getElementById('check-all-link-types-btn').addEventListener('click', () => {
+          linkTypes.forEach(type => {
+            visibleLinkTypes[type] = true;
+          });
+          updateEdgeVisibilityByLinkType();
+          renderLinkTypesPanel();
+        });
+
+        document.getElementById('uncheck-all-link-types-btn').addEventListener('click', () => {
+          linkTypes.forEach(type => {
+            visibleLinkTypes[type] = false;
+          });
+          updateEdgeVisibilityByLinkType();
+          renderLinkTypesPanel();
+        });
+
+        // Add collapse/expand functionality
+        const panelHeader = document.getElementById('link-types-panel-header');
+        const panelContent = document.getElementById('link-types-panel-content');
+        const collapseIcon = panelHeader.querySelector('.collapse-icon');
+
+        panelHeader.addEventListener('click', () => {
+          panelContent.classList.toggle('collapsed');
+          collapseIcon.classList.toggle('collapsed');
+        });
+      };
+
+      renderLinkTypesPanel();
     }
 
     // Search functionality
