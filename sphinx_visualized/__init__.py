@@ -507,12 +507,20 @@ def create_json(app, exception):
     for ref, count in Counter(reference_list).items():
         source_page, target_page, ref_type = ref
 
-        # Strip fragments from URLs (e.g., "/glossary.html#term-foo" -> "/glossary.html")
-        # This is needed for term references which include fragment identifiers
-        source_page_clean = source_page.split('#')[0]
-        target_page_clean = target_page.split('#')[0]
+        # Strip fragments from URLs for internal pages only
+        # (e.g., "/glossary.html#term-foo" -> "/glossary.html")
+        # Don't strip from external pages which use "|||" separator
+        if not source_page.startswith("external"):
+            source_page_clean = source_page.split('#')[0]
+        else:
+            source_page_clean = source_page
 
-        # Skip if either page is not in the page list (could be external or fragment-only references)
+        if not target_page.startswith("external"):
+            target_page_clean = target_page.split('#')[0]
+        else:
+            target_page_clean = target_page
+
+        # Skip if either page is not in the page list
         if source_page_clean not in page_list or target_page_clean not in page_list:
             continue
 
