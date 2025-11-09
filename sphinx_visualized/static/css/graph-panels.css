@@ -1,4 +1,4 @@
-/* Shared styles for graph visualization panels */
+/* Shared styles for graph visualization panels - shadcn/ui inspired */
 
 /* Panel header and collapse functionality */
 .panel-header {
@@ -16,9 +16,10 @@
 
 .panel-header h3 {
   margin: 0;
-  font-size: 1.125rem;
+  font-size: 0.875rem;
   font-weight: 600;
-  color: #1f2937;
+  color: hsl(222.2 84% 4.9%);
+  letter-spacing: -0.025em;
 }
 
 .collapse-icon {
@@ -60,18 +61,20 @@
 
 .cluster-btn {
   flex: 1;
-  padding: 0.5rem 1rem;
-  background: white;
-  border: 1px solid #d1d5db;
+  padding: 0.5rem 0.75rem;
+  background: hsl(0 0% 100%);
+  border: 1px solid hsl(214.3 31.8% 91.4%);
   border-radius: 0.375rem;
   cursor: pointer;
   font-size: 0.875rem;
-  transition: all 0.2s ease;
+  font-weight: 500;
+  color: hsl(222.2 47.4% 11.2%);
+  transition: all 0.15s ease;
 }
 
 .cluster-btn:hover {
-  background: #f3f4f6;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background: hsl(210 40% 96.1%);
+  color: hsl(222.2 47.4% 11.2%);
 }
 
 /* Caption rows for categories/clusters */
@@ -84,7 +87,8 @@
 }
 
 .caption-row input[type="checkbox"]:not(:checked) + label {
-  color: #9ca3af;
+  color: hsl(215.4 16.3% 46.9%);
+  opacity: 0.7;
 }
 
 .caption-row input[type="checkbox"]:not(:checked) + label .circle {
@@ -125,25 +129,25 @@
   height: 1.5rem;
   margin-right: 0.5rem;
   margin-top: 0;
-  background-color: #6b7280;
+  background-color: hsl(222.2 47.4% 11.2%);
   border-radius: 50%;
   padding: 0.25rem;
   box-sizing: border-box;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
 .caption-row label .icon-container svg {
   width: 100%;
   height: 100%;
-  stroke: white;
+  stroke: hsl(210 40% 98%);
 }
 
 .caption-row input[type="checkbox"]:not(:checked) + label .icon-container {
-  background-color: #e5e7eb;
+  background-color: hsl(210 40% 96.1%);
 }
 
 .caption-row input[type="checkbox"]:not(:checked) + label .icon-container svg {
-  stroke: #9ca3af;
+  stroke: hsl(215.4 16.3% 46.9%);
 }
 
 .caption-row label .node-label {
@@ -156,12 +160,13 @@
   margin-bottom: 0.25rem;
   font-size: 0.875rem;
   font-weight: 500;
+  color: hsl(222.2 84% 4.9%);
 }
 
 .caption-row label .bar {
   position: relative;
-  background: #e5e7eb;
-  height: 3px;
+  background: hsl(210 40% 96.1%);
+  height: 2px;
   width: 100%;
   border-radius: 2px;
   overflow: hidden;
@@ -172,6 +177,6 @@
   top: 0;
   left: 0;
   height: 100%;
-  background: #3b82f6;
+  background: hsl(222.2 47.4% 11.2%);
   transition: all ease-out 300ms;
 }

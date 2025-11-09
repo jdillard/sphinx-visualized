@@ -4,16 +4,21 @@
   <meta charset="utf-8">
   <title>Documentation Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../js/tailwind-config.js"></script>
   <style>
-    /* Custom styles for graph cards with gradients */
-    .graph-card-1 {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    /* shadcn-style graph cards */
+    .graph-card {
+      position: relative;
+      overflow: hidden;
     }
-    .graph-card-2 {
-      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    }
-    .graph-card-3 {
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    .graph-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, hsl(222.2 47.4% 11.2%), hsl(215 20% 65%));
     }
   </style>
   <script src="../js/nodes.js"></script>
@@ -21,102 +26,125 @@
   <script src="../js/includes-nodes.js"></script>
   <script src="../js/includes-links.js"></script>
 </head>
-<body class="bg-gray-50 min-h-screen">
-  <div class="bg-white shadow-sm border-b border-gray-200">
-    <h1 class="text-3xl font-bold text-gray-900 text-center py-6">Documentation Dashboard</h1>
+<body class="bg-secondary min-h-screen">
+  <div class="border-b border-border bg-card">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-3xl font-semibold tracking-tight text-foreground py-6">Documentation Dashboard</h1>
+    </div>
   </div>
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <!-- Graph Navigation Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-      <a href="link-graph.html" class="graph-card-1 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 p-8 text-center text-white no-underline">
-        <div class="text-2xl font-semibold mb-3">Link Graph</div>
-        <div class="text-white/90 text-base">Visualize page connections and references</div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+      <a href="link-graph.html" class="graph-card group block bg-card border border-border rounded-lg p-6 hover:shadow-md transition-all duration-200 no-underline">
+        <div class="flex items-start justify-between mb-4 pt-2">
+          <h3 class="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">Link Graph</h3>
+          <svg class="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </div>
+        <p class="text-sm text-muted-foreground leading-relaxed">Visualize page connections and references</p>
       </a>
-      <a href="toctree-graph.html" class="graph-card-2 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 p-8 text-center text-white no-underline">
-        <div class="text-2xl font-semibold mb-3">Toctree Graph</div>
-        <div class="text-white/90 text-base">Explore document hierarchy structure</div>
+      <a href="toctree-graph.html" class="graph-card group block bg-card border border-border rounded-lg p-6 hover:shadow-md transition-all duration-200 no-underline">
+        <div class="flex items-start justify-between mb-4 pt-2">
+          <h3 class="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">Toctree Graph</h3>
+          <svg class="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </div>
+        <p class="text-sm text-muted-foreground leading-relaxed">Explore document hierarchy structure</p>
       </a>
-      <a href="includes-graph.html" class="graph-card-3 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 p-8 text-center text-white no-underline">
-        <div class="text-2xl font-semibold mb-3">Includes Graph</div>
-        <div class="text-white/90 text-base">See file inclusion relationships</div>
+      <a href="includes-graph.html" class="graph-card group block bg-card border border-border rounded-lg p-6 hover:shadow-md transition-all duration-200 no-underline">
+        <div class="flex items-start justify-between mb-4 pt-2">
+          <h3 class="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">Includes Graph</h3>
+          <svg class="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </div>
+        <p class="text-sm text-muted-foreground leading-relaxed">See file inclusion relationships</p>
       </a>
     </div>
 
     <!-- Tabbed Detailed Sections -->
-    <div class="bg-white rounded-lg shadow overflow-hidden mb-6">
-      <div class="flex border-b border-gray-200 bg-gray-50 overflow-x-auto">
-        <button class="tab-button px-6 py-4 text-sm font-medium text-blue-600 hover:text-blue-600 hover:bg-blue-50 border-b-2 border-blue-600 bg-white whitespace-nowrap transition-colors duration-150" onclick="switchTab('structure')">Structure</button>
-        <button class="tab-button px-6 py-4 text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 border-b-2 border-transparent whitespace-nowrap transition-colors duration-150" onclick="switchTab('links')">Link Analysis</button>
-        <button class="tab-button px-6 py-4 text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-blue-50 border-b-2 border-transparent whitespace-nowrap transition-colors duration-150" onclick="switchTab('reuse')">Content Reuse</button>
+    <div class="bg-card border border-border rounded-lg overflow-hidden mb-6">
+      <div class="flex border-b border-border bg-muted overflow-x-auto">
+        <button class="tab-button px-6 py-3 text-sm font-medium text-primary hover:text-foreground hover:bg-accent border-b-2 border-primary bg-card whitespace-nowrap transition-colors duration-150" onclick="switchTab('structure')">Structure</button>
+        <button class="tab-button px-6 py-3 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent border-b-2 border-transparent whitespace-nowrap transition-colors duration-150" onclick="switchTab('links')">Link Analysis</button>
+        <button class="tab-button px-6 py-3 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent border-b-2 border-transparent whitespace-nowrap transition-colors duration-150" onclick="switchTab('reuse')">Content Reuse</button>
       </div>
 
       <!-- Structure Tab -->
       <div id="tab-structure" class="tab-content p-6">
         <!-- Summary card at top of tab -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-          <div class="bg-white border border-gray-200 rounded-lg p-6 text-center hover:shadow-md transition-shadow duration-200">
-            <div class="text-4xl font-bold text-blue-600 mb-2" id="total-pages-tab">-</div>
-            <div class="text-sm text-gray-600 font-medium">Total Pages</div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+          <div class="bg-card border border-border rounded-md p-6 hover:bg-accent/50 transition-colors duration-200">
+            <div class="flex flex-col">
+              <span class="text-sm font-medium text-muted-foreground">Total Pages</span>
+              <span class="text-3xl font-bold text-foreground mt-2" id="total-pages-tab">-</span>
+            </div>
           </div>
         </div>
 
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Cluster Distribution</h3>
+        <h3 class="text-lg font-semibold text-foreground mb-4">Cluster Distribution</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="cluster-stats"></div>
       </div>
 
       <!-- Link Analysis Tab -->
       <div id="tab-links" class="tab-content p-6 hidden">
         <!-- Summary cards at top of tab -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-          <div class="bg-white border border-gray-200 rounded-lg p-6 text-center hover:shadow-md transition-shadow duration-200">
-            <div class="text-4xl font-bold text-blue-600 mb-2" id="total-links-tab">-</div>
-            <div class="text-sm text-gray-600 font-medium">Total Links</div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+          <div class="bg-card border border-border rounded-md p-6 hover:bg-accent/50 transition-colors duration-200">
+            <div class="flex flex-col">
+              <span class="text-sm font-medium text-muted-foreground">Total Links</span>
+              <span class="text-3xl font-bold text-foreground mt-2" id="total-links-tab">-</span>
+            </div>
           </div>
-          <div class="bg-white border border-gray-200 rounded-lg p-6 text-center hover:shadow-md transition-shadow duration-200">
-            <div class="text-4xl font-bold text-blue-600 mb-2" id="total-references-tab">-</div>
-            <div class="text-sm text-gray-600 font-medium">Total References</div>
+          <div class="bg-card border border-border rounded-md p-6 hover:bg-accent/50 transition-colors duration-200">
+            <div class="flex flex-col">
+              <span class="text-sm font-medium text-muted-foreground">Total References</span>
+              <span class="text-3xl font-bold text-foreground mt-2" id="total-references-tab">-</span>
+            </div>
           </div>
         </div>
 
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Most Referenced Pages</h3>
-        <div class="overflow-x-auto">
-          <table class="min-w-full divide-y divide-gray-200 mb-8">
-            <thead class="bg-blue-600">
+        <h3 class="text-lg font-semibold text-foreground mb-4">Most Referenced Pages</h3>
+        <div class="border border-border rounded-md overflow-hidden mb-6">
+          <table class="min-w-full divide-y divide-border">
+            <thead class="bg-muted/50">
               <tr>
-                <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Page</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Inbound References</th>
+                <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Page</th>
+                <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Inbound References</th>
               </tr>
             </thead>
-            <tbody id="most-referenced" class="bg-white divide-y divide-gray-200"></tbody>
+            <tbody id="most-referenced" class="bg-card divide-y divide-border"></tbody>
           </table>
         </div>
 
-        <h3 class="text-lg font-semibold text-gray-900 mb-4 mt-8">Pages with Most Outbound Links</h3>
-        <div class="overflow-x-auto">
-          <table class="min-w-full divide-y divide-gray-200 mb-8">
-            <thead class="bg-blue-600">
+        <h3 class="text-lg font-semibold text-foreground mb-4 mt-8">Pages with Most Outbound Links</h3>
+        <div class="border border-border rounded-md overflow-hidden mb-6">
+          <table class="min-w-full divide-y divide-border">
+            <thead class="bg-muted/50">
               <tr>
-                <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Page</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Outbound Links</th>
+                <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Page</th>
+                <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Outbound Links</th>
               </tr>
             </thead>
-            <tbody id="most-outbound" class="bg-white divide-y divide-gray-200"></tbody>
+            <tbody id="most-outbound" class="bg-card divide-y divide-border"></tbody>
           </table>
         </div>
 
         <div id="intersphinx-section" class="mt-8">
-          <h3 class="text-lg font-semibold text-gray-900 mb-4">Intersphinx Links by Project</h3>
-          <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-              <thead class="bg-blue-600">
+          <h3 class="text-lg font-semibold text-foreground mb-4">Intersphinx Links by Project</h3>
+          <div class="border border-border rounded-md overflow-hidden">
+            <table class="min-w-full divide-y divide-border">
+              <thead class="bg-muted/50">
                 <tr>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Project</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">External Pages</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Total References</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Project</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">External Pages</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Total References</th>
                 </tr>
               </thead>
-              <tbody id="intersphinx-stats" class="bg-white divide-y divide-gray-200"></tbody>
+              <tbody id="intersphinx-stats" class="bg-card divide-y divide-border"></tbody>
             </table>
           </div>
         </div>
@@ -125,47 +153,53 @@
       <!-- Content Reuse Tab -->
       <div id="tab-reuse" class="tab-content p-6 hidden">
         <!-- Summary cards at top of tab -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-          <div class="bg-white border border-gray-200 rounded-lg p-6 text-center hover:shadow-md transition-shadow duration-200">
-            <div class="text-4xl font-bold text-blue-600 mb-2" id="total-include-directives-tab">-</div>
-            <div class="text-sm text-gray-600 font-medium">Include Directives</div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+          <div class="bg-card border border-border rounded-md p-6 hover:bg-accent/50 transition-colors duration-200">
+            <div class="flex flex-col">
+              <span class="text-sm font-medium text-muted-foreground">Include Directives</span>
+              <span class="text-3xl font-bold text-foreground mt-2" id="total-include-directives-tab">-</span>
+            </div>
           </div>
-          <div class="bg-white border border-gray-200 rounded-lg p-6 text-center hover:shadow-md transition-shadow duration-200">
-            <div class="text-4xl font-bold text-blue-600 mb-2" id="total-included-files-tab">-</div>
-            <div class="text-sm text-gray-600 font-medium">Included Files</div>
+          <div class="bg-card border border-border rounded-md p-6 hover:bg-accent/50 transition-colors duration-200">
+            <div class="flex flex-col">
+              <span class="text-sm font-medium text-muted-foreground">Included Files</span>
+              <span class="text-3xl font-bold text-foreground mt-2" id="total-included-files-tab">-</span>
+            </div>
           </div>
-          <div class="bg-white border border-gray-200 rounded-lg p-6 text-center hover:shadow-md transition-shadow duration-200">
-            <div class="text-4xl font-bold text-blue-600 mb-2" id="docs-with-includes-tab">-</div>
-            <div class="text-sm text-gray-600 font-medium">Docs Using Includes</div>
+          <div class="bg-card border border-border rounded-md p-6 hover:bg-accent/50 transition-colors duration-200">
+            <div class="flex flex-col">
+              <span class="text-sm font-medium text-muted-foreground">Docs Using Includes</span>
+              <span class="text-3xl font-bold text-foreground mt-2" id="docs-with-includes-tab">-</span>
+            </div>
           </div>
         </div>
 
         <div id="most-included-section">
-          <h3 class="text-lg font-semibold text-gray-900 mb-4">Most Included Files</h3>
-          <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200 mb-8">
-              <thead class="bg-blue-600">
+          <h3 class="text-lg font-semibold text-foreground mb-4">Most Included Files</h3>
+          <div class="border border-border rounded-md overflow-hidden mb-6">
+            <table class="min-w-full divide-y divide-border">
+              <thead class="bg-muted/50">
                 <tr>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">File</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Times Included</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">File</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Times Included</th>
                 </tr>
               </thead>
-              <tbody id="most-included-files" class="bg-white divide-y divide-gray-200"></tbody>
+              <tbody id="most-included-files" class="bg-card divide-y divide-border"></tbody>
             </table>
           </div>
         </div>
 
         <div id="most-includes-section" class="mt-8">
-          <h3 class="text-lg font-semibold text-gray-900 mb-4">Documents with Most Includes</h3>
-          <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-              <thead class="bg-blue-600">
+          <h3 class="text-lg font-semibold text-foreground mb-4">Documents with Most Includes</h3>
+          <div class="border border-border rounded-md overflow-hidden">
+            <table class="min-w-full divide-y divide-border">
+              <thead class="bg-muted/50">
                 <tr>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Document</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Include Count</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Document</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Include Count</th>
                 </tr>
               </thead>
-              <tbody id="most-includes-docs" class="bg-white divide-y divide-gray-200"></tbody>
+              <tbody id="most-includes-docs" class="bg-card divide-y divide-border"></tbody>
             </table>
           </div>
         </div>
@@ -178,8 +212,8 @@
     function switchTab(tabName) {
       // Remove active class from all buttons and contents
       document.querySelectorAll('.tab-button').forEach(btn => {
-        btn.classList.remove('text-blue-600', 'border-blue-600', 'bg-white');
-        btn.classList.add('text-gray-600');
+        btn.classList.remove('text-primary', 'border-primary', 'bg-card');
+        btn.classList.add('text-muted-foreground', 'border-transparent');
       });
       document.querySelectorAll('.tab-content').forEach(content => {
         content.classList.add('hidden');
@@ -187,8 +221,8 @@
 
       // Add active class to selected tab
       const activeButton = document.querySelector(`[onclick*="${tabName}"]`);
-      activeButton.classList.remove('text-gray-600');
-      activeButton.classList.add('text-blue-600', 'border-blue-600', 'bg-white');
+      activeButton.classList.remove('text-muted-foreground', 'border-transparent');
+      activeButton.classList.add('text-primary', 'border-primary', 'bg-card');
       document.getElementById(`tab-${tabName}`).classList.remove('hidden');
     }
 
@@ -246,15 +280,15 @@
     if (Object.keys(clusterCounts).length > 0) {
       Object.entries(clusterCounts).sort((a, b) => b[1] - a[1]).forEach(([cluster, count]) => {
         const div = document.createElement('div');
-        div.className = 'bg-gray-50 p-4 rounded-lg border-l-4 border-blue-600';
+        div.className = 'bg-card border border-border rounded-md p-4 hover:bg-accent/50 transition-colors duration-200';
         div.innerHTML = `
-          <div class="font-semibold text-gray-900 mb-1">${cluster}</div>
-          <div class="text-2xl text-blue-600 font-bold">${count} pages</div>
+          <div class="font-medium text-muted-foreground text-sm mb-1">${cluster}</div>
+          <div class="text-2xl font-bold text-foreground">${count} pages</div>
         `;
         clusterStatsDiv.appendChild(div);
       });
     } else {
-      clusterStatsDiv.innerHTML = '<div class="text-center text-gray-500 italic py-8 col-span-full">No clusters configured</div>';
+      clusterStatsDiv.innerHTML = '<div class="text-center text-muted-foreground italic py-8 col-span-full">No clusters configured</div>';
     }
 
     // Intersphinx statistics by project
@@ -299,11 +333,11 @@
         .sort((a, b) => b[1].referenceCount - a[1].referenceCount)
         .forEach(([project, stats]) => {
           const row = document.createElement('tr');
-          row.className = 'hover:bg-gray-50';
+          row.className = 'hover:bg-muted/50 transition-colors';
           row.innerHTML = `
-            <td class="px-6 py-4 whitespace-nowrap">${project}</td>
-            <td class="px-6 py-4 whitespace-nowrap">${stats.pageCount}</td>
-            <td class="px-6 py-4 whitespace-nowrap">${stats.referenceCount}</td>
+            <td class="px-4 py-3 font-medium">${project}</td>
+            <td class="px-4 py-3 text-muted-foreground">${stats.pageCount}</td>
+            <td class="px-4 py-3 text-muted-foreground">${stats.referenceCount}</td>
           `;
           intersphinxStatsTbody.appendChild(row);
         });
@@ -321,15 +355,15 @@
     if (mostReferenced.length > 0) {
       mostReferenced.forEach(page => {
         const row = document.createElement('tr');
-        row.className = 'hover:bg-gray-50';
+        row.className = 'hover:bg-muted/50 transition-colors';
         row.innerHTML = `
-          <td class="px-6 py-4 whitespace-nowrap"><a href="${page.path}" target="_blank" class="text-blue-600 hover:text-blue-800 hover:underline">${page.label}</a></td>
-          <td class="px-6 py-4 whitespace-nowrap">${page.inbound}</td>
+          <td class="px-4 py-3"><a href="${page.path}" target="_blank" class="text-primary hover:underline font-medium">${page.label}</a></td>
+          <td class="px-4 py-3 text-muted-foreground">${page.inbound}</td>
         `;
         mostReferencedTbody.appendChild(row);
       });
     } else {
-      mostReferencedTbody.innerHTML = '<tr><td colspan="2" class="px-6 py-4 text-center text-gray-500 italic">No referenced pages</td></tr>';
+      mostReferencedTbody.innerHTML = '<tr><td colspan="2" class="px-4 py-3 text-center text-muted-foreground italic">No referenced pages</td></tr>';
     }
 
     // Pages with most outbound links (top 10)
@@ -342,15 +376,15 @@
     if (mostOutbound.length > 0) {
       mostOutbound.forEach(page => {
         const row = document.createElement('tr');
-        row.className = 'hover:bg-gray-50';
+        row.className = 'hover:bg-muted/50 transition-colors';
         row.innerHTML = `
-          <td class="px-6 py-4 whitespace-nowrap"><a href="${page.path}" target="_blank" class="text-blue-600 hover:text-blue-800 hover:underline">${page.label}</a></td>
-          <td class="px-6 py-4 whitespace-nowrap">${page.outbound}</td>
+          <td class="px-4 py-3"><a href="${page.path}" target="_blank" class="text-primary hover:underline font-medium">${page.label}</a></td>
+          <td class="px-4 py-3 text-muted-foreground">${page.outbound}</td>
         `;
         mostOutboundTbody.appendChild(row);
       });
     } else {
-      mostOutboundTbody.innerHTML = '<tr><td colspan="2" class="px-6 py-4 text-center text-gray-500 italic">No pages with outbound links</td></tr>';
+      mostOutboundTbody.innerHTML = '<tr><td colspan="2" class="px-4 py-3 text-center text-muted-foreground italic">No pages with outbound links</td></tr>';
     }
 
     // ========== Include Statistics ==========
@@ -397,10 +431,10 @@
     if (mostIncludedFiles.length > 0) {
       mostIncludedFiles.forEach(file => {
         const row = document.createElement('tr');
-        row.className = 'hover:bg-gray-50';
+        row.className = 'hover:bg-muted/50 transition-colors';
         row.innerHTML = `
-          <td class="px-6 py-4 whitespace-nowrap">${file.label}</td>
-          <td class="px-6 py-4 whitespace-nowrap">${file.count}</td>
+          <td class="px-4 py-3 font-medium">${file.label}</td>
+          <td class="px-4 py-3 text-muted-foreground">${file.count}</td>
         `;
         mostIncludedTbody.appendChild(row);
       });
@@ -435,10 +469,10 @@
     if (mostIncludesDocs.length > 0) {
       mostIncludesDocs.forEach(doc => {
         const row = document.createElement('tr');
-        row.className = 'hover:bg-gray-50';
+        row.className = 'hover:bg-muted/50 transition-colors';
         row.innerHTML = `
-          <td class="px-6 py-4 whitespace-nowrap"><a href="${doc.path}" target="_blank" class="text-blue-600 hover:text-blue-800 hover:underline">${doc.label}</a></td>
-          <td class="px-6 py-4 whitespace-nowrap">${doc.count}</td>
+          <td class="px-4 py-3"><a href="${doc.path}" target="_blank" class="text-primary hover:underline font-medium">${doc.label}</a></td>
+          <td class="px-4 py-3 text-muted-foreground">${doc.count}</td>
         `;
         mostIncludesDocsTbody.appendChild(row);
       });

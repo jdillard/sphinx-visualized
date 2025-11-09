@@ -4,41 +4,42 @@
   <meta charset="utf-8">
   <title>Link Graph Visualization</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="../js/tailwind-config.js"></script>
   <link rel="stylesheet" href="../css/graph-panels.css">
   <script src="https://unpkg.com/graphology/dist/graphology.umd.min.js"></script>
   <script src="https://unpkg.com/sigma@2.4.0/build/sigma.min.js"></script>
   <script type="module" src="../js/link-graph.js"></script>
 </head>
 <body class="m-0 p-0 font-sans overflow-hidden">
-  <div class="bg-white shadow-sm border-b border-gray-200">
-    <h1 class="text-2xl font-bold text-gray-900 text-center py-4 mb-0">Link Graph Visualization</h1>
+  <div class="bg-card shadow-sm border-b border-border">
+    <h1 class="text-2xl font-bold text-foreground text-center py-4 mb-0">Link Graph Visualization</h1>
     <p class="text-center pb-4">
-      <a href="index.html" class="text-blue-600 hover:text-blue-800 hover:underline">Sphinx Visualized</a>
+      <a href="index.html" class="text-primary hover:underline transition-all">Sphinx Visualized</a>
     </p>
   </div>
 
   <div id="panels" class="absolute top-20 right-5 w-80 max-h-[calc(100vh-120px)] overflow-y-auto z-[1000]">
-    <div class="bg-white p-4 rounded-lg shadow-lg mb-2" id="search-panel">
-      <input type="text" id="search" placeholder="Search nodes..." class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+    <div class="bg-card p-4 rounded-lg shadow-lg mb-2 border border-border" id="search-panel">
+      <input type="text" id="search" placeholder="Search nodes..." class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent text-sm" />
     </div>
 
-    <div class="bg-white p-4 rounded-lg shadow-lg mb-2" id="cluster-panel"></div>
+    <div class="bg-card p-4 rounded-lg shadow-lg mb-2 border border-border" id="cluster-panel"></div>
 
-    <div class="bg-white p-4 rounded-lg shadow-lg mb-2" id="category-panel"></div>
+    <div class="bg-card p-4 rounded-lg shadow-lg mb-2 border border-border" id="category-panel"></div>
 
-    <div class="bg-white p-4 rounded-lg shadow-lg mb-2" id="controls-panel">
-      <h3 class="mt-0 text-lg font-semibold mb-3">Controls</h3>
-      <button id="export-json" class="block w-full my-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm transition-colors duration-150">Export GraphSON</button>
+    <div class="bg-card p-4 rounded-lg shadow-lg mb-2 border border-border" id="controls-panel">
+      <h3 class="mt-0 text-sm font-semibold mb-3 text-foreground tracking-tight">Controls</h3>
+      <button id="export-json" class="block w-full my-2 px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-md text-sm transition-colors duration-150 font-medium">Export GraphSON</button>
     </div>
   </div>
 
-  <div id="graph-container" class="w-screen h-[calc(100vh-100px)] bg-gray-100"></div>
+  <div id="graph-container" class="w-screen h-[calc(100vh-100px)] bg-secondary"></div>
 
   <div id="graph-controls" class="absolute bottom-5 left-5 flex flex-col gap-2.5 z-[1000]">
-    <button id="zoom-in" class="w-10 h-10 bg-white border border-gray-300 rounded-lg cursor-pointer flex items-center justify-center p-2 shadow-md hover:bg-gray-50 hover:shadow-lg transition-all duration-200" title="Zoom in"></button>
-    <button id="zoom-out" class="w-10 h-10 bg-white border border-gray-300 rounded-lg cursor-pointer flex items-center justify-center p-2 shadow-md hover:bg-gray-50 hover:shadow-lg transition-all duration-200" title="Zoom out"></button>
-    <button id="zoom-reset" class="w-10 h-10 bg-white border border-gray-300 rounded-lg cursor-pointer flex items-center justify-center p-2 shadow-md hover:bg-gray-50 hover:shadow-lg transition-all duration-200" title="See whole graph"></button>
-    <button id="toggle-legend" class="w-10 h-10 bg-white border border-gray-300 rounded-lg cursor-pointer flex items-center justify-center p-2 shadow-md hover:bg-gray-50 hover:shadow-lg transition-all duration-200" title="Toggle legend"></button>
+    <button id="zoom-in" class="w-10 h-10 bg-card border border-border rounded-lg cursor-pointer flex items-center justify-center p-2 shadow-md hover:bg-accent hover:shadow-lg transition-all duration-200" title="Zoom in"></button>
+    <button id="zoom-out" class="w-10 h-10 bg-card border border-border rounded-lg cursor-pointer flex items-center justify-center p-2 shadow-md hover:bg-accent hover:shadow-lg transition-all duration-200" title="Zoom out"></button>
+    <button id="zoom-reset" class="w-10 h-10 bg-card border border-border rounded-lg cursor-pointer flex items-center justify-center p-2 shadow-md hover:bg-accent hover:shadow-lg transition-all duration-200" title="See whole graph"></button>
+    <button id="toggle-legend" class="w-10 h-10 bg-card border border-border rounded-lg cursor-pointer flex items-center justify-center p-2 shadow-md hover:bg-accent hover:shadow-lg transition-all duration-200" title="Toggle legend"></button>
   </div>
 </body>
 </html>
