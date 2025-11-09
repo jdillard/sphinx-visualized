@@ -5,6 +5,7 @@ Changelog
 -----
 
 - Add Glossary stats
+- Add support for link types to link graph
 
 0.7.0
 -----
