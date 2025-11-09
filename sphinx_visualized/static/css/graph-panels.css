@@ -7,7 +7,6 @@
   justify-content: space-between;
   cursor: pointer;
   user-select: none;
-  margin-bottom: 0.75rem;
 }
 
 .panel-header:hover {
