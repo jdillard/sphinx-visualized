@@ -286,9 +286,9 @@ window.addEventListener('DOMContentLoaded', async () => {
               Categories
               ${visibleCount < categories.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${categories.length})</span>` : ''}
             </h3>
-            <span class="collapse-icon">${chevronSvg}</span>
+            <span class="collapse-icon collapsed">${chevronSvg}</span>
           </div>
-          <div class="panel-content" id="category-panel-content">
+          <div class="panel-content collapsed" id="category-panel-content">
             <p style="color: #666; font-style: italic; font-size: 0.9em; margin-top: 0.5em;">Click a category to show/hide related pages from the network.</p>
             <p class="cluster-buttons">
               <button id="check-all-categories-btn" class="cluster-btn">Show All</button>
@@ -424,9 +424,9 @@ window.addEventListener('DOMContentLoaded', async () => {
                 Clusters
                 ${visibleCount < clusterConfig.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${clusterConfig.length})</span>` : ''}
               </h3>
-              <span class="collapse-icon">${chevronSvg}</span>
+              <span class="collapse-icon collapsed">${chevronSvg}</span>
             </div>
-            <div class="panel-content" id="cluster-panel-content">
+            <div class="panel-content collapsed" id="cluster-panel-content">
               <p style="color: #666; font-style: italic; font-size: 0.9em; margin-top: 0.5em;">Click a cluster to show/hide related pages from the network.</p>
               <p class="cluster-buttons">
                 <button id="check-all-btn" class="cluster-btn">Show All</button>
@@ -613,10 +613,10 @@ window.addEventListener('DOMContentLoaded', async () => {
               Link Types
               ${visibleCount < linkTypes.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${linkTypes.length})</span>` : ''}
             </h3>
-            <span class="collapse-icon">${chevronSvg}</span>
+            <span class="collapse-icon collapsed">${chevronSvg}</span>
           </div>
-          <div class="panel-content" id="link-types-panel-content">
-            <p style="color: #666; font-style: italic; font-size: 0.9em; margin-top: 0.5em;">Click a link type to show/hide related edges from the network.</p>
+          <div class="panel-content collapsed" id="link-types-panel-content">
+            <p style="color: #666; font-style: italic; font-size: 0.9em; margin-top: 0.5em;">Click a link type to show/hide related links from the network.</p>
             <p class="cluster-buttons">
               <button id="check-all-link-types-btn" class="cluster-btn">Show All</button>
               <button id="uncheck-all-link-types-btn" class="cluster-btn">Hide All</button>
