@@ -6,6 +6,7 @@ Changelog
 
 - Add includes graph and statistics
 - Improve toctree graph to match other graphs
+- Use Tailwinds CSS for styling
 
 0.6.0
 -----
