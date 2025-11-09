@@ -4,6 +4,7 @@
 
 import json
 import sphinx
+from sphinx import addnodes as sphinx_addnodes
 from packaging import version
 import os
 import shutil
@@ -13,7 +14,7 @@ from docutils import nodes as docutils_nodes
 from multiprocessing import Manager, Queue
 from fnmatch import fnmatch
 
-__version__ = "0.7.0"
+__version__ = "0.8.0"
 
 
 def setup(app):
@@ -224,9 +225,27 @@ def get_links(app, doctree, docname):
                 ref = refuri.split("#")[0]
                 refname = os.path.abspath(os.path.join(os.path.dirname(f"/{docname}.html"), ref))[1:-5]
 
-                #TODO some how get ref/doc/term for type?
+                # Determine the reference type based on classes or fragment
+                ref_type = "ref"  # default
+                target_path = f"/{refname}.html"
+
+                # Check if this is a term reference (glossary term)
+                # Term references have a fragment starting with "term-"
+                if "#" in refuri and refuri.split("#")[1].startswith("term-"):
+                    ref_type = "term"
+                    # Keep the full path with fragment for term references
+                    fragment = refuri.split("#")[1]
+                    target_path = f"/{refname}.html#{fragment}"
+                # Check if node has classes that indicate it's a term reference
+                elif 'std-term' in node.get('classes', []):
+                    ref_type = "term"
+                    # Try to extract fragment if present
+                    if "#" in refuri:
+                        fragment = refuri.split("#")[1]
+                        target_path = f"/{refname}.html#{fragment}"
+
                 # add each link as an individual reference
-                app.env.app.references.put((f"/{docname}.html", f"/{refname}.html", "ref"))
+                app.env.app.references.put((f"/{docname}.html", target_path, ref_type))
 
                 docname_page = f"/{docname}.html"
                 app.env.app.pages[docname_page] = True
@@ -484,6 +503,10 @@ def create_json(app, exception):
     links = [] # a list of links between pages
     references_counts = Counter(reference_list)
     for ref, count in references_counts.items():
+        # Skip term references as they include fragments and will be processed separately
+        if ref[2] == "term":
+            continue
+
         links.append({
             "target": page_list.index(ref[1]),
             "source": page_list.index(ref[0]),
@@ -569,3 +592,40 @@ def create_json(app, exception):
     filename = Path(app.outdir) / "_static" / "sphinx-visualized" / "js" / "includes-links.js"
     with open(filename, "w") as json_file:
         json_file.write(f'var includes_links_data = {json.dumps(includes_links, indent=4)};')
+
+    # Calculate glossary statistics
+    glossary_stats = {
+        "total_terms": 0,
+        "total_references": 0,
+        "unique_pages_with_terms": 0,
+        "most_referenced_terms": []
+    }
+
+    # Filter term references
+    term_references = [ref for ref in reference_list if ref[2] == "term"]
+    glossary_stats["total_references"] = len(term_references)
+
+    # Count unique pages that use terms
+    pages_using_terms = set(ref[0] for ref in term_references)
+    glossary_stats["unique_pages_with_terms"] = len(pages_using_terms)
+
+    # Count references per term
+    term_counts = Counter(ref[1] for ref in term_references)
+    glossary_stats["total_terms"] = len(term_counts)
+
+    # Get top 10 most referenced terms
+    most_referenced = []
+    for term_link, count in term_counts.most_common(10):
+        # Extract term name from link format: /glossary.html#term-{name}
+        term_name = term_link.split("#term-")[-1] if "#term-" in term_link else term_link
+        most_referenced.append({
+            "term": term_name,
+            "count": count,
+            "link": term_link
+        })
+    glossary_stats["most_referenced_terms"] = most_referenced
+
+    # Write glossary stats to JavaScript file
+    filename = Path(app.outdir) / "_static" / "sphinx-visualized" / "js" / "glossary-stats.js"
+    with open(filename, "w") as json_file:
+        json_file.write(f'var glossary_stats = {json.dumps(glossary_stats, indent=4)};')
