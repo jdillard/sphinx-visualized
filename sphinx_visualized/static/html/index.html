@@ -92,68 +92,105 @@
 
       <!-- Link Analysis Tab -->
       <div id="tab-links" class="tab-content p-6 hidden">
-        <!-- Summary cards at top of tab -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-          <div class="bg-card border border-border rounded-md p-6 hover:bg-accent/50 transition-colors duration-200">
-            <div class="flex flex-col">
-              <span class="text-sm font-medium text-muted-foreground">Total Links</span>
-              <span class="text-3xl font-bold text-foreground mt-2" id="total-links-tab">-</span>
+
+        <!-- Sub-tabs for Link Analysis -->
+        <div class="flex border-b border-border mb-6 overflow-x-auto">
+          <button class="link-subtab-button px-4 py-2 text-sm font-medium text-primary hover:text-foreground hover:bg-accent border-b-2 border-primary whitespace-nowrap transition-colors duration-150" onclick="switchLinkSubtab('internal')">Internal Links</button>
+          <button class="link-subtab-button px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent border-b-2 border-transparent whitespace-nowrap transition-colors duration-150" onclick="switchLinkSubtab('glossary')">Glossary Terms</button>
+          <button class="link-subtab-button px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent border-b-2 border-transparent whitespace-nowrap transition-colors duration-150" onclick="switchLinkSubtab('external')">External Links</button>
+        </div>
+
+        <!-- Internal Links Sub-tab -->
+        <div id="link-subtab-internal" class="link-subtab-content">
+
+          <!-- Internal Links Summary Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+            <div class="bg-card border border-border rounded-md p-6 hover:bg-accent/50 transition-colors duration-200">
+              <div class="flex flex-col">
+                <span class="text-sm font-medium text-muted-foreground">Total Links</span>
+                <span class="text-3xl font-bold text-foreground mt-2" id="total-links-tab">-</span>
+              </div>
+            </div>
+            <div class="bg-card border border-border rounded-md p-6 hover:bg-accent/50 transition-colors duration-200">
+              <div class="flex flex-col">
+                <span class="text-sm font-medium text-muted-foreground">Total References</span>
+                <span class="text-3xl font-bold text-foreground mt-2" id="total-references-tab">-</span>
+              </div>
             </div>
           </div>
-          <div class="bg-card border border-border rounded-md p-6 hover:bg-accent/50 transition-colors duration-200">
-            <div class="flex flex-col">
-              <span class="text-sm font-medium text-muted-foreground">Total References</span>
-              <span class="text-3xl font-bold text-foreground mt-2" id="total-references-tab">-</span>
-            </div>
+
+          <!-- Internal Links Tables -->
+          <h3 class="text-lg font-semibold text-foreground mb-4 mt-6">Most Referenced Pages</h3>
+          <div class="border border-border rounded-md overflow-hidden mb-6">
+            <table class="min-w-full divide-y divide-border">
+              <thead class="bg-muted/50">
+                <tr>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Page</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Inbound References</th>
+                </tr>
+              </thead>
+              <tbody id="most-referenced" class="bg-card divide-y divide-border"></tbody>
+            </table>
           </div>
-          <div class="bg-card border border-border rounded-md p-6 hover:bg-accent/50 transition-colors duration-200">
-            <div class="flex flex-col">
-              <span class="text-sm font-medium text-muted-foreground">Glossary Terms</span>
-              <span class="text-3xl font-bold text-foreground mt-2" id="glossary-total-terms">-</span>
-            </div>
-          </div>
-          <div class="bg-card border border-border rounded-md p-6 hover:bg-accent/50 transition-colors duration-200">
-            <div class="flex flex-col">
-              <span class="text-sm font-medium text-muted-foreground">Term References</span>
-              <span class="text-3xl font-bold text-foreground mt-2" id="glossary-total-references">-</span>
-            </div>
-          </div>
-          <div class="bg-card border border-border rounded-md p-6 hover:bg-accent/50 transition-colors duration-200">
-            <div class="flex flex-col">
-              <span class="text-sm font-medium text-muted-foreground">Pages Using Terms</span>
-              <span class="text-3xl font-bold text-foreground mt-2" id="glossary-pages-with-terms">-</span>
-            </div>
+
+          <h3 class="text-lg font-semibold text-foreground mb-4">Pages with Most Outbound Links</h3>
+          <div class="border border-border rounded-md overflow-hidden">
+            <table class="min-w-full divide-y divide-border">
+              <thead class="bg-muted/50">
+                <tr>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Page</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Outbound Links</th>
+                </tr>
+              </thead>
+              <tbody id="most-outbound" class="bg-card divide-y divide-border"></tbody>
+            </table>
           </div>
         </div>
 
-        <h3 class="text-lg font-semibold text-foreground mb-4">Most Referenced Pages</h3>
-        <div class="border border-border rounded-md overflow-hidden mb-6">
-          <table class="min-w-full divide-y divide-border">
-            <thead class="bg-muted/50">
-              <tr>
-                <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Page</th>
-                <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Inbound References</th>
-              </tr>
-            </thead>
-            <tbody id="most-referenced" class="bg-card divide-y divide-border"></tbody>
-          </table>
+        <!-- Glossary Terms Sub-tab -->
+        <div id="link-subtab-glossary" class="link-subtab-content hidden">
+
+          <!-- Glossary Summary Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+            <div class="bg-card border border-border rounded-md p-6 hover:bg-accent/50 transition-colors duration-200">
+              <div class="flex flex-col">
+                <span class="text-sm font-medium text-muted-foreground">Glossary Terms</span>
+                <span class="text-3xl font-bold text-foreground mt-2" id="glossary-total-terms">-</span>
+              </div>
+            </div>
+            <div class="bg-card border border-border rounded-md p-6 hover:bg-accent/50 transition-colors duration-200">
+              <div class="flex flex-col">
+                <span class="text-sm font-medium text-muted-foreground">Term References</span>
+                <span class="text-3xl font-bold text-foreground mt-2" id="glossary-total-references">-</span>
+              </div>
+            </div>
+            <div class="bg-card border border-border rounded-md p-6 hover:bg-accent/50 transition-colors duration-200">
+              <div class="flex flex-col">
+                <span class="text-sm font-medium text-muted-foreground">Pages Using Terms</span>
+                <span class="text-3xl font-bold text-foreground mt-2" id="glossary-pages-with-terms">-</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Glossary Table -->
+          <h3 class="text-lg font-semibold text-foreground mb-4 mt-6">Most Referenced Terms</h3>
+          <div class="border border-border rounded-md overflow-hidden">
+            <table class="min-w-full divide-y divide-border">
+              <thead class="bg-muted/50">
+                <tr>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Term</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">References</th>
+                </tr>
+              </thead>
+              <tbody id="glossary-terms-stats" class="bg-card divide-y divide-border"></tbody>
+            </table>
+          </div>
         </div>
 
-        <h3 class="text-lg font-semibold text-foreground mb-4 mt-8">Pages with Most Outbound Links</h3>
-        <div class="border border-border rounded-md overflow-hidden mb-6">
-          <table class="min-w-full divide-y divide-border">
-            <thead class="bg-muted/50">
-              <tr>
-                <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Page</th>
-                <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Outbound Links</th>
-              </tr>
-            </thead>
-            <tbody id="most-outbound" class="bg-card divide-y divide-border"></tbody>
-          </table>
-        </div>
+        <!-- External Links Sub-tab -->
+        <div id="link-subtab-external" class="link-subtab-content hidden">
 
-        <div id="intersphinx-section" class="mt-8">
-          <h3 class="text-lg font-semibold text-foreground mb-4">Intersphinx Links by Project</h3>
+          <h3 class="text-lg font-semibold text-foreground mb-4">Links by Project</h3>
           <div class="border border-border rounded-md overflow-hidden">
             <table class="min-w-full divide-y divide-border">
               <thead class="bg-muted/50">
@@ -168,20 +205,6 @@
           </div>
         </div>
 
-        <div id="glossary-section" class="mt-8">
-          <h3 class="text-lg font-semibold text-foreground mb-4">Most Referenced Glossary Terms</h3>
-          <div class="border border-border rounded-md overflow-hidden">
-            <table class="min-w-full divide-y divide-border">
-              <thead class="bg-muted/50">
-                <tr>
-                  <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Term</th>
-                  <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">References</th>
-                </tr>
-              </thead>
-              <tbody id="glossary-terms-stats" class="bg-card divide-y divide-border"></tbody>
-            </table>
-          </div>
-        </div>
       </div>
 
       <!-- Content Reuse Tab -->
@@ -258,6 +281,24 @@
       activeButton.classList.remove('text-muted-foreground', 'border-transparent');
       activeButton.classList.add('text-primary', 'border-primary', 'bg-card');
       document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+    }
+
+    // Link Analysis sub-tab switching function
+    function switchLinkSubtab(subtabName) {
+      // Remove active class from all sub-tab buttons and contents
+      document.querySelectorAll('.link-subtab-button').forEach(btn => {
+        btn.classList.remove('text-primary', 'border-primary');
+        btn.classList.add('text-muted-foreground', 'border-transparent');
+      });
+      document.querySelectorAll('.link-subtab-content').forEach(content => {
+        content.classList.add('hidden');
+      });
+
+      // Add active class to selected sub-tab
+      const activeButton = document.querySelector(`[onclick*="switchLinkSubtab('${subtabName}')"]`);
+      activeButton.classList.remove('text-muted-foreground', 'border-transparent');
+      activeButton.classList.add('text-primary', 'border-primary');
+      document.getElementById(`link-subtab-${subtabName}`).classList.remove('hidden');
     }
 
     // Calculate statistics
@@ -360,7 +401,8 @@
     });
 
     const intersphinxStatsTbody = document.getElementById('intersphinx-stats');
-    const intersphinxSection = document.getElementById('intersphinx-section');
+    const intersphinxSubtab = document.getElementById('link-subtab-external');
+    const externalSubtabButton = document.querySelector('[onclick*="switchLinkSubtab(\'external\')"]');
 
     if (Object.keys(intersphinxByProject).length > 0) {
       Object.entries(intersphinxByProject)
@@ -376,7 +418,11 @@
           intersphinxStatsTbody.appendChild(row);
         });
     } else {
-      intersphinxSection.style.display = 'none';
+      // Hide the External Links sub-tab if no intersphinx links
+      intersphinxSubtab.style.display = 'none';
+      if (externalSubtabButton) {
+        externalSubtabButton.style.display = 'none';
+      }
     }
 
     // ========== Glossary Statistics ==========
@@ -389,7 +435,8 @@
 
     // Populate most referenced terms table
     const glossaryTermsStatsTbody = document.getElementById('glossary-terms-stats');
-    const glossarySection = document.getElementById('glossary-section');
+    const glossarySubtab = document.getElementById('link-subtab-glossary');
+    const glossarySubtabButton = document.querySelector('[onclick*="switchLinkSubtab(\'glossary\')"]');
 
     if (glossaryData.most_referenced_terms && glossaryData.most_referenced_terms.length > 0) {
       glossaryData.most_referenced_terms.forEach(termData => {
@@ -402,7 +449,11 @@
         glossaryTermsStatsTbody.appendChild(row);
       });
     } else {
-      glossarySection.style.display = 'none';
+      // Hide the Glossary Terms sub-tab if no glossary data
+      glossarySubtab.style.display = 'none';
+      if (glossarySubtabButton) {
+        glossarySubtabButton.style.display = 'none';
+      }
     }
 
     // Most referenced pages (top 10)
