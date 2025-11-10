@@ -121,6 +121,7 @@
   margin-top: 0.25rem;
   cursor: pointer;
   flex-shrink: 0;
+  accent-color: hsl(215.4 16.3% 46.9%);
 }
 
 #link-types-panel .caption-row {
