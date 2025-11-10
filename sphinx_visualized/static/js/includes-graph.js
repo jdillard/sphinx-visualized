@@ -225,7 +225,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         });
       };
 
-      const renderTypePanel = () => {
+      const renderTypePanel = async () => {
         const types = Object.keys(TYPE_COLORS);
         const visibleCount = types.filter(t => visibleTypes[t]).length;
 
@@ -235,14 +235,21 @@ window.addEventListener('DOMContentLoaded', async () => {
           'literalinclude': 'Code Inclusions'
         };
 
+        // Load chevron SVG
+        const response = await fetch('../svg/chevron-down.svg');
+        const chevronSvg = await response.text();
+
         typeContainer.innerHTML = `
-          <h3>
-            File Types
-            ${visibleCount < types.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${types.length})</span>` : ''}
-          </h3>
-          <div class="panel-content">
+          <div class="panel-header" id="type-panel-header">
+            <h3 style="margin: 0; font-size: 1.3em;">
+              File Types
+              ${visibleCount < types.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${types.length})</span>` : ''}
+            </h3>
+            <span class="collapse-icon">${chevronSvg}</span>
+          </div>
+          <div class="panel-content" id="type-panel-content">
             <p style="color: #666; font-style: italic; font-size: 0.9em; margin-top: 0.5em;">
-              Click a type to show/hide files.
+              Click a type to show/hide related files.
             </p>
             <ul style="list-style: none; padding: 0; margin: 0;"></ul>
           </div>
@@ -278,6 +285,16 @@ window.addEventListener('DOMContentLoaded', async () => {
           });
 
           list.appendChild(li);
+        });
+
+        // Add collapse/expand functionality
+        const panelHeader = document.getElementById('type-panel-header');
+        const panelContent = document.getElementById('type-panel-content');
+        const collapseIcon = panelHeader.querySelector('.collapse-icon');
+
+        panelHeader.addEventListener('click', () => {
+          panelContent.classList.toggle('collapsed');
+          collapseIcon.classList.toggle('collapsed');
         });
       };
 
