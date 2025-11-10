@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.8.1
+-----
+
+- Make mobile friendly
+
 0.8.0
 -----
 
