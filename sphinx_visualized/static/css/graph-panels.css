@@ -125,14 +125,27 @@
   opacity: 0.7;
 }
 
-/* Circles are unfilled by default, filled only when active coloring is on */
-.caption-row label .circle {
+/* Circles are unfilled by default for link-types panel, filled only when active coloring is on */
+#link-types-panel .caption-row label .circle {
   background-color: white !important;
 }
 
 /* Fill the circle when link type is actively being colored */
 #link-types-panel .caption-row.active-coloring label .circle {
   background-color: var(--active-color, hsl(222.2 47.4% 11.2%)) !important;
+}
+
+/* For other panels (type-panel, category-panel, cluster-panel): fill circles based on checked state */
+#type-panel .caption-row input[type="checkbox"]:checked + label .circle,
+#category-panel .caption-row input[type="checkbox"]:checked + label .circle,
+#cluster-panel .caption-row input[type="checkbox"]:checked + label .circle {
+  /* Background color is already set inline from JS, just ensure it's visible */
+}
+
+#type-panel .caption-row input[type="checkbox"]:not(:checked) + label .circle,
+#category-panel .caption-row input[type="checkbox"]:not(:checked) + label .circle,
+#cluster-panel .caption-row input[type="checkbox"]:not(:checked) + label .circle {
+  background-color: white !important;
 }
 
 .caption-row label {
