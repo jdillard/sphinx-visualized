@@ -10,7 +10,8 @@ Directly install via pip by using:
 
    pip install sphinx-visualized
 
-Add ``sphinx_visualized`` to the `extensions <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-extensions>`_ array in your Sphinx **conf.py**.
+Add ``sphinx_visualized`` to the :confval:`extensions <sphinx:extensions>` array in your Sphinx **conf.py**.
+
 For example:
 
 .. code-block:: python

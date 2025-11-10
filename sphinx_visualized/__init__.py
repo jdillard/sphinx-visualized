@@ -539,11 +539,12 @@ def fetch_external_project_data(app, project_name):
             return None
 
 
-def merge_external_project_data(home_nodes, home_links, external_project_data, home_page_list):
+def merge_external_project_data(app, home_nodes, home_links, external_project_data, home_page_list):
     """
     Merge external project data into the home project's graph.
 
     Args:
+        app: Sphinx application object
         home_nodes: List of nodes from the home project
         home_links: List of links from the home project
         external_project_data: Dictionary with external project data
@@ -568,17 +569,40 @@ def merge_external_project_data(home_nodes, home_links, external_project_data, h
     # First pass: identify connections between external project and home project
     # Check if any home nodes link to external project URLs
     for home_node in home_nodes:
-        if home_node.get('is_intersphinx') and home_node.get('path', '').startswith(base_url):
-            # This home node is actually a reference to the external project
-            # Mark it for later matching
-            external_nodes_with_home_connections.add(home_node['path'])
+        if home_node.get('is_intersphinx'):
+            node_path = home_node.get('path', '')
+
+            # Normalize the path to absolute if it's relative
+            if not node_path.startswith(('http://', 'https://', 'file://')):
+                # It's a relative path - convert to absolute
+                if not os.path.isabs(node_path):
+                    confdir = app.confdir
+                    # Remove leading ../../../ and make absolute
+                    node_path = os.path.abspath(os.path.join(confdir, node_path))
+
+            # Check if this path is under the base_url directory
+            # Strip fragments for comparison
+            node_path_base = node_path.split('#')[0]
+            base_url_normalized = base_url.split('#')[0]
+
+            if node_path_base.startswith(base_url_normalized):
+                # This home node is actually a reference to the external project
+                # Mark it for later matching (store with fragment for specific matching)
+                external_nodes_with_home_connections.add(node_path)
 
     # Create mapping of external URLs to new node IDs
     external_url_to_node = {}
     merged_nodes = list(home_nodes)
 
-    # Add external project nodes with offset IDs
+    # Add external project nodes with offset IDs (only internal pages, not their external references)
     for vertex in graphson_data.get('vertices', []):
+        # Skip external/intersphinx nodes from the external project
+        # We only want their internal documentation pages
+        if vertex.get('label') in ['external', 'intersphinx', 'external_project']:
+            continue
+        if vertex.get('properties', {}).get('is_external') or vertex.get('properties', {}).get('is_intersphinx'):
+            continue
+
         original_id = vertex['id']
         new_id = original_id + node_id_offset
 
@@ -594,14 +618,17 @@ def merge_external_project_data(home_nodes, home_links, external_project_data, h
             full_url = node_path
 
         # Check if this external node connects to home project
-        has_home_connection = full_url in external_nodes_with_home_connections
+        # Need to check both exact match and base path match (without fragment)
+        full_url_base = full_url.split('#')[0]
+        has_home_connection = any(
+            ref == full_url or ref.split('#')[0] == full_url_base
+            for ref in external_nodes_with_home_connections
+        )
 
-        # Add cluster prefix to indicate external project
-        original_cluster = vertex['properties'].get('cluster')
-        if original_cluster:
-            cluster_name = f"{project_name}:{original_cluster}"
-        else:
-            cluster_name = project_name
+        # All nodes from external project go into single cluster named after the project
+        # (ignore the external project's internal cluster structure)
+        # Use "(external)" suffix to match existing intersphinx node pattern
+        cluster_name = f"{project_name} (external)"
 
         merged_nodes.append({
             'id': new_id,
@@ -613,18 +640,64 @@ def merge_external_project_data(home_nodes, home_links, external_project_data, h
             'has_home_connection': has_home_connection,
         })
 
+        # Store both with and without fragments for matching
         external_url_to_node[full_url] = new_id
+        external_url_to_node[full_url_base] = new_id
 
-    # Update existing home nodes that reference the external project
+    # Create mapping from old intersphinx node IDs to new external project node IDs
+    node_id_redirect = {}
+    intersphinx_node_ids_to_remove = set()
+
     for home_node in merged_nodes:
-        if home_node.get('is_intersphinx') and home_node.get('path', '').startswith(base_url):
-            # Try to find matching external node
-            if home_node['path'] in external_url_to_node:
-                # Mark that this exists in external project
-                home_node['external_project_node_id'] = external_url_to_node[home_node['path']]
+        # ONLY process nodes that are explicitly marked as intersphinx
+        # This ensures we don't accidentally remove home project's internal nodes
+        if not home_node.get('is_intersphinx'):
+            continue
 
-    # Add external project edges with offset IDs
-    merged_links = list(home_links)
+        node_path = home_node.get('path', '')
+
+        # Normalize the path to absolute if it's relative
+        if not node_path.startswith(('http://', 'https://', 'file://')):
+            if not os.path.isabs(node_path):
+                confdir = app.confdir
+                node_path = os.path.abspath(os.path.join(confdir, node_path))
+
+        # Check if this path matches the base_url
+        node_path_base = node_path.split('#')[0]
+        if node_path_base.startswith(base_url.split('#')[0]):
+            # Try to find matching external node (try both with and without fragment)
+            matched_id = external_url_to_node.get(node_path) or external_url_to_node.get(node_path_base)
+            if matched_id:
+                # Map the old intersphinx stub node ID to the actual external project node ID
+                old_id = home_node['id']
+                new_id = matched_id
+                node_id_redirect[old_id] = new_id
+                # Mark this intersphinx stub node for removal (we'll use the full external node instead)
+                intersphinx_node_ids_to_remove.add(old_id)
+
+    # Remove intersphinx stub nodes that have been replaced by full external project nodes
+    # Only remove nodes that are in the removal set (these should only be intersphinx stubs)
+    merged_nodes = [n for n in merged_nodes if n['id'] not in intersphinx_node_ids_to_remove]
+
+    # Update home links to redirect edges from intersphinx stubs to actual external nodes
+    merged_links = []
+    for link in home_links:
+        source_id = link['source']
+        target_id = link['target']
+
+        # Redirect if either endpoint is an intersphinx stub that now has a real external node
+        if source_id in node_id_redirect:
+            source_id = node_id_redirect[source_id]
+        if target_id in node_id_redirect:
+            target_id = node_id_redirect[target_id]
+
+        merged_links.append({
+            **link,
+            'source': source_id,
+            'target': target_id,
+        })
+
+    # Add external project edges with offset IDs (only edges between internal nodes)
     for edge in graphson_data.get('edges', []):
         # Check if both nodes are in external project (not connected to home)
         source_id = edge['outV'] + node_id_offset
@@ -633,6 +706,10 @@ def merge_external_project_data(home_nodes, home_links, external_project_data, h
         # Find if either endpoint connects to home
         source_node = next((n for n in merged_nodes if n['id'] == source_id), None)
         target_node = next((n for n in merged_nodes if n['id'] == target_id), None)
+
+        # Skip edges where either node was filtered out (external/intersphinx nodes)
+        if not source_node or not target_node:
+            continue
 
         has_home_connection = False
         if source_node and source_node.get('has_home_connection'):
@@ -808,6 +885,20 @@ def create_json(app, exception):
             "types": link_types,  # New field: all link types for this edge
         })
 
+    # Fetch and merge external project data if configured
+    # This must happen BEFORE writing nodes.js and links.js
+    visualised_projects = getattr(app.config, 'visualised_projects', [])
+    if visualised_projects:
+        logger.info(f"Fetching data for {len(visualised_projects)} external project(s): {', '.join(visualised_projects)}")
+
+        for project_name in visualised_projects:
+            external_data = fetch_external_project_data(app, project_name)
+            if external_data:
+                logger.info(f"Successfully fetched data for '{project_name}', merging into graph...")
+                nodes, links, _ = merge_external_project_data(app, nodes, links, external_data, page_list)
+            else:
+                logger.info(f"Skipping '{project_name}' - data could not be fetched")
+
     filename = Path(app.outdir) / "_static" / "sphinx-visualized" / "js" / "links.js"
     with open(filename, "w") as json_file:
         json_file.write(f'var links_data = {json.dumps(links, indent=4)};')
@@ -819,18 +910,6 @@ def create_json(app, exception):
     filename = Path(app.outdir) / "_static" / "sphinx-visualized" / "js" / "toctree.js"
     with open(filename, "w") as json_file:
         json_file.write(f'var toctree = {json.dumps(build_toctree_hierarchy(app), indent=4)};')
-
-    # Fetch and merge external project data if configured
-    visualised_projects = getattr(app.config, 'visualised_projects', [])
-    if visualised_projects:
-        logger.info(f"sphinx-vizualised: Fetching data for {len(visualised_projects)} external project(s): {', '.join(visualised_projects)}")
-
-        for project_name in visualised_projects:
-            external_data = fetch_external_project_data(app, project_name)
-            if external_data:
-                nodes, links, _ = merge_external_project_data(nodes, links, external_data, page_list)
-            else:
-                logger.info(f"sphinx-vizualised: Skipping '{project_name}' - data could not be fetched")
 
     # Create GraphSON format
     graphson = create_graphson(nodes, links, page_list, clusters_config)
