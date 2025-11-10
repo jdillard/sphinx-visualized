@@ -438,7 +438,8 @@ window.addEventListener('DOMContentLoaded', async () => {
         // Track which clusters are visible
         const visibleClusters = {};
         clusterConfig.forEach(cluster => {
-          visibleClusters[cluster.name] = true;
+          // Default to hidden if cluster is marked as default_hidden
+          visibleClusters[cluster.name] = !cluster.default_hidden;
         });
 
         const updateGraph = () => {
@@ -773,6 +774,28 @@ window.addEventListener('DOMContentLoaded', async () => {
       };
 
       renderLinkTypesPanel();
+    }
+
+    // Apply initial visibility for clusters with default_hidden flag
+    // This must be done after updateEdgeVisibilityByLinkType is defined
+    if (clusterConfig.length > 0 && legendContainer) {
+      // Find the updateGraph function from the cluster panel scope
+      // Since it's in a closure, we need to trigger it by checking visibility
+      graph.forEachNode((node) => {
+        const nodeData = graph.getNodeAttributes(node);
+        const cluster = nodeData.cluster;
+
+        // Check if this cluster should be hidden by default
+        const clusterInfo = clusterConfig.find(c => c.name === cluster);
+        if (clusterInfo && clusterInfo.default_hidden) {
+          graph.setNodeAttribute(node, 'hidden', true);
+        }
+      });
+
+      // Update edge visibility after hiding nodes
+      if (typeof updateEdgeVisibilityByLinkType === 'function') {
+        updateEdgeVisibilityByLinkType();
+      }
     }
 
     // Search functionality
