@@ -11,14 +11,37 @@
   <script type="module" src="../js/includes-graph.js"></script>
 </head>
 <body class="m-0 p-0 font-sans overflow-hidden">
-  <div class="bg-card shadow-sm border-b border-border">
-    <h1 class="text-2xl font-bold text-foreground text-center py-4 mb-0">Includes Graph</h1>
-    <p class="text-center pb-4">
-      <a href="index.html" class="text-primary hover:underline transition-all">Sphinx Visualized</a>
-    </p>
-  </div>
+  <!-- Navigation Header -->
+  <nav class="border-b border-border bg-card">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center space-x-8">
+          <!-- Logo/Home -->
+          <a href="index.html" class="flex items-center space-x-2 text-foreground hover:text-primary transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+            </svg>
+            <span class="font-semibold text-lg">Sphinx Visualized</span>
+          </a>
 
-  <div id="panels" class="absolute top-20 right-5 w-80 max-h-[calc(100vh-120px)] overflow-y-auto z-[1000]">
+          <!-- Navigation Tabs -->
+          <div class="hidden md:flex space-x-1">
+            <a href="link-graph.html" class="px-4 py-2 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-colors">
+              Link Graph
+            </a>
+            <a href="toctree-graph.html" class="px-4 py-2 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-colors">
+              Toctree Graph
+            </a>
+            <a href="includes-graph.html" class="px-4 py-2 rounded-md text-sm font-medium bg-accent text-foreground transition-colors">
+              Includes Graph
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div id="panels" class="absolute top-[68px] right-5 w-80 max-h-[calc(100vh-88px)] overflow-y-auto z-[1000]">
     <div class="bg-card p-4 rounded-lg shadow-lg mb-2 border border-border" id="search-panel">
       <input type="text" id="search" placeholder="Search files..." class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent text-sm" />
     </div>
@@ -26,7 +49,7 @@
     <div class="bg-card p-4 rounded-lg shadow-lg mb-2 border border-border" id="type-panel"></div>
   </div>
 
-  <div id="graph-container" class="w-screen h-[calc(100vh-100px)] bg-secondary"></div>
+  <div id="graph-container" class="w-screen h-[calc(100vh-68px)] bg-secondary"></div>
 
   <div id="graph-controls" class="absolute bottom-5 left-5 flex flex-col gap-2.5 z-[1000]">
     <button id="zoom-in" class="w-10 h-10 bg-card border border-border rounded-lg cursor-pointer flex items-center justify-center p-2 shadow-md hover:bg-accent hover:shadow-lg transition-all duration-200" title="Zoom in"></button>
