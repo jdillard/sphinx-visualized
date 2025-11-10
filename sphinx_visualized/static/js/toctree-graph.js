@@ -24,6 +24,51 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   await loadControlIcons();
 
+  // Description panel functionality
+  const descriptionContainer = document.getElementById('description-panel');
+  if (descriptionContainer) {
+    const renderDescriptionPanel = async () => {
+      // Load chevron SVG
+      const response = await fetch('../svg/chevron-down.svg');
+      const chevronSvg = await response.text();
+
+      descriptionContainer.innerHTML = `
+        <div class="panel-header" id="description-panel-header">
+          <h3 style="margin: 0; font-size: 1.3em;">
+            About This Graph
+          </h3>
+          <span class="collapse-icon collapsed">${chevronSvg}</span>
+        </div>
+        <div class="panel-content collapsed" id="description-panel-content">
+          <p style="color: #666; font-size: 0.9em; margin-top: 0.5em; line-height: 1.5;">
+            This graph visualizes your documentation's table of contents structure. It shows the hierarchical organization of pages as defined by <code style="background: #f3f4f6; padding: 0.125rem 0.25rem; border-radius: 0.25rem;">toctree</code> directives.
+          </p>
+          <p style="color: #666; font-size: 0.9em; margin-top: 0.5em; line-height: 1.5;">
+            <strong>How to use:</strong>
+          </p>
+          <ul style="color: #666; font-size: 0.9em; line-height: 1.5;">
+            <li>Click a label to navigate to that page</li>
+            <li>Click parent nodes to expand/collapse branches</li>
+            <li>Use expand/collapse all for quick navigation</li>
+            <li>Drag and zoom to explore the tree structure</li>
+          </ul>
+        </div>
+      `;
+
+      // Add collapse/expand functionality
+      const panelHeader = document.getElementById('description-panel-header');
+      const panelContent = document.getElementById('description-panel-content');
+      const collapseIcon = panelHeader.querySelector('.collapse-icon');
+
+      panelHeader.addEventListener('click', () => {
+        panelContent.classList.toggle('collapsed');
+        collapseIcon.classList.toggle('collapsed');
+      });
+    };
+
+    renderDescriptionPanel();
+  }
+
   // Check if we have data
   if (!window.toctree || !window.toctree.label) {
     document.getElementById('graph-container').innerHTML =

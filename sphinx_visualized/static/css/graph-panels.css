@@ -1,5 +1,19 @@
 /* Shared styles for graph visualization panels - shadcn/ui inspired */
 
+/* Description panel list styling */
+#description-panel-content ul {
+  list-style: disc;
+  list-style-position: outside;
+  padding-left: 1rem;
+  margin-left: 0;
+}
+
+#description-panel-content ul li {
+  margin-bottom: 0.5rem;
+  padding-left: 0;
+  line-height: 1.1rem;
+}
+
 /* Panel header and collapse functionality */
 .panel-header {
   display: flex;

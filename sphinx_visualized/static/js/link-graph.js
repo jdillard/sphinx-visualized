@@ -166,6 +166,51 @@ window.addEventListener('DOMContentLoaded', async () => {
       labelColor: { color: '#000' }
     });
 
+    // Description panel functionality
+    const descriptionContainer = document.getElementById('description-panel');
+    if (descriptionContainer) {
+      const renderDescriptionPanel = async () => {
+        // Load chevron SVG
+        const response = await fetch('../svg/chevron-down.svg');
+        const chevronSvg = await response.text();
+
+        descriptionContainer.innerHTML = `
+          <div class="panel-header" id="description-panel-header">
+            <h3 style="margin: 0; font-size: 1.3em;">
+              About This Graph
+            </h3>
+            <span class="collapse-icon collapsed">${chevronSvg}</span>
+          </div>
+          <div class="panel-content collapsed" id="description-panel-content">
+            <p style="color: #666; font-size: 0.9em; margin-top: 0.5em; line-height: 1.5;">
+              This graph visualizes the link structure between pages in your documentation. Each node represents a page, and edges show links between pages.
+            </p>
+            <p style="color: #666; font-size: 0.9em; margin-top: 0.5em; line-height: 1.5;">
+              <strong>How to use:</strong>
+            </p>
+            <ul style="color: #666; font-size: 0.9em; line-height: 1.5;">
+              <li>Click a node to navigate to that page</li>
+              <li>Hover over nodes to highlight connections</li>
+              <li>Filter by clusters, categories, or link types</li>
+              <li>Zoom and pan to explore the network</li>
+            </ul>
+          </div>
+        `;
+
+        // Add collapse/expand functionality
+        const panelHeader = document.getElementById('description-panel-header');
+        const panelContent = document.getElementById('description-panel-content');
+        const collapseIcon = panelHeader.querySelector('.collapse-icon');
+
+        panelHeader.addEventListener('click', () => {
+          panelContent.classList.toggle('collapsed');
+          collapseIcon.classList.toggle('collapsed');
+        });
+      };
+
+      renderDescriptionPanel();
+    }
+
     // State for tracking hover
     let hoveredNode = null;
     let hoveredNeighbors = new Set();
