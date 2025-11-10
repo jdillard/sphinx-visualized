@@ -280,15 +280,19 @@ window.addEventListener('DOMContentLoaded', async () => {
         const response = await fetch('../svg/chevron-down.svg');
         const chevronSvg = await response.text();
 
+        // Check if panel is currently expanded before re-rendering
+        const existingPanelContent = document.getElementById('category-panel-content');
+        const isExpanded = existingPanelContent && !existingPanelContent.classList.contains('collapsed');
+
         categoryContainer.innerHTML = `
           <div class="panel-header" id="category-panel-header">
             <h3 style="margin: 0; font-size: 1.3em;">
               Categories
               ${visibleCount < categories.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${categories.length})</span>` : ''}
             </h3>
-            <span class="collapse-icon collapsed">${chevronSvg}</span>
+            <span class="collapse-icon ${isExpanded ? '' : 'collapsed'}">${chevronSvg}</span>
           </div>
-          <div class="panel-content collapsed" id="category-panel-content">
+          <div class="panel-content ${isExpanded ? '' : 'collapsed'}" id="category-panel-content">
             <p style="color: #666; font-style: italic; font-size: 0.9em; margin-top: 0.5em;">Click a category to show/hide related pages from the network.</p>
             <p class="cluster-buttons">
               <button id="check-all-categories-btn" class="cluster-btn">Show All</button>
@@ -418,15 +422,19 @@ window.addEventListener('DOMContentLoaded', async () => {
           const response = await fetch('../svg/chevron-down.svg');
           const chevronSvg = await response.text();
 
+          // Check if panel is currently expanded before re-rendering
+          const existingPanelContent = document.getElementById('cluster-panel-content');
+          const isExpanded = existingPanelContent && !existingPanelContent.classList.contains('collapsed');
+
           legendContainer.innerHTML = `
             <div class="panel-header" id="cluster-panel-header">
               <h3 style="margin: 0; font-size: 1.3em;">
                 Clusters
                 ${visibleCount < clusterConfig.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${clusterConfig.length})</span>` : ''}
               </h3>
-              <span class="collapse-icon collapsed">${chevronSvg}</span>
+              <span class="collapse-icon ${isExpanded ? '' : 'collapsed'}">${chevronSvg}</span>
             </div>
-            <div class="panel-content collapsed" id="cluster-panel-content">
+            <div class="panel-content ${isExpanded ? '' : 'collapsed'}" id="cluster-panel-content">
               <p style="color: #666; font-style: italic; font-size: 0.9em; margin-top: 0.5em;">Click a cluster to show/hide related pages from the network.</p>
               <p class="cluster-buttons">
                 <button id="check-all-btn" class="cluster-btn">Show All</button>
@@ -607,15 +615,19 @@ window.addEventListener('DOMContentLoaded', async () => {
         const response = await fetch('../svg/chevron-down.svg');
         const chevronSvg = await response.text();
 
+        // Check if panel is currently expanded before re-rendering
+        const existingPanelContent = document.getElementById('link-types-panel-content');
+        const isExpanded = existingPanelContent && !existingPanelContent.classList.contains('collapsed');
+
         linkTypesContainer.innerHTML = `
           <div class="panel-header" id="link-types-panel-header">
             <h3 style="margin: 0; font-size: 1.3em;">
               Link Types
               ${visibleCount < linkTypes.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${linkTypes.length})</span>` : ''}
             </h3>
-            <span class="collapse-icon collapsed">${chevronSvg}</span>
+            <span class="collapse-icon ${isExpanded ? '' : 'collapsed'}">${chevronSvg}</span>
           </div>
-          <div class="panel-content collapsed" id="link-types-panel-content">
+          <div class="panel-content ${isExpanded ? '' : 'collapsed'}" id="link-types-panel-content">
             <p style="color: #666; font-style: italic; font-size: 0.9em; margin-top: 0.5em;">Click a link type to show/hide related links from the network.</p>
             <p class="cluster-buttons">
               <button id="check-all-link-types-btn" class="cluster-btn">Show All</button>
