@@ -70,25 +70,25 @@
     });
   </script>
 
-  <div id="panels" class="absolute top-[68px] right-5 w-80 max-h-[calc(100vh-88px)] overflow-y-auto z-[1000]">
-    <div class="bg-card p-4 rounded-lg shadow-lg mb-2 border border-border" id="search-panel">
+  <div id="panels" class="absolute top-[68px] right-2 md:right-5 w-64 md:w-80 max-h-[calc(100vh-88px)] overflow-y-auto z-[1000]">
+    <div class="bg-card p-3 md:p-4 rounded-lg shadow-lg mb-2 border border-border" id="search-panel">
       <div class="relative">
         <img src="../svg/magnifying-glass.svg" alt="Search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none">
-        <input type="text" id="search" placeholder="Search pages..." class="w-full pl-10 pr-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent text-sm" />
+        <input type="text" id="search" placeholder="Search pages..." class="w-full pl-10 pr-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent text-xs md:text-sm" />
       </div>
     </div>
 
-    <div class="bg-card p-4 rounded-lg shadow-lg mb-2 border border-border" id="description-panel"></div>
+    <div class="bg-card p-3 md:p-4 rounded-lg shadow-lg mb-2 border border-border text-sm md:text-base" id="description-panel"></div>
 
-    <div class="bg-card p-4 rounded-lg shadow-lg mb-2 border border-border" id="cluster-panel"></div>
+    <div class="bg-card p-3 md:p-4 rounded-lg shadow-lg mb-2 border border-border text-sm md:text-base" id="cluster-panel"></div>
 
-    <div class="bg-card p-4 rounded-lg shadow-lg mb-2 border border-border" id="category-panel"></div>
+    <div class="bg-card p-3 md:p-4 rounded-lg shadow-lg mb-2 border border-border text-sm md:text-base" id="category-panel"></div>
 
-    <div class="bg-card p-4 rounded-lg shadow-lg mb-2 border border-border" id="link-types-panel"></div>
+    <div class="bg-card p-3 md:p-4 rounded-lg shadow-lg mb-2 border border-border text-sm md:text-base" id="link-types-panel"></div>
 
-    <div class="bg-card p-4 rounded-lg shadow-lg mb-2 border border-border" id="controls-panel">
-      <h3 style="margin: 0;font-size: 1.3em;font-weight: 600;color: hsl(222.2 84% 4.9%);letter-spacing: -0.025em;">Controls</h3>
-      <button id="export-json" class="block w-full my-2 px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-md text-sm transition-colors duration-150 font-medium">Export GraphSON</button>
+    <div class="bg-card p-3 md:p-4 rounded-lg shadow-lg mb-2 border border-border" id="controls-panel">
+      <h3 class="m-0 text-base md:text-lg font-semibold text-foreground tracking-tight">Controls</h3>
+      <button id="export-json" class="block w-full my-2 px-3 md:px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-md text-xs md:text-sm transition-colors duration-150 font-medium">Export GraphSON</button>
     </div>
   </div>
 
