@@ -6,6 +6,7 @@ Changelog
 
 - Add Glossary stats
 - Add support for link types to link graph
+- Add header navigation
 
 0.7.0
 -----
