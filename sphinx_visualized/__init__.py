@@ -604,8 +604,17 @@ def create_json(app, exception):
                 label = os.path.basename(file_path)
             node_type = "document"
         else:
-            # This is an included file - all same type
-            label = os.path.basename(file_path)
+            # This is an included file - show full path relative to docs root
+            # Use the path as-is (already relative from docs source or absolute)
+            if os.path.isabs(file_path):
+                # If absolute, convert to relative path from source directory
+                try:
+                    label = os.path.relpath(file_path, app.env.srcdir)
+                except (ValueError, TypeError):
+                    label = file_path
+            else:
+                # Already relative, use as-is
+                label = file_path
             node_type = "include"
 
         includes_nodes.append({
