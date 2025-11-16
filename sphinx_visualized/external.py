@@ -136,7 +136,8 @@ def merge_external_project_data(app, home_nodes, home_links, external_project_da
     project_name = external_project_data['project_name']
 
     # Offset for external node IDs to avoid conflicts
-    node_id_offset = len(home_nodes)
+    # Use max ID + 1 to handle sparse/non-sequential IDs
+    node_id_offset = max([n['id'] for n in home_nodes]) + 1 if home_nodes else 0
 
     # Track which external nodes connect to home project
     external_nodes_with_home_connections = set()
