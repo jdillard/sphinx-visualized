@@ -588,11 +588,11 @@ def create_json(app, exception):
     includes_files = set()  # Track all files involved in inclusions
     for source_doc, included_file in includes_list:
         includes_files.add(source_doc)
-        includes_files.add(included_file)
+        includes_files.add(str(included_file))  # Normalize to string (Sphinx can store as Path or str)
 
     # Create nodes for includes graph
     includes_nodes = []
-    includes_file_list = sorted([str(f) for f in includes_files])
+    includes_file_list = sorted(includes_files)
     for file_path in includes_file_list:
         # Check if this is a documentation page or an included file
         if file_path.endswith('.html'):
