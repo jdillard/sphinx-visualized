@@ -544,7 +544,6 @@ window.addEventListener('DOMContentLoaded', async () => {
             if (cluster.show_only_connected_by_default) {
               const unlinkedChecked = showUnlinkedNodes[cluster.name];
               html = `
-                <input type="checkbox" ${unlinkedChecked ? 'checked' : ''} id="cluster-${index}" />
                 <label>
                   <span class="circle" style="background-color: ${color}; border-color: ${color};"></span>
                   <div class="node-label">
@@ -552,6 +551,7 @@ window.addEventListener('DOMContentLoaded', async () => {
                     <div class="bar" style="width: ${barWidth}%;"></div>
                   </div>
                 </label>
+                <input type="checkbox" ${unlinkedChecked ? 'checked' : ''} id="cluster-${index}" />
               `;
             } else {
               // Regular cluster - no checkbox needed

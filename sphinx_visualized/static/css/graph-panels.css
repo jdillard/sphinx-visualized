@@ -112,13 +112,24 @@
   display: none;
 }
 
-/* Show real checkboxes for link types and cluster panels */
-#link-types-panel .caption-row input[type="checkbox"],
-#cluster-panel .caption-row input[type="checkbox"] {
+/* Show real checkboxes for link types panel (left side) */
+#link-types-panel .caption-row input[type="checkbox"] {
   display: inline-block;
   width: 1rem;
   height: 1rem;
   margin-right: 0.5rem;
+  margin-top: 0.25rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  accent-color: hsl(215.4 16.3% 46.9%);
+}
+
+/* Show real checkboxes for cluster panel (right side) */
+#cluster-panel .caption-row input[type="checkbox"] {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  margin-left: 0.5rem;
   margin-top: 0.25rem;
   cursor: pointer;
   flex-shrink: 0;
