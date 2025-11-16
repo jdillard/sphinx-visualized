@@ -4,6 +4,7 @@ Changelog
 0.8.2
 -----
 
+- Add icons to graph panel headings
 - Increase the zoom out limit for the toctree graph 
 
 0.8.1
