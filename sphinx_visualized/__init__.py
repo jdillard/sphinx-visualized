@@ -17,7 +17,7 @@ from sphinx.util import logging
 
 from .external import fetch_external_project_data, merge_external_project_data
 
-__version__ = "0.8.1"
+__version__ = "0.9.0"
 
 logger = logging.getLogger(__name__)
 
