@@ -22,3 +22,12 @@ For advanced usage, see :doc:`advanced-configuration`.
      See :ref:`auto_clustering` for more details.
 
    .. versionadded:: 0.6.0
+
+.. confval:: visualised_projects
+
+   - **Type**: list of strings
+   - **Default**: ``[]`` (empty list)
+   - **Description**: List of external Sphinx projects to integrate into the link graph visualization.
+     See :ref:`external_projects` for detailed usage examples.
+
+   .. versionadded:: 0.9.0
