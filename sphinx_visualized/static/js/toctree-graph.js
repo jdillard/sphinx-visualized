@@ -37,7 +37,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       descriptionContainer.innerHTML = `
         <div class="panel-header" id="description-panel-header">
           <h3 style="margin: 0; font-size: 1.3em; display: flex; align-items: center; gap: 0.5rem;">
-            <span style="width: 1.25rem; height: 1.25rem; display: inline-flex;">${infoSvg}</span>
+            <span style="width: 1.25rem; height: 1.25rem; display: inline-flex; opacity: 0.6;">${infoSvg}</span>
             <span>About This Graph</span>
           </h3>
           <span class="collapse-icon collapsed">${chevronSvg}</span>

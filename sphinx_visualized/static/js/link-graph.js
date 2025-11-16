@@ -179,7 +179,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         descriptionContainer.innerHTML = `
           <div class="panel-header" id="description-panel-header">
             <h3 style="margin: 0; font-size: 1.3em; display: flex; align-items: center; gap: 0.5rem;">
-              <span style="width: 1.25rem; height: 1.25rem; display: inline-flex;">${infoSvg}</span>
+              <span style="width: 1.25rem; height: 1.25rem; display: inline-flex; opacity: 0.6;">${infoSvg}</span>
               <span>About This Graph</span>
             </h3>
             <span class="collapse-icon collapsed">${chevronSvg}</span>
@@ -359,7 +359,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         categoryContainer.innerHTML = `
           <div class="panel-header" id="category-panel-header">
             <h3 style="margin: 0; font-size: 1.3em; display: flex; align-items: center; gap: 0.5rem;">
-              <span style="width: 1.25rem; height: 1.25rem; display: inline-flex;">${squaresSvg}</span>
+              <span style="width: 1.25rem; height: 1.25rem; display: inline-flex; opacity: 0.6;">${squaresSvg}</span>
               <span>Categories</span>
               ${visibleCount < categories.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${categories.length})</span>` : ''}
             </h3>
@@ -504,7 +504,7 @@ window.addEventListener('DOMContentLoaded', async () => {
           legendContainer.innerHTML = `
             <div class="panel-header" id="cluster-panel-header">
               <h3 style="margin: 0; font-size: 1.3em; display: flex; align-items: center; gap: 0.5rem;">
-                <span style="width: 1.25rem; height: 1.25rem; display: inline-flex;">${cubeSvg}</span>
+                <span style="width: 1.25rem; height: 1.25rem; display: inline-flex; opacity: 0.6;">${cubeSvg}</span>
                 <span>Clusters</span>
                 ${visibleCount < clusterConfig.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${clusterConfig.length})</span>` : ''}
               </h3>
@@ -700,7 +700,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         linkTypesContainer.innerHTML = `
           <div class="panel-header" id="link-types-panel-header">
             <h3 style="margin: 0; font-size: 1.3em; display: flex; align-items: center; gap: 0.5rem;">
-              <span style="width: 1.25rem; height: 1.25rem; display: inline-flex;">${arrowSvg}</span>
+              <span style="width: 1.25rem; height: 1.25rem; display: inline-flex; opacity: 0.6;">${arrowSvg}</span>
               <span>Link Types</span>
               ${visibleCount < linkTypes.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${linkTypes.length})</span>` : ''}
             </h3>
