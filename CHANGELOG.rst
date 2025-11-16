@@ -5,6 +5,7 @@ Changelog
 -----
 
 - Make mobile friendly
+- Use full relative path (from root) for include files
 
 0.8.0
 -----
