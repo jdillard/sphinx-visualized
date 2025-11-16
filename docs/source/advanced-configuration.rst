@@ -76,7 +76,7 @@ With auto-clustering enabled:
 Integrating External Projects
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To integrate documentation from other Sphinx projects that also use the **sphinx-visualized** extension, add them to the ``visualised_projects`` list.
+To integrate documentation from other Sphinx projects that also use the **sphinx-visualized** extension, add them to the :confval:`visualised_projects` list.
 Each project name must match an entry in your ``intersphinx_mapping``:
 
 .. code-block:: python
