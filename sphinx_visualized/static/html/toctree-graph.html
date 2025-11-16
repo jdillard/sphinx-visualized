@@ -80,20 +80,28 @@
 
     <div class="bg-card p-3 md:p-4 rounded-lg shadow-lg mb-2 border border-border text-sm md:text-base" id="description-panel"></div>
 
-    <div class="bg-card p-3 md:p-4 rounded-lg shadow-lg mb-2 border border-border" id="controls-panel">
-      <h3 class="m-0 text-base md:text-lg font-semibold text-foreground tracking-tight">Controls</h3>
-      <div class="mt-2">
-        <h4 class="m-0 mb-2 text-sm font-medium text-foreground">Expand/Collapse</h4>
-        <div class="flex gap-2">
-          <button id="expand-all-btn" class="flex-1 px-3 md:px-4 py-2 bg-card border border-border rounded-md text-xs md:text-sm hover:bg-accent hover:shadow transition-all duration-200 font-medium">Expand All</button>
-          <button id="collapse-all-btn" class="flex-1 px-3 md:px-4 py-2 bg-card border border-border rounded-md text-xs md:text-sm hover:bg-accent hover:shadow transition-all duration-200 font-medium">Collapse All</button>
-        </div>
+    <div class="bg-card p-3 md:p-4 rounded-lg shadow-lg mb-2 border border-border text-sm md:text-base" id="controls-panel">
+      <div class="panel-header" id="controls-panel-header">
+        <h3 style="margin: 0; font-size: 1.3em; display: flex; align-items: center; gap: 0.5rem;">
+          <img src="../svg/cog.svg" alt="Controls" class="w-4 h-4 md:w-5 md:h-5" style="opacity: 0.6;">
+          <span>Controls</span>
+        </h3>
+        <span class="collapse-icon" id="controls-collapse-icon"></span>
       </div>
-      <div class="mt-3">
-        <h4 class="m-0 mb-2 text-sm font-medium text-foreground">Column Spacing</h4>
-        <div class="flex items-center gap-2">
-          <input type="range" id="spacing-slider" min="50" max="600" value="200" step="25" class="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary" />
-          <span id="spacing-value" class="text-xs text-muted-foreground font-medium w-12 text-right">200px</span>
+      <div class="panel-content" id="controls-panel-content">
+        <div style="margin-top: 0.5em;">
+          <h4 style="margin: 0 0 0.5rem 0; font-size: 0.9em; font-weight: 500;">Expand/Collapse</h4>
+          <div style="display: flex; gap: 0.5rem;">
+            <button id="expand-all-btn" class="flex-1 px-3 md:px-4 py-2 bg-card border border-border rounded-md text-xs md:text-sm hover:bg-accent hover:shadow transition-all duration-200 font-medium">Expand All</button>
+            <button id="collapse-all-btn" class="flex-1 px-3 md:px-4 py-2 bg-card border border-border rounded-md text-xs md:text-sm hover:bg-accent hover:shadow transition-all duration-200 font-medium">Collapse All</button>
+          </div>
+        </div>
+        <div style="margin-top: 0.75rem;">
+          <h4 style="margin: 0 0 0.5rem 0; font-size: 0.9em; font-weight: 500;">Column Spacing</h4>
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <input type="range" id="spacing-slider" min="50" max="600" value="200" step="25" class="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary" />
+            <span id="spacing-value" style="font-size: 0.75rem; color: #666; font-weight: 500; width: 3rem; text-align: right;">200px</span>
+          </div>
         </div>
       </div>
     </div>

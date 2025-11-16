@@ -137,11 +137,14 @@ window.addEventListener('DOMContentLoaded', async () => {
         // Load chevron SVG
         const response = await fetch('../svg/chevron-down.svg');
         const chevronSvg = await response.text();
+        const infoResponse = await fetch('../svg/info.svg');
+        const infoSvg = await infoResponse.text();
 
         descriptionContainer.innerHTML = `
           <div class="panel-header" id="description-panel-header">
-            <h3 style="margin: 0; font-size: 1.3em;">
-              About This Graph
+            <h3 style="margin: 0; font-size: 1.3em; display: flex; align-items: center; gap: 0.5rem;">
+              <span style="width: 1.25rem; height: 1.25rem; display: inline-flex; opacity: 0.6;">${infoSvg}</span>
+              <span>About This Graph</span>
             </h3>
             <span class="collapse-icon collapsed">${chevronSvg}</span>
           </div>
@@ -280,14 +283,17 @@ window.addEventListener('DOMContentLoaded', async () => {
           'literalinclude': 'Code Inclusions'
         };
 
-        // Load chevron SVG
-        const response = await fetch('../svg/chevron-down.svg');
-        const chevronSvg = await response.text();
+        // Load chevron and document-text SVGs
+        const chevronResponse = await fetch('../svg/chevron-down.svg');
+        const chevronSvg = await chevronResponse.text();
+        const documentResponse = await fetch('../svg/document-text.svg');
+        const documentSvg = await documentResponse.text();
 
         typeContainer.innerHTML = `
           <div class="panel-header" id="type-panel-header">
-            <h3 style="margin: 0; font-size: 1.3em;">
-              File Types
+            <h3 style="margin: 0; font-size: 1.3em; display: flex; align-items: center; gap: 0.5rem;">
+              <span style="width: 1.25rem; height: 1.25rem; display: inline-flex; opacity: 0.6;">${documentSvg}</span>
+              <span>File Types</span>
               ${visibleCount < types.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${types.length})</span>` : ''}
             </h3>
             <span class="collapse-icon">${chevronSvg}</span>
