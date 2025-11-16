@@ -553,7 +553,7 @@ window.addEventListener('DOMContentLoaded', async () => {
               const unlinkedChecked = showUnlinkedNodes[cluster.name];
               html += `
                 <input type="checkbox" ${unlinkedChecked ? 'checked' : ''} id="cluster-unlinked-${index}" style="margin-left: 28px;" />
-                <label title="Show all ${cluster.external_project_name || 'external'} nodes">
+                <label for="cluster-unlinked-${index}" title="Show all ${cluster.external_project_name || 'external'} nodes">
                   <span class="circle" style="background-color: #999; border-color: #999;"></span>
                 </label>
               `;
