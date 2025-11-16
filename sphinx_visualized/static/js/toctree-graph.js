@@ -28,14 +28,17 @@ window.addEventListener('DOMContentLoaded', async () => {
   const descriptionContainer = document.getElementById('description-panel');
   if (descriptionContainer) {
     const renderDescriptionPanel = async () => {
-      // Load chevron SVG
-      const response = await fetch('../svg/chevron-down.svg');
-      const chevronSvg = await response.text();
+      // Load chevron and info SVGs
+      const chevronResponse = await fetch('../svg/chevron-down.svg');
+      const chevronSvg = await chevronResponse.text();
+      const infoResponse = await fetch('../svg/info.svg');
+      const infoSvg = await infoResponse.text();
 
       descriptionContainer.innerHTML = `
         <div class="panel-header" id="description-panel-header">
-          <h3 style="margin: 0; font-size: 1.3em;">
-            About This Graph
+          <h3 style="margin: 0; font-size: 1.3em; display: flex; align-items: center; gap: 0.5rem;">
+            <span style="width: 1.25rem; height: 1.25rem; display: inline-flex;">${infoSvg}</span>
+            <span>About This Graph</span>
           </h3>
           <span class="collapse-icon collapsed">${chevronSvg}</span>
         </div>
@@ -68,6 +71,28 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     renderDescriptionPanel();
   }
+
+  // Controls panel functionality
+  const setupControlsPanel = async () => {
+    const collapseIcon = document.getElementById('controls-collapse-icon');
+    if (collapseIcon) {
+      // Load chevron SVG
+      const chevronResponse = await fetch('../svg/chevron-down.svg');
+      const chevronSvg = await chevronResponse.text();
+      collapseIcon.innerHTML = chevronSvg;
+
+      // Add click handler for collapse/expand
+      const header = document.getElementById('controls-panel-header');
+      const content = document.getElementById('controls-panel-content');
+
+      header.addEventListener('click', () => {
+        content.classList.toggle('collapsed');
+        collapseIcon.classList.toggle('collapsed');
+      });
+    }
+  };
+
+  setupControlsPanel();
 
   // Check if we have data
   if (!window.toctree || !window.toctree.label) {
