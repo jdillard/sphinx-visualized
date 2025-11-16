@@ -493,9 +493,15 @@ window.addEventListener('DOMContentLoaded', async () => {
         const renderLegend = async () => {
           const visibleCount = Object.values(visibleClusters).filter(v => v).length;
 
-          // Load chevron SVG
-          const response = await fetch('../svg/chevron-down.svg');
-          const chevronSvg = await response.text();
+          // Load SVGs
+          const chevronResponse = await fetch('../svg/chevron-down.svg');
+          const chevronSvg = await chevronResponse.text();
+
+          const linkResponse = await fetch('../svg/link.svg');
+          const linkSvg = await linkResponse.text();
+
+          const linkSlashResponse = await fetch('../svg/link-slash.svg');
+          const linkSlashSvg = await linkSlashResponse.text();
 
           // Check if panel is currently expanded before re-rendering
           const existingPanelContent = document.getElementById('cluster-panel-content');
@@ -542,7 +548,8 @@ window.addEventListener('DOMContentLoaded', async () => {
             let html = '';
 
             if (cluster.show_only_connected_by_default) {
-              const unlinkedChecked = showUnlinkedNodes[cluster.name];
+              const showingUnlinked = showUnlinkedNodes[cluster.name];
+              const iconSvg = showingUnlinked ? linkSlashSvg : linkSvg;
               html = `
                 <label>
                   <span class="circle" style="background-color: ${color}; border-color: ${color};"></span>
@@ -551,10 +558,10 @@ window.addEventListener('DOMContentLoaded', async () => {
                     <div class="bar" style="width: ${barWidth}%;"></div>
                   </div>
                 </label>
-                <input type="checkbox" ${unlinkedChecked ? 'checked' : ''} id="cluster-${index}" />
+                <span class="link-toggle-icon" data-cluster="${cluster.name}" title="${showingUnlinked ? 'Showing all nodes (click to show only linked)' : 'Showing only linked nodes (click to show all)'}">${iconSvg}</span>
               `;
             } else {
-              // Regular cluster - no checkbox needed
+              // Regular cluster - no icon needed
               html = `
                 <label>
                   <span class="circle" style="background-color: ${color}; border-color: ${color};"></span>
@@ -568,13 +575,15 @@ window.addEventListener('DOMContentLoaded', async () => {
 
             li.innerHTML = html;
 
-            // Checkbox handler (for external projects only - toggles unlinked nodes)
+            // Link toggle icon handler (for external projects only - toggles unlinked nodes)
             if (cluster.show_only_connected_by_default) {
-              const checkbox = li.querySelector(`#cluster-${index}`);
-              if (checkbox) {
-                checkbox.addEventListener('change', (e) => {
-                  showUnlinkedNodes[cluster.name] = e.target.checked;
+              const linkToggle = li.querySelector('.link-toggle-icon');
+              if (linkToggle) {
+                linkToggle.addEventListener('click', (e) => {
+                  e.stopPropagation();
+                  showUnlinkedNodes[cluster.name] = !showUnlinkedNodes[cluster.name];
                   updateGraph();
+                  renderLegend();
                 });
               }
             }
@@ -582,11 +591,6 @@ window.addEventListener('DOMContentLoaded', async () => {
             // Circle/label click handler - toggles entire cluster visibility
             const label = li.querySelector('label');
             label.addEventListener('click', (e) => {
-              // Don't trigger if clicking the checkbox itself
-              if (e.target.tagName === 'INPUT') {
-                return;
-              }
-
               e.preventDefault();
 
               // Toggle cluster visibility
