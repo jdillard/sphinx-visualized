@@ -76,9 +76,8 @@ With auto-clustering enabled:
 Integrating External Projects
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-sphinx-visualized can integrate documentation from other Sphinx projects that also use the sphinx-visualized extension. This creates a unified visualization showing how your documentation links to and references external projects.
-
-To integrate external projects, add them to the ``visualised_projects`` list in your ``conf.py``. Each project name must match an entry in your ``intersphinx_mapping``:
+To integrate documentation from other Sphinx projects that also use the **sphinx-visualized** extension, add them to the ``visualised_projects`` list.
+Each project name must match an entry in your ``intersphinx_mapping``:
 
 .. code-block:: python
 
@@ -88,8 +87,6 @@ To integrate external projects, add them to the ``visualised_projects`` list in 
    }
 
    visualised_projects = ['sphinx']
-
-.. note:: The external project must use the sphinx-visualized extension.
 
 GraphSON Export
 ^^^^^^^^^^^^^^^
