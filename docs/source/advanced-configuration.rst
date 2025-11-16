@@ -76,8 +76,7 @@ With auto-clustering enabled:
 Integrating External Projects
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To integrate documentation from other Sphinx projects that also use the **sphinx-visualized** extension, add them to the :confval:`visualised_projects` list.
-Each project name must match an entry in your ``intersphinx_mapping``:
+Integrate documentation from other Sphinx projects that also use the **sphinx-visualized** extension:
 
 .. code-block:: python
 
@@ -87,6 +86,8 @@ Each project name must match an entry in your ``intersphinx_mapping``:
    }
 
    visualised_projects = ['sphinx']
+
+.. note:: Each project name must match an entry in your :confval:`intersphinx_mapping`.
 
 GraphSON Export
 ^^^^^^^^^^^^^^^
