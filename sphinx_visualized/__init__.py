@@ -203,17 +203,31 @@ def create_objects(app):
     manager = Manager()
     builder.env.app.pages = manager.dict() # an index of page names
     builder.env.app.references = manager.Queue() # a queue of every internal reference made between pages
+    builder.env.app.image_counts = manager.dict() # track image counts per page
 
 
 def get_links(app, doctree, docname):
     """
-    Gather internal and external link connections
+    Gather internal and external link connections and count images/figures
     """
 
     #TODO handle troctree entries?
     #TODO get targets
     # for node in doctree.traverse(sphinx.addnodes.toctree):
     #     print(vars(node))
+
+    # Count images and figures in this document
+    image_count = 0
+    for node in doctree.traverse(docutils_nodes.image):
+        image_count += 1
+
+    for node in doctree.traverse(docutils_nodes.figure):
+        image_count += 1
+
+    # Store image count for this page
+    if image_count > 0:
+        docname_page = f"/{docname}.html"
+        app.env.app.image_counts[docname_page] = image_count
 
     for node in doctree.traverse(docutils_nodes.reference):
         if node.tagname == 'reference' and node.get('refuri'):
@@ -680,3 +694,37 @@ def create_json(app, exception):
     filename = Path(app.outdir) / "_static" / "sphinx-visualized" / "js" / "glossary-stats.js"
     with open(filename, "w") as json_file:
         json_file.write(f'var glossary_stats = {json.dumps(glossary_stats, indent=4)};')
+
+    # Calculate image/figure statistics
+    image_counts_dict = dict(app.env.app.image_counts) if hasattr(app.env.app, 'image_counts') else {}
+    total_images = sum(image_counts_dict.values())
+    pages_with_images = len(image_counts_dict)
+
+    # Get pages with most images (top 10)
+    most_images = []
+    if image_counts_dict:
+        sorted_pages = sorted(image_counts_dict.items(), key=lambda x: x[1], reverse=True)[:10]
+        for page_path, count in sorted_pages:
+            # Get page title
+            docname = page_path[1:-5]  # Remove leading / and .html
+            if app.env.titles.get(docname):
+                label = app.env.titles.get(docname).astext()
+            else:
+                label = os.path.basename(page_path)
+
+            most_images.append({
+                "page": label,
+                "path": f"../../..{page_path}",
+                "count": count
+            })
+
+    image_stats = {
+        "total_images": total_images,
+        "pages_with_images": pages_with_images,
+        "pages_with_most_images": most_images
+    }
+
+    # Write image stats to JavaScript file
+    filename = Path(app.outdir) / "_static" / "sphinx-visualized" / "js" / "image-stats.js"
+    with open(filename, "w") as json_file:
+        json_file.write(f'var image_stats = {json.dumps(image_stats, indent=4)};')
