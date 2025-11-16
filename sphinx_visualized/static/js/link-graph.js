@@ -174,11 +174,14 @@ window.addEventListener('DOMContentLoaded', async () => {
         // Load chevron SVG
         const response = await fetch('../svg/chevron-down.svg');
         const chevronSvg = await response.text();
+        const infoResponse = await fetch('../svg/info.svg');
+        const infoSvg = await infoResponse.text();
 
         descriptionContainer.innerHTML = `
           <div class="panel-header" id="description-panel-header">
-            <h3 style="margin: 0; font-size: 1.3em;">
-              About This Graph
+            <h3 style="margin: 0; font-size: 1.3em; display: flex; align-items: center; gap: 0.5rem;">
+              <span style="width: 1.25rem; height: 1.25rem; display: inline-flex; opacity: 0.6;">${infoSvg}</span>
+              <span>About This Graph</span>
             </h3>
             <span class="collapse-icon collapsed">${chevronSvg}</span>
           </div>
@@ -211,6 +214,28 @@ window.addEventListener('DOMContentLoaded', async () => {
 
       renderDescriptionPanel();
     }
+
+    // Controls panel functionality
+    const setupControlsPanel = async () => {
+      const collapseIcon = document.getElementById('controls-collapse-icon');
+      if (collapseIcon) {
+        // Load chevron SVG
+        const chevronResponse = await fetch('../svg/chevron-down.svg');
+        const chevronSvg = await chevronResponse.text();
+        collapseIcon.innerHTML = chevronSvg;
+
+        // Add click handler for collapse/expand
+        const header = document.getElementById('controls-panel-header');
+        const content = document.getElementById('controls-panel-content');
+
+        header.addEventListener('click', () => {
+          content.classList.toggle('collapsed');
+          collapseIcon.classList.toggle('collapsed');
+        });
+      }
+    };
+
+    setupControlsPanel();
 
     // State for tracking hover
     let hoveredNode = null;
@@ -322,9 +347,11 @@ window.addEventListener('DOMContentLoaded', async () => {
         // Calculate max nodes for progress bar scaling
         const maxNodesPerCategory = Math.max(...categories.map(c => nodesPerCategory[c] || 0));
 
-        // Load chevron SVG
-        const response = await fetch('../svg/chevron-down.svg');
-        const chevronSvg = await response.text();
+        // Load chevron and squares-2x2 SVGs
+        const chevronResponse = await fetch('../svg/chevron-down.svg');
+        const chevronSvg = await chevronResponse.text();
+        const squaresResponse = await fetch('../svg/squares-2x2.svg');
+        const squaresSvg = await squaresResponse.text();
 
         // Check if panel is currently expanded before re-rendering
         const existingPanelContent = document.getElementById('category-panel-content');
@@ -332,8 +359,9 @@ window.addEventListener('DOMContentLoaded', async () => {
 
         categoryContainer.innerHTML = `
           <div class="panel-header" id="category-panel-header">
-            <h3 style="margin: 0; font-size: 1.3em;">
-              Categories
+            <h3 style="margin: 0; font-size: 1.3em; display: flex; align-items: center; gap: 0.5rem;">
+              <span style="width: 1.25rem; height: 1.25rem; display: inline-flex; opacity: 0.6;">${squaresSvg}</span>
+              <span>Categories</span>
               ${visibleCount < categories.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${categories.length})</span>` : ''}
             </h3>
             <span class="collapse-icon ${isExpanded ? '' : 'collapsed'}">${chevronSvg}</span>
@@ -503,14 +531,18 @@ window.addEventListener('DOMContentLoaded', async () => {
           const linkSlashResponse = await fetch('../svg/link-slash.svg');
           const linkSlashSvg = await linkSlashResponse.text();
 
+          const cubeResponse = await fetch('../svg/cube-transparent.svg');
+          const cubeSvg = await cubeResponse.text();
+
           // Check if panel is currently expanded before re-rendering
           const existingPanelContent = document.getElementById('cluster-panel-content');
           const isExpanded = existingPanelContent && !existingPanelContent.classList.contains('collapsed');
 
           legendContainer.innerHTML = `
             <div class="panel-header" id="cluster-panel-header">
-              <h3 style="margin: 0; font-size: 1.3em;">
-                Clusters
+              <h3 style="margin: 0; font-size: 1.3em; display: flex; align-items: center; gap: 0.5rem;">
+                <span style="width: 1.25rem; height: 1.25rem; display: inline-flex; opacity: 0.6;">${cubeSvg}</span>
+                <span>Clusters</span>
                 ${visibleCount < clusterConfig.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${clusterConfig.length})</span>` : ''}
               </h3>
               <span class="collapse-icon ${isExpanded ? '' : 'collapsed'}">${chevronSvg}</span>
@@ -733,9 +765,11 @@ window.addEventListener('DOMContentLoaded', async () => {
         // Calculate max edges for progress bar scaling
         const maxEdgesPerType = Math.max(...linkTypes.map(t => edgesPerLinkType[t] || 0));
 
-        // Load chevron SVG
-        const response = await fetch('../svg/chevron-down.svg');
-        const chevronSvg = await response.text();
+        // Load chevron and arrow-path SVGs
+        const chevronResponse = await fetch('../svg/chevron-down.svg');
+        const chevronSvg = await chevronResponse.text();
+        const arrowResponse = await fetch('../svg/arrow-path.svg');
+        const arrowSvg = await arrowResponse.text();
 
         // Check if panel is currently expanded before re-rendering
         const existingPanelContent = document.getElementById('link-types-panel-content');
@@ -743,8 +777,9 @@ window.addEventListener('DOMContentLoaded', async () => {
 
         linkTypesContainer.innerHTML = `
           <div class="panel-header" id="link-types-panel-header">
-            <h3 style="margin: 0; font-size: 1.3em;">
-              Link Types
+            <h3 style="margin: 0; font-size: 1.3em; display: flex; align-items: center; gap: 0.5rem;">
+              <span style="width: 1.25rem; height: 1.25rem; display: inline-flex; opacity: 0.6;">${arrowSvg}</span>
+              <span>Link Types</span>
               ${visibleCount < linkTypes.length ? `<span style="color: #666; font-size: 0.8em;"> (${visibleCount} / ${linkTypes.length})</span>` : ''}
             </h3>
             <span class="collapse-icon ${isExpanded ? '' : 'collapsed'}">${chevronSvg}</span>

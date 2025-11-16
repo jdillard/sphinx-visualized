@@ -86,9 +86,17 @@
 
     <div class="bg-card p-3 md:p-4 rounded-lg shadow-lg mb-2 border border-border text-sm md:text-base" id="link-types-panel"></div>
 
-    <div class="bg-card p-3 md:p-4 rounded-lg shadow-lg mb-2 border border-border" id="controls-panel">
-      <h3 class="m-0 text-base md:text-lg font-semibold text-foreground tracking-tight">Controls</h3>
-      <button id="export-json" class="block w-full my-2 px-3 md:px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-md text-xs md:text-sm transition-colors duration-150 font-medium">Export GraphSON</button>
+    <div class="bg-card p-3 md:p-4 rounded-lg shadow-lg mb-2 border border-border text-sm md:text-base" id="controls-panel">
+      <div class="panel-header" id="controls-panel-header">
+        <h3 style="margin: 0; font-size: 1.3em; display: flex; align-items: center; gap: 0.5rem;">
+          <img src="../svg/cog.svg" alt="Controls" class="w-4 h-4 md:w-5 md:h-5" style="opacity: 0.6;">
+          <span>Controls</span>
+        </h3>
+        <span class="collapse-icon collapsed" id="controls-collapse-icon"></span>
+      </div>
+      <div class="panel-content collapsed" id="controls-panel-content">
+        <button id="export-json" class="block w-full mt-2 px-3 md:px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-md text-xs md:text-sm transition-colors duration-150 font-medium">Export GraphSON</button>
+      </div>
     </div>
   </div>
 
