@@ -14,7 +14,7 @@ from docutils import nodes as docutils_nodes
 from multiprocessing import Manager, Queue
 from fnmatch import fnmatch
 
-__version__ = "0.8.1"
+__version__ = "0.8.2"
 
 
 def setup(app):
