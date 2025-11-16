@@ -305,15 +305,21 @@ def build_toctree_hierarchy(app):
 
         for child in data[key]:
             if child not in node_map:
+                title = app.env.titles.get(child)
+                label = title.astext() if title is not None else child
                 node_map[child] = {
                     "id": child,
-                    "label": app.env.titles.get(child).astext(),
+                    "label": label,
                     "path": f"../../../{child}.html",
                     "children": [],
                 }
             node_map[key]["children"].append(node_map[child])
 
-    return node_map[app.builder.config.root_doc]
+    root_doc = app.builder.config.root_doc
+    if root_doc not in node_map:
+        # Build may have failed, return empty structure
+        return {"id": root_doc, "label": root_doc, "path": f"../../../{root_doc}.html", "children": []}
+    return node_map[root_doc]
 
 
 def create_graphson(nodes, links, page_list, clusters_config):
@@ -644,11 +650,11 @@ def create_json(app, exception):
     includes_files = set()  # Track all files involved in inclusions
     for source_doc, included_file in includes_list:
         includes_files.add(source_doc)
-        includes_files.add(included_file)
+        includes_files.add(str(included_file))  # Normalize to string (Sphinx can store as Path or str)
 
     # Create nodes for includes graph
     includes_nodes = []
-    includes_file_list = sorted(list(includes_files))
+    includes_file_list = sorted(includes_files)
     for file_path in includes_file_list:
         # Check if this is a documentation page or an included file
         if file_path.endswith('.html'):
@@ -660,8 +666,17 @@ def create_json(app, exception):
                 label = os.path.basename(file_path)
             node_type = "document"
         else:
-            # This is an included file - all same type
-            label = os.path.basename(file_path)
+            # This is an included file - show full path relative to docs root
+            # Use the path as-is (already relative from docs source or absolute)
+            if os.path.isabs(file_path):
+                # If absolute, convert to relative path from source directory
+                try:
+                    label = os.path.relpath(file_path, app.env.srcdir)
+                except (ValueError, TypeError):
+                    label = file_path
+            else:
+                # Already relative, use as-is
+                label = file_path
             node_type = "include"
 
         includes_nodes.append({

@@ -86,7 +86,22 @@ window.addEventListener('DOMContentLoaded', async () => {
   // Rows are separated by dx pixels, columns by dy pixels
   const root = d3.hierarchy(window.toctree);
   const dx = 30; // Increased vertical spacing (was 20)
-  const dy = 200; // Increased horizontal spacing for better visibility
+
+  // Load column spacing from localStorage or use default
+  let dy = parseInt(localStorage.getItem('toctree-column-spacing')) || 200;
+
+  // Update the spacing display and slider
+  const updateSpacingDisplay = () => {
+    const spacingValueEl = document.getElementById('spacing-value');
+    const spacingSlider = document.getElementById('spacing-slider');
+    if (spacingValueEl) {
+      spacingValueEl.textContent = `${dy}px`;
+    }
+    if (spacingSlider) {
+      spacingSlider.value = dy;
+    }
+  };
+  updateSpacingDisplay();
 
   // Define the tree layout and the shape for links
   const tree = d3.tree().nodeSize([dx, dy]);
@@ -304,6 +319,15 @@ window.addEventListener('DOMContentLoaded', async () => {
   // Collapse all nodes (except root)
   document.getElementById('collapse-all-btn')?.addEventListener('click', () => {
     collapseAll(root);
+    update(null, root);
+  });
+
+  // Column spacing slider control
+  document.getElementById('spacing-slider')?.addEventListener('input', (e) => {
+    dy = parseInt(e.target.value);
+    localStorage.setItem('toctree-column-spacing', dy);
+    tree.nodeSize([dx, dy]);
+    updateSpacingDisplay();
     update(null, root);
   });
 
