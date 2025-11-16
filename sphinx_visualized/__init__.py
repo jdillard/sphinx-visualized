@@ -667,7 +667,14 @@ def create_json(app, exception):
     includes_files = set()  # Track all files involved in inclusions
     for source_doc, included_file in includes_list:
         includes_files.add(source_doc)
-        includes_files.add(str(included_file))  # Normalize to string (Sphinx can store as Path or str)
+        # Normalize included files to relative paths to avoid duplicates
+        included_file_str = str(included_file)
+        if os.path.isabs(included_file_str):
+            try:
+                included_file_str = os.path.relpath(included_file_str, app.env.srcdir)
+            except (ValueError, TypeError):
+                pass  # Keep absolute path if conversion fails
+        includes_files.add(included_file_str)
 
     # Create nodes for includes graph
     includes_nodes = []
@@ -707,9 +714,17 @@ def create_json(app, exception):
     includes_links = []
     includes_counts = Counter(includes_list)
     for (source_doc, included_file), count in includes_counts.items():
+        # Normalize included_file to match how we normalized it when building the file list
+        included_file_str = str(included_file)
+        if os.path.isabs(included_file_str):
+            try:
+                included_file_str = os.path.relpath(included_file_str, app.env.srcdir)
+            except (ValueError, TypeError):
+                pass  # Keep absolute path if conversion fails
+
         includes_links.append({
             "source": includes_file_list.index(source_doc),
-            "target": includes_file_list.index(included_file),
+            "target": includes_file_list.index(included_file_str),
             "type": "include",
             "count": count,
         })
