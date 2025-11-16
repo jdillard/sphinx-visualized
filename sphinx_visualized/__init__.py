@@ -424,7 +424,11 @@ def create_graphson(nodes, links, page_list, clusters_config):
                 cluster_config["is_external_project"] = True
                 cluster_config["external_project_name"] = cluster_info["project_name"]
 
-                # Default to hidden if no connections to home project
+                # For external projects, only show nodes with home connections by default
+                # Unlinked nodes can be revealed with a checkbox
+                cluster_config["show_only_connected_by_default"] = True
+
+                # Default to completely hidden if no connections to home project at all
                 if not cluster_info["has_any_home_connection"]:
                     cluster_config["default_hidden"] = True
 
