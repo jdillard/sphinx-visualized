@@ -112,8 +112,9 @@
   display: none;
 }
 
-/* Show real checkboxes for link types panel */
-#link-types-panel .caption-row input[type="checkbox"] {
+/* Show real checkboxes for link types and cluster panels */
+#link-types-panel .caption-row input[type="checkbox"],
+#cluster-panel .caption-row input[type="checkbox"] {
   display: inline-block;
   width: 1rem;
   height: 1rem;
@@ -124,18 +125,21 @@
   accent-color: hsl(215.4 16.3% 46.9%);
 }
 
-#link-types-panel .caption-row {
+#link-types-panel .caption-row,
+#cluster-panel .caption-row {
   display: flex;
   align-items: flex-start;
 }
 
-#link-types-panel .caption-row label {
+#link-types-panel .caption-row label,
+#cluster-panel .caption-row label {
   flex: 1;
   min-width: 0;
 }
 
-/* For non-link-types panels: dim unchecked items */
-.caption-row input[type="checkbox"]:not(:checked) + label {
+/* For non-link-types, non-cluster panels: dim unchecked items */
+#type-panel .caption-row input[type="checkbox"]:not(:checked) + label,
+#category-panel .caption-row input[type="checkbox"]:not(:checked) + label {
   color: hsl(215.4 16.3% 46.9%);
   opacity: 0.7;
 }
@@ -150,17 +154,30 @@
   background-color: var(--active-color, hsl(222.2 47.4% 11.2%)) !important;
 }
 
-/* For other panels (type-panel, category-panel, cluster-panel): fill circles based on checked state */
+/* For other panels (type-panel, category-panel): fill circles based on checked state */
 #type-panel .caption-row input[type="checkbox"]:checked + label .circle,
-#category-panel .caption-row input[type="checkbox"]:checked + label .circle,
-#cluster-panel .caption-row input[type="checkbox"]:checked + label .circle {
+#category-panel .caption-row input[type="checkbox"]:checked + label .circle {
   /* Background color is already set inline from JS, just ensure it's visible */
 }
 
 #type-panel .caption-row input[type="checkbox"]:not(:checked) + label .circle,
-#category-panel .caption-row input[type="checkbox"]:not(:checked) + label .circle,
-#cluster-panel .caption-row input[type="checkbox"]:not(:checked) + label .circle {
+#category-panel .caption-row input[type="checkbox"]:not(:checked) + label .circle {
   background-color: white !important;
+}
+
+/* For cluster panel: fill circles based on cluster visibility (not checkbox state) */
+#cluster-panel .caption-row.cluster-visible label .circle {
+  /* Background color is already set inline from JS, just ensure it's visible */
+}
+
+#cluster-panel .caption-row:not(.cluster-visible) label .circle {
+  background-color: white !important;
+}
+
+/* For cluster panel: dim hidden clusters */
+#cluster-panel .caption-row:not(.cluster-visible) {
+  color: hsl(215.4 16.3% 46.9%);
+  opacity: 0.7;
 }
 
 .caption-row label {

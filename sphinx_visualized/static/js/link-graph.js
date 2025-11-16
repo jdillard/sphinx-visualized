@@ -533,51 +533,67 @@ window.addEventListener('DOMContentLoaded', async () => {
             const barWidth = (100 * count) / maxNodesPerCluster;
 
             const li = document.createElement('li');
-            li.className = 'caption-row';
+            li.className = `caption-row ${isChecked ? 'cluster-visible' : ''}`;
             li.title = `${count} page${count !== 1 ? 's' : ''}`;
 
-            // Build the main cluster checkbox
-            let html = `
-              <input type="checkbox" ${isChecked ? 'checked' : ''} id="cluster-${index}" />
-              <label for="cluster-${index}">
-                <span class="circle" style="background-color: ${color}; border-color: ${color};"></span>
-                <div class="node-label">
-                  <span>${cluster.name}</span>
-                  <div class="bar" style="width: ${barWidth}%;"></div>
-                </div>
-              </label>
-            `;
+            // Build the cluster UI
+            // For external projects: checkbox toggles unlinked nodes, circle toggles cluster
+            // For regular clusters: hide checkbox, circle toggles cluster
+            let html = '';
 
-            // Add secondary checkbox for external projects with linked/unlinked toggle
             if (cluster.show_only_connected_by_default) {
               const unlinkedChecked = showUnlinkedNodes[cluster.name];
-              html += `
-                <input type="checkbox" ${unlinkedChecked ? 'checked' : ''} id="cluster-unlinked-${index}" style="margin-left: 28px;" />
-                <label for="cluster-unlinked-${index}" title="Show all ${cluster.external_project_name || 'external'} nodes">
-                  <span class="circle" style="background-color: #999; border-color: #999;"></span>
+              html = `
+                <input type="checkbox" ${unlinkedChecked ? 'checked' : ''} id="cluster-${index}" />
+                <label>
+                  <span class="circle" style="background-color: ${color}; border-color: ${color};"></span>
+                  <div class="node-label">
+                    <span>${cluster.name}</span>
+                    <div class="bar" style="width: ${barWidth}%;"></div>
+                  </div>
+                </label>
+              `;
+            } else {
+              // Regular cluster - no checkbox needed
+              html = `
+                <label>
+                  <span class="circle" style="background-color: ${color}; border-color: ${color};"></span>
+                  <div class="node-label">
+                    <span>${cluster.name}</span>
+                    <div class="bar" style="width: ${barWidth}%;"></div>
+                  </div>
                 </label>
               `;
             }
 
             li.innerHTML = html;
 
-            // Main cluster checkbox handler
-            li.querySelector(`#cluster-${index}`).addEventListener('change', (e) => {
-              visibleClusters[cluster.name] = e.target.checked;
-              updateGraph();
-              renderLegend();
-            });
-
-            // Unlinked nodes checkbox handler (if present)
+            // Checkbox handler (for external projects only - toggles unlinked nodes)
             if (cluster.show_only_connected_by_default) {
-              const unlinkedCheckbox = li.querySelector(`#cluster-unlinked-${index}`);
-              if (unlinkedCheckbox) {
-                unlinkedCheckbox.addEventListener('change', (e) => {
+              const checkbox = li.querySelector(`#cluster-${index}`);
+              if (checkbox) {
+                checkbox.addEventListener('change', (e) => {
                   showUnlinkedNodes[cluster.name] = e.target.checked;
                   updateGraph();
                 });
               }
             }
+
+            // Circle/label click handler - toggles entire cluster visibility
+            const label = li.querySelector('label');
+            label.addEventListener('click', (e) => {
+              // Don't trigger if clicking the checkbox itself
+              if (e.target.tagName === 'INPUT') {
+                return;
+              }
+
+              e.preventDefault();
+
+              // Toggle cluster visibility
+              visibleClusters[cluster.name] = !visibleClusters[cluster.name];
+              updateGraph();
+              renderLegend();
+            });
 
             list.appendChild(li);
           });
