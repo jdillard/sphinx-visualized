@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.8.2
+-----
+
+- Increase the zoom out limit for the toctree graph 
+
 0.8.1
 -----
 
