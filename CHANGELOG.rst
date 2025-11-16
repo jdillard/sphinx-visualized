@@ -6,6 +6,9 @@ Changelog
 
 - Make mobile friendly
 - Use full relative path (from root) for include files
+- Fix TypeError with mixed Path and string types for Python 3.12 compatibility
+- Fix AttributeError when title is missing in toctrees
+- Fix KeyError during failed builds when accessing root_doc
 
 0.8.0
 -----
