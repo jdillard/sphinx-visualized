@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 def setup(app):
     app.add_config_value("visualized_clusters", [], "html")
     app.add_config_value("visualized_auto_cluster", False, "html")
-    app.add_config_value("visualised_projects", [], "html")
+    app.add_config_value("visualized_projects", [], "html")
     app.connect("builder-inited", create_objects)
     app.connect("doctree-resolved", get_links)
     app.connect("doctree-resolved", track_includes)
@@ -688,11 +688,11 @@ def create_json(app, exception):
 
     # Fetch and merge external project data if configured
     # This must happen BEFORE writing nodes.js and links.js
-    visualised_projects = getattr(app.config, 'visualised_projects', [])
-    if visualised_projects:
-        logger.info(f"Fetching data for {len(visualised_projects)} external project(s): {', '.join(visualised_projects)}")
+    visualized_projects = getattr(app.config, 'visualized_projects', [])
+    if visualized_projects:
+        logger.info(f"Fetching data for {len(visualized_projects)} external project(s): {', '.join(visualized_projects)}")
 
-        for project_name in visualised_projects:
+        for project_name in visualized_projects:
             external_data = fetch_external_project_data(app, project_name)
             if external_data:
                 logger.info(f"Successfully fetched data for '{project_name}', merging into graph...")

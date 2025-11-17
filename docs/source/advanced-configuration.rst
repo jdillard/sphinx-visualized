@@ -85,7 +85,7 @@ Integrate documentation from other Sphinx projects that also use the **sphinx-vi
        "python": ("https://docs.python.org/3/", None),
    }
 
-   visualised_projects = ['sphinx']
+   visualized_projects = ['sphinx']
 
 .. note:: Each project name must match an entry in your :confval:`intersphinx_mapping`.
 

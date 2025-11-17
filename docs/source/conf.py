@@ -76,7 +76,7 @@ intersphinx_mapping = {
     "sphinx": ("../../../sphinx/build/sphinx/html", None),
 }
 
-visualised_projects = ['sphinx']
+visualized_projects = ['sphinx']
 
 
 # -- Options for HTML output -------------------------------------------------

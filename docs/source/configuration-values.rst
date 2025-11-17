@@ -23,7 +23,7 @@ For advanced usage, see :doc:`advanced-configuration`.
 
    .. versionadded:: 0.6.0
 
-.. confval:: visualised_projects
+.. confval:: visualized_projects
 
    - **Type**: list of strings
    - **Default**: ``[]`` (empty list)
