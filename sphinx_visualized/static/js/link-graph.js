@@ -113,6 +113,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       originalColor: nodeColor,
       isExternal: vertex.properties.is_external,
       isIntersphinx: isIntersphinx,
+      has_home_connection: vertex.properties.has_home_connection || false,
       x: Math.random() * 100,
       y: Math.random() * 100
     });
@@ -465,8 +466,14 @@ window.addEventListener('DOMContentLoaded', async () => {
       if (legendContainer) {
         // Track which clusters are visible
         const visibleClusters = {};
+        // Track whether to show unlinked nodes for external project clusters
+        const showUnlinkedNodes = {};
+
         clusterConfig.forEach(cluster => {
-          visibleClusters[cluster.name] = true;
+          // Default to hidden if cluster is marked as default_hidden
+          visibleClusters[cluster.name] = !cluster.default_hidden;
+          // Default to NOT showing unlinked nodes for external projects
+          showUnlinkedNodes[cluster.name] = false;
         });
 
         const updateGraph = () => {
@@ -474,12 +481,35 @@ window.addEventListener('DOMContentLoaded', async () => {
             const nodeData = graph.getNodeAttributes(node);
             const cluster = nodeData.cluster;
 
-            if (!cluster || visibleClusters[cluster]) {
+            // Nodes without a cluster are always visible
+            if (!cluster) {
               graph.setNodeAttribute(node, 'color', nodeData.originalColor);
               graph.setNodeAttribute(node, 'hidden', false);
-            } else {
-              graph.setNodeAttribute(node, 'hidden', true);
+              return;
             }
+
+            // Check if cluster is visible
+            if (!visibleClusters[cluster]) {
+              graph.setNodeAttribute(node, 'hidden', true);
+              return;
+            }
+
+            // Cluster is visible - now check if this is an external project node without home connection
+            const clusterConfig_item = clusterConfig.find(c => c.name === cluster);
+            if (clusterConfig_item && clusterConfig_item.show_only_connected_by_default) {
+              // This is an external project cluster that should only show connected nodes by default
+              const hasHomeConnection = nodeData.has_home_connection;
+
+              if (!hasHomeConnection && !showUnlinkedNodes[cluster]) {
+                // Node is not connected to home and we're not showing unlinked nodes
+                graph.setNodeAttribute(node, 'hidden', true);
+                return;
+              }
+            }
+
+            // Node should be visible
+            graph.setNodeAttribute(node, 'color', nodeData.originalColor);
+            graph.setNodeAttribute(node, 'hidden', false);
           });
 
           // Update edge visibility based on link types after node visibility changes
@@ -491,9 +521,16 @@ window.addEventListener('DOMContentLoaded', async () => {
         const renderLegend = async () => {
           const visibleCount = Object.values(visibleClusters).filter(v => v).length;
 
-          // Load chevron and cube-transparent SVGs
+          // Load SVGs
           const chevronResponse = await fetch('../svg/chevron-down.svg');
           const chevronSvg = await chevronResponse.text();
+
+          const linkResponse = await fetch('../svg/link.svg');
+          const linkSvg = await linkResponse.text();
+
+          const linkSlashResponse = await fetch('../svg/link-slash.svg');
+          const linkSlashSvg = await linkSlashResponse.text();
+
           const cubeResponse = await fetch('../svg/cube-transparent.svg');
           const cubeSvg = await cubeResponse.text();
 
@@ -534,21 +571,62 @@ window.addEventListener('DOMContentLoaded', async () => {
             const barWidth = (100 * count) / maxNodesPerCluster;
 
             const li = document.createElement('li');
-            li.className = 'caption-row';
+            li.className = `caption-row ${isChecked ? 'cluster-visible' : ''}`;
             li.title = `${count} page${count !== 1 ? 's' : ''}`;
-            li.innerHTML = `
-              <input type="checkbox" ${isChecked ? 'checked' : ''} id="cluster-${index}" />
-              <label for="cluster-${index}">
-                <span class="circle" style="background-color: ${color}; border-color: ${color};"></span>
-                <div class="node-label">
-                  <span>${cluster.name}</span>
-                  <div class="bar" style="width: ${barWidth}%;"></div>
-                </div>
-              </label>
-            `;
 
-            li.querySelector('input').addEventListener('change', (e) => {
-              visibleClusters[cluster.name] = e.target.checked;
+            // Build the cluster UI
+            // For external projects: checkbox toggles unlinked nodes, circle toggles cluster
+            // For regular clusters: hide checkbox, circle toggles cluster
+            let html = '';
+
+            if (cluster.show_only_connected_by_default) {
+              const showingUnlinked = showUnlinkedNodes[cluster.name];
+              const iconSvg = showingUnlinked ? linkSlashSvg : linkSvg;
+              html = `
+                <label>
+                  <span class="circle" style="background-color: ${color}; border-color: ${color};"></span>
+                  <div class="node-label">
+                    <span>${cluster.name}</span>
+                    <div class="bar" style="width: ${barWidth}%;"></div>
+                  </div>
+                </label>
+                <span class="link-toggle-icon" data-cluster="${cluster.name}" title="${showingUnlinked ? 'Showing all nodes (click to show only linked)' : 'Showing only linked nodes (click to show all)'}">${iconSvg}</span>
+              `;
+            } else {
+              // Regular cluster - no icon needed
+              html = `
+                <label>
+                  <span class="circle" style="background-color: ${color}; border-color: ${color};"></span>
+                  <div class="node-label">
+                    <span>${cluster.name}</span>
+                    <div class="bar" style="width: ${barWidth}%;"></div>
+                  </div>
+                </label>
+              `;
+            }
+
+            li.innerHTML = html;
+
+            // Link toggle icon handler (for external projects only - toggles unlinked nodes)
+            if (cluster.show_only_connected_by_default) {
+              const linkToggle = li.querySelector('.link-toggle-icon');
+              if (linkToggle) {
+                linkToggle.addEventListener('click', (e) => {
+                  e.stopPropagation();
+                  showUnlinkedNodes[cluster.name] = !showUnlinkedNodes[cluster.name];
+                  updateGraph();
+                  renderLegend();
+                });
+              }
+            }
+
+            // Circle/label click handler - toggles entire cluster visibility
+            const label = li.querySelector('label');
+            label.addEventListener('click', (e) => {
+              e.preventDefault();
+
+              // Toggle cluster visibility
+              visibleClusters[cluster.name] = !visibleClusters[cluster.name];
               updateGraph();
               renderLegend();
             });
@@ -814,6 +892,40 @@ window.addEventListener('DOMContentLoaded', async () => {
       };
 
         renderLinkTypesPanel();
+      }
+    }
+
+    // Apply initial visibility for clusters with default_hidden flag and show_only_connected_by_default
+    // This must be done after updateEdgeVisibilityByLinkType is defined
+    if (clusterConfig.length > 0 && legendContainer) {
+      graph.forEachNode((node) => {
+        const nodeData = graph.getNodeAttributes(node);
+        const cluster = nodeData.cluster;
+
+        if (!cluster) return;
+
+        // Check cluster configuration
+        const clusterInfo = clusterConfig.find(c => c.name === cluster);
+
+        // Hide entire cluster if marked as default_hidden
+        if (clusterInfo && clusterInfo.default_hidden) {
+          graph.setNodeAttribute(node, 'hidden', true);
+          return;
+        }
+
+        // For external project clusters, hide unlinked nodes by default
+        if (clusterInfo && clusterInfo.show_only_connected_by_default) {
+          const hasHomeConnection = nodeData.has_home_connection;
+          if (!hasHomeConnection) {
+            graph.setNodeAttribute(node, 'hidden', true);
+            return;
+          }
+        }
+      });
+
+      // Update edge visibility after hiding nodes
+      if (typeof updateEdgeVisibilityByLinkType === 'function') {
+        updateEdgeVisibilityByLinkType();
       }
     }
 

@@ -71,6 +71,24 @@ With auto-clustering enabled:
 - Root-level pages (like ``index.html``) remain unclustered
 - You can combine auto-clustering with manual clusters - manual patterns take precedence
 
+.. _external_projects:
+
+Integrating External Projects
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Integrate documentation from other Sphinx projects that also use the **sphinx-visualized** extension:
+
+.. code-block:: python
+
+   intersphinx_mapping = {
+       "sphinx": ("https://www.sphinx-doc.org/en/master/", None),
+       "python": ("https://docs.python.org/3/", None),
+   }
+
+   visualized_projects = ['sphinx']
+
+.. note:: Each project name must match an entry in your :confval:`intersphinx_mapping`.
+
 GraphSON Export
 ^^^^^^^^^^^^^^^
 

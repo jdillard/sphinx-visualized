@@ -13,13 +13,19 @@ from pathlib import Path
 from docutils import nodes as docutils_nodes
 from multiprocessing import Manager, Queue
 from fnmatch import fnmatch
+from sphinx.util import logging
 
-__version__ = "0.8.2"
+from .external import fetch_external_project_data, merge_external_project_data
+
+__version__ = "0.9.0"
+
+logger = logging.getLogger(__name__)
 
 
 def setup(app):
     app.add_config_value("visualized_clusters", [], "html")
     app.add_config_value("visualized_auto_cluster", False, "html")
+    app.add_config_value("visualized_projects", [], "html")
     app.connect("builder-inited", create_objects)
     app.connect("doctree-resolved", get_links)
     app.connect("doctree-resolved", track_includes)
@@ -412,6 +418,8 @@ def create_graphson(nodes, links, page_list, clusters_config):
             vertex_label = "intersphinx"
         elif node.get("is_external"):
             vertex_label = "external"
+        elif node.get("is_external_project"):
+            vertex_label = "external_project"
         else:
             vertex_label = "page"
 
@@ -436,6 +444,15 @@ def create_graphson(nodes, links, page_list, clusters_config):
         if node.get("is_intersphinx"):
             vertex["properties"]["is_intersphinx"] = True
 
+        # Mark external project nodes
+        if node.get("is_external_project"):
+            vertex["properties"]["is_external_project"] = True
+            vertex["properties"]["external_project_name"] = node.get("external_project_name")
+
+            # Mark whether this external node connects to home project
+            if node.get("has_home_connection"):
+                vertex["properties"]["has_home_connection"] = True
+
         vertices.append(vertex)
 
     # Create edges (links)
@@ -457,9 +474,24 @@ def create_graphson(nodes, links, page_list, clusters_config):
 
     # Collect all unique cluster names from nodes
     cluster_names = set()
+    external_project_clusters = {}  # Track external project clusters and their connection status
+
     for node in nodes:
         if node.get("cluster") is not None:
             cluster_names.add(node["cluster"])
+
+            # Track external project clusters
+            if node.get("is_external_project"):
+                cluster = node["cluster"]
+                if cluster not in external_project_clusters:
+                    external_project_clusters[cluster] = {
+                        "has_any_home_connection": False,
+                        "project_name": node.get("external_project_name")
+                    }
+
+                # Update if any node in this cluster connects to home
+                if node.get("has_home_connection"):
+                    external_project_clusters[cluster]["has_any_home_connection"] = True
 
     # Build complete cluster list: manual configs + auto-generated clusters
     all_clusters = list(clusters_config) if clusters_config else []
@@ -468,10 +500,26 @@ def create_graphson(nodes, links, page_list, clusters_config):
     # Add auto-generated clusters that aren't already in manual config
     for cluster_name in cluster_names:
         if cluster_name not in manual_cluster_names:
-            all_clusters.append({
+            cluster_config = {
                 "name": cluster_name,
                 "patterns": []  # Auto-generated clusters don't have patterns
-            })
+            }
+
+            # For external project clusters, set default visibility based on home connections
+            if cluster_name in external_project_clusters:
+                cluster_info = external_project_clusters[cluster_name]
+                cluster_config["is_external_project"] = True
+                cluster_config["external_project_name"] = cluster_info["project_name"]
+
+                # For external projects, only show nodes with home connections by default
+                # Unlinked nodes can be revealed with a checkbox
+                cluster_config["show_only_connected_by_default"] = True
+
+                # Default to completely hidden if no connections to home project at all
+                if not cluster_info["has_any_home_connection"]:
+                    cluster_config["default_hidden"] = True
+
+            all_clusters.append(cluster_config)
 
     # Include cluster configuration metadata
     graphson = {
@@ -637,6 +685,20 @@ def create_json(app, exception):
             "type": link_types[0] if len(link_types) == 1 else "ref",  # Keep first type for backward compatibility
             "types": link_types,  # New field: all link types for this edge
         })
+
+    # Fetch and merge external project data if configured
+    # This must happen BEFORE writing nodes.js and links.js
+    visualized_projects = getattr(app.config, 'visualized_projects', [])
+    if visualized_projects:
+        logger.info(f"Fetching data for {len(visualized_projects)} external project(s): {', '.join(visualized_projects)}")
+
+        for project_name in visualized_projects:
+            external_data = fetch_external_project_data(app, project_name)
+            if external_data:
+                logger.info(f"Successfully fetched data for '{project_name}', merging into graph...")
+                nodes, links, _ = merge_external_project_data(app, nodes, links, external_data, page_list)
+            else:
+                logger.info(f"Skipping '{project_name}' - data could not be fetched")
 
     filename = Path(app.outdir) / "_static" / "sphinx-visualized" / "js" / "links.js"
     with open(filename, "w") as json_file:

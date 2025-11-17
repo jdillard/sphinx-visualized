@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.9.0
+-----
+
+- Add support for integrating external Sphinx projects with :confval:`visualized_projects`
+
 0.8.2
 -----
 
