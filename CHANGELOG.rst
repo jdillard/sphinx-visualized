@@ -8,6 +8,7 @@ Changelog
 - Increase the zoom out limit for the toctree graph 
 - Add stats for images
 - Remove images from Includes graph and stats
+- Only show Link Types if they exist on the Link Graph
 
 0.8.1
 -----
