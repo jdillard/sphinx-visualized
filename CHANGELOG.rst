@@ -6,6 +6,15 @@ Changelog
 
 - Add support for integrating external Sphinx projects with :confval:`visualised_projects`
 
+0.8.2
+-----
+
+- Add icons to graph panel headings
+- Increase the zoom out limit for the toctree graph 
+- Add stats for images
+- Remove images from Includes graph and stats
+- Only show Link Types if they exist on the Link Graph
+
 0.8.1
 -----
 

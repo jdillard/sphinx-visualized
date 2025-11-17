@@ -143,7 +143,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   // Add zoom behavior
   const zoom = d3.zoom()
-      .scaleExtent([0.1, 4]) // Allow zoom from 10% to 400%
+      .scaleExtent([0.05, 4]) // Allow zoom from 5% to 400%
       .on("zoom", (event) => {
         g.attr("transform", event.transform);
       });
