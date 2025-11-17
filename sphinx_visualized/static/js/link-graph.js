@@ -680,8 +680,15 @@ window.addEventListener('DOMContentLoaded', async () => {
         });
       });
 
-      const renderLinkTypesPanel = async () => {
-        const linkTypes = Object.keys(LINK_TYPE_CONFIG);
+      // Filter to only link types that actually exist in the graph
+      const existingLinkTypes = Object.keys(LINK_TYPE_CONFIG).filter(type => edgesPerLinkType[type] > 0);
+
+      // Only render the panel if there are link types with edges
+      if (existingLinkTypes.length === 0) {
+        linkTypesContainer.style.display = 'none';
+      } else {
+        const renderLinkTypesPanel = async () => {
+          const linkTypes = existingLinkTypes;
         const visibleCount = linkTypes.filter(t => visibleLinkTypes[t]).length;
 
         // Calculate max edges for progress bar scaling
@@ -806,7 +813,8 @@ window.addEventListener('DOMContentLoaded', async () => {
         });
       };
 
-      renderLinkTypesPanel();
+        renderLinkTypesPanel();
+      }
     }
 
     // Search functionality
