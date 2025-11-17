@@ -22,6 +22,7 @@ def setup(app):
     app.add_config_value("visualized_auto_cluster", False, "html")
     app.connect("builder-inited", create_objects)
     app.connect("doctree-resolved", get_links)
+    app.connect("doctree-resolved", track_includes)
     app.connect("build-finished", create_json)
 
     return {
@@ -203,17 +204,42 @@ def create_objects(app):
     manager = Manager()
     builder.env.app.pages = manager.dict() # an index of page names
     builder.env.app.references = manager.Queue() # a queue of every internal reference made between pages
+    builder.env.app.image_counts = manager.dict() # track image counts per page
+    builder.env.app.includes = manager.Queue() # track include/literalinclude directives
 
 
 def get_links(app, doctree, docname):
     """
-    Gather internal and external link connections
+    Gather internal and external link connections and count images/figures
     """
 
     #TODO handle troctree entries?
     #TODO get targets
     # for node in doctree.traverse(sphinx.addnodes.toctree):
     #     print(vars(node))
+
+    # Count images and figures in this document
+    # Note: A figure contains an image, so we only count image nodes to avoid double-counting
+    # Also skip images inside substitution_definition nodes (they're counted when used)
+    image_count = 0
+    for node in doctree.traverse(docutils_nodes.image):
+        # Skip images that are inside substitution definitions
+        # These get counted when the substitution is actually used
+        is_in_substitution = False
+        parent = node.parent
+        while parent is not None:
+            if isinstance(parent, docutils_nodes.substitution_definition):
+                is_in_substitution = True
+                break
+            parent = parent.parent
+
+        if not is_in_substitution:
+            image_count += 1
+
+    # Store image count for this page
+    if image_count > 0:
+        docname_page = f"/{docname}.html"
+        app.env.app.image_counts[docname_page] = image_count
 
     for node in doctree.traverse(docutils_nodes.reference):
         if node.tagname == 'reference' and node.get('refuri'):
@@ -279,6 +305,61 @@ def get_links(app, doctree, docname):
 
                     # Add external URL as a "page" with special prefix including project name
                     app.env.app.pages[target_key] = True
+
+
+def track_includes(app, doctree, docname):
+    """
+    Track include and literalinclude directives using a hybrid approach:
+    1. literalinclude: detected via node source attributes (works perfectly)
+    2. include: tracked via env.included (maintained by Sphinx for regular includes)
+
+    This approach requires NO filtering or extension lists!
+    """
+    seen_includes = set()
+
+    # Build the expected main document path to compare against
+    expected_doc_path = os.path.join(app.env.srcdir, f'{docname}.rst')
+
+    # 1. Track literalinclude by examining nodes with source attributes
+    # literalinclude creates nodes that retain their source file information
+    for node in doctree.traverse():
+        # Skip text nodes and nodes without attributes
+        if not hasattr(node, 'get'):
+            continue
+
+        source = node.get('source')
+        if source:
+            source_str = str(source)
+            # If the source is different from the current document, it's from literalinclude
+            if source_str and source_str != expected_doc_path:
+                include_key = (f"/{docname}.html", source_str)
+                if include_key not in seen_includes:
+                    seen_includes.add(include_key)
+                    app.env.app.includes.put(include_key)
+
+    # 2. Track regular .. include:: directives
+    # Unfortunately, include directives merge content without leaving traces in nodes.
+    # We must use env.dependencies and exclude only obvious binary/media files.
+    # This is a minimal blocklist of the most common non-text formats.
+    if hasattr(app.env, 'dependencies') and docname in app.env.dependencies:
+        # Minimal list: only the most common binary file extensions that are never includes
+        binary_extensions = {
+            '.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.bmp',  # Images
+            '.mp3', '.mp4', '.avi', '.wav', '.mov',  # Audio/Video
+            '.ttf', '.woff', '.woff2', '.eot',  # Fonts
+            '.pdf', '.zip', '.tar', '.gz'  # Documents/Archives
+        }
+
+        for dep_file in app.env.dependencies[docname]:
+            dep_str = str(dep_file)
+            file_ext = os.path.splitext(dep_str)[1].lower()
+
+            # Include everything EXCEPT known binary formats
+            if file_ext not in binary_extensions:
+                include_key = (f"/{docname}.html", dep_str)
+                if include_key not in seen_includes:
+                    seen_includes.add(include_key)
+                    app.env.app.includes.put(include_key)
 
 
 def build_toctree_hierarchy(app):
@@ -576,19 +657,24 @@ def create_json(app, exception):
         json.dump(graphson, json_file, indent=2)
 
     # Process inclusions for includes graph
-    # Collect from env.dependencies which is populated after all documents are processed
+    # Use our custom tracked includes from track_includes() function
+    # This directly captures include and literalinclude directives without needing to filter
     includes_list = []
-    if hasattr(app.env, 'dependencies'):
-        for docname, deps in app.env.dependencies.items():
-            for included_file in deps:
-                # Store as (source_doc, included_file)
-                includes_list.append((f"/{docname}.html", included_file))
+    while not app.env.app.includes.empty():
+        includes_list.append(app.env.app.includes.get())
 
     # Build includes nodes and links
     includes_files = set()  # Track all files involved in inclusions
     for source_doc, included_file in includes_list:
         includes_files.add(source_doc)
-        includes_files.add(str(included_file))  # Normalize to string (Sphinx can store as Path or str)
+        # Normalize included files to relative paths to avoid duplicates
+        included_file_str = str(included_file)
+        if os.path.isabs(included_file_str):
+            try:
+                included_file_str = os.path.relpath(included_file_str, app.env.srcdir)
+            except (ValueError, TypeError):
+                pass  # Keep absolute path if conversion fails
+        includes_files.add(included_file_str)
 
     # Create nodes for includes graph
     includes_nodes = []
@@ -628,9 +714,17 @@ def create_json(app, exception):
     includes_links = []
     includes_counts = Counter(includes_list)
     for (source_doc, included_file), count in includes_counts.items():
+        # Normalize included_file to match how we normalized it when building the file list
+        included_file_str = str(included_file)
+        if os.path.isabs(included_file_str):
+            try:
+                included_file_str = os.path.relpath(included_file_str, app.env.srcdir)
+            except (ValueError, TypeError):
+                pass  # Keep absolute path if conversion fails
+
         includes_links.append({
             "source": includes_file_list.index(source_doc),
-            "target": includes_file_list.index(included_file),
+            "target": includes_file_list.index(included_file_str),
             "type": "include",
             "count": count,
         })
@@ -680,3 +774,37 @@ def create_json(app, exception):
     filename = Path(app.outdir) / "_static" / "sphinx-visualized" / "js" / "glossary-stats.js"
     with open(filename, "w") as json_file:
         json_file.write(f'var glossary_stats = {json.dumps(glossary_stats, indent=4)};')
+
+    # Calculate image/figure statistics
+    image_counts_dict = dict(app.env.app.image_counts) if hasattr(app.env.app, 'image_counts') else {}
+    total_images = sum(image_counts_dict.values())
+    pages_with_images = len(image_counts_dict)
+
+    # Get pages with most images (top 10)
+    most_images = []
+    if image_counts_dict:
+        sorted_pages = sorted(image_counts_dict.items(), key=lambda x: x[1], reverse=True)[:10]
+        for page_path, count in sorted_pages:
+            # Get page title
+            docname = page_path[1:-5]  # Remove leading / and .html
+            if app.env.titles.get(docname):
+                label = app.env.titles.get(docname).astext()
+            else:
+                label = os.path.basename(page_path)
+
+            most_images.append({
+                "page": label,
+                "path": f"../../..{page_path}",
+                "count": count
+            })
+
+    image_stats = {
+        "total_images": total_images,
+        "pages_with_images": pages_with_images,
+        "pages_with_most_images": most_images
+    }
+
+    # Write image stats to JavaScript file
+    filename = Path(app.outdir) / "_static" / "sphinx-visualized" / "js" / "image-stats.js"
+    with open(filename, "w") as json_file:
+        json_file.write(f'var image_stats = {json.dumps(image_stats, indent=4)};')
