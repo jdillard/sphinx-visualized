@@ -6,6 +6,8 @@ Changelog
 
 - Add icons to graph panel headings
 - Increase the zoom out limit for the toctree graph 
+- Add stats for images
+- Remove images from Includes graph and stats
 
 0.8.1
 -----
