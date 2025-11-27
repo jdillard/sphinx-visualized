@@ -71,7 +71,7 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 pygments_style = "sphinx"
 
 intersphinx_mapping = {
-    "sphinx": ("../../../sphinx/build/sphinx/html", None),
+    "sphinx": ("https://www.sphinx-doc.org/en/master/", "_externals/sphinx/objects.inv"),
 }
 
 

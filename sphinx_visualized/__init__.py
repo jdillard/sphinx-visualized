@@ -212,17 +212,24 @@ def fetch_external_graphson(app):
     external_projects = {}
 
     for project_name, project_info in intersphinx_mapping.items():
-        # Extract base URL from intersphinx_mapping
+        # Extract base URL and local inventory path from intersphinx_mapping
         # Sphinx processes intersphinx_mapping into: {name: (name, (url, (inventory,)))}
         # or the original format: {name: (url, inventory)}
         base_url = None
+        local_inventory = None
 
         if isinstance(project_info, tuple):
             if len(project_info) >= 2 and isinstance(project_info[1], tuple):
-                # Processed format: ('sphinx', ('https://...', (None,)))
+                # Processed format: ('sphinx', ('https://...', ('path/to/objects.inv',)))
                 base_url = project_info[1][0] if len(project_info[1]) > 0 else None
+                if len(project_info[1]) > 1 and project_info[1][1]:
+                    local_inventory = project_info[1][1][0] if isinstance(project_info[1][1], tuple) else project_info[1][1]
+            elif len(project_info) >= 2:
+                # Original format: ('https://...', 'path/to/objects.inv')
+                base_url = project_info[0]
+                local_inventory = project_info[1]
             elif len(project_info) >= 1:
-                # Original format: ('https://...', None)
+                # Only URL provided
                 base_url = project_info[0]
         else:
             base_url = project_info
@@ -230,21 +237,45 @@ def fetch_external_graphson(app):
         if not base_url or not isinstance(base_url, str):
             continue
 
-        # Normalize URL/path
+        # Normalize URL
         base_url = base_url.rstrip('/')
 
-        # Handle local paths vs HTTP URLs
-        if base_url.startswith(('http://', 'https://')):
-            # Remote URL
+        # Determine where to look for graphson.json
+        # Priority: local inventory path > base_url (if local) > base_url (if remote)
+        graphson_data = None
+
+        # If we have a local inventory path, use its directory to find graphson.json
+        if local_inventory and isinstance(local_inventory, str):
+            # Resolve relative to conf.py directory
+            if not os.path.isabs(local_inventory):
+                local_inventory_path = os.path.abspath(os.path.join(app.confdir, local_inventory))
+            else:
+                local_inventory_path = local_inventory
+
+            # Get the directory containing objects.inv
+            if local_inventory_path.endswith('objects.inv'):
+                local_base = os.path.dirname(local_inventory_path)
+            else:
+                local_base = local_inventory_path
+
+            graphson_path = os.path.join(local_base, '_static', 'sphinx-visualized', 'graphson.json')
+
+            try:
+                if os.path.exists(graphson_path):
+                    with open(graphson_path, 'r', encoding='utf-8') as f:
+                        graphson_data = json.load(f)
+                        logger.info(f"Loaded graphson for '{project_name}' from {graphson_path}")
+            except json.JSONDecodeError as e:
+                logger.warning(f"Invalid JSON in graphson for '{project_name}': {e}")
+            except Exception as e:
+                logger.info(f"Could not load graphson for '{project_name}' from local path: {e}")
+
+        # If no local graphson found and base_url is remote, try fetching from URL
+        if graphson_data is None and base_url.startswith(('http://', 'https://')):
             graphson_url = f"{base_url}/_static/sphinx-visualized/graphson.json"
             try:
                 with urllib.request.urlopen(graphson_url, timeout=10) as response:
-                    data = json.loads(response.read().decode('utf-8'))
-                    external_projects[project_name] = {
-                        'data': data,
-                        'base_url': base_url,
-                        'label': project_name.replace('_', ' ').replace('-', ' ').title()
-                    }
+                    graphson_data = json.loads(response.read().decode('utf-8'))
                     logger.info(f"Fetched graphson for '{project_name}' from {graphson_url}")
             except urllib.error.HTTPError as e:
                 logger.info(f"Could not fetch graphson for '{project_name}' (HTTP {e.code}): "
@@ -255,8 +286,9 @@ def fetch_external_graphson(app):
                 logger.warning(f"Invalid JSON in graphson for '{project_name}': {e}")
             except Exception as e:
                 logger.info(f"Could not fetch graphson for '{project_name}': {e}")
-        else:
-            # Local path - resolve relative to conf.py directory
+
+        # If no local graphson found and base_url is a local path
+        if graphson_data is None and not base_url.startswith(('http://', 'https://')):
             if not os.path.isabs(base_url):
                 local_path = os.path.abspath(os.path.join(app.confdir, base_url))
             else:
@@ -267,20 +299,20 @@ def fetch_external_graphson(app):
             try:
                 if os.path.exists(graphson_path):
                     with open(graphson_path, 'r', encoding='utf-8') as f:
-                        data = json.load(f)
-                        external_projects[project_name] = {
-                            'data': data,
-                            'base_url': local_path,  # Use local path for URL rewriting
-                            'label': project_name.replace('_', ' ').replace('-', ' ').title()
-                        }
+                        graphson_data = json.load(f)
                         logger.info(f"Loaded graphson for '{project_name}' from {graphson_path}")
-                else:
-                    logger.info(f"Could not find graphson for '{project_name}' at {graphson_path}: "
-                               f"Project may not have sphinx-visualized installed")
             except json.JSONDecodeError as e:
                 logger.warning(f"Invalid JSON in graphson for '{project_name}': {e}")
             except Exception as e:
                 logger.info(f"Could not load graphson for '{project_name}': {e}")
+
+        # If we found graphson data, add to external_projects
+        if graphson_data:
+            external_projects[project_name] = {
+                'data': graphson_data,
+                'base_url': base_url,  # Use the URL for link navigation
+                'label': project_name.replace('_', ' ').replace('-', ' ').title()
+            }
 
     return external_projects
 
