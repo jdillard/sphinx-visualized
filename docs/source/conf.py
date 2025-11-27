@@ -37,7 +37,6 @@ release = ""
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    "sphinxemoji.sphinxemoji",
     "sphinx_contributors",
     "sphinx.ext.intersphinx",
     "sphinxext.opengraph",
@@ -72,7 +71,7 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 pygments_style = "sphinx"
 
 intersphinx_mapping = {
-    "sphinx": ("https://www.sphinx-doc.org/en/master/", None),
+    "sphinx": ("../../../sphinx/build/sphinx/html", None),
 }
 
 

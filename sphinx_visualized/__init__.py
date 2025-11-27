@@ -8,11 +8,16 @@ from sphinx import addnodes as sphinx_addnodes
 from packaging import version
 import os
 import shutil
+import urllib.request
+import urllib.error
 from collections import Counter
 from pathlib import Path
 from docutils import nodes as docutils_nodes
 from multiprocessing import Manager, Queue
 from fnmatch import fnmatch
+from sphinx.util import logging
+
+logger = logging.getLogger(__name__)
 
 __version__ = "0.8.2"
 
@@ -191,6 +196,93 @@ def get_intersphinx_display_name(app, url, project_name):
                             fallback_match = target
 
     return fallback_match
+
+
+def fetch_external_graphson(app):
+    """
+    Fetch graphson.json from intersphinx projects that have sphinx-visualized installed.
+
+    Args:
+        app: Sphinx application object
+
+    Returns:
+        dict of {project_name: {'data': graphson_dict, 'base_url': str, 'label': str}}
+    """
+    intersphinx_mapping = getattr(app.config, 'intersphinx_mapping', {})
+    external_projects = {}
+
+    for project_name, project_info in intersphinx_mapping.items():
+        # Extract base URL from intersphinx_mapping
+        # Sphinx processes intersphinx_mapping into: {name: (name, (url, (inventory,)))}
+        # or the original format: {name: (url, inventory)}
+        base_url = None
+
+        if isinstance(project_info, tuple):
+            if len(project_info) >= 2 and isinstance(project_info[1], tuple):
+                # Processed format: ('sphinx', ('https://...', (None,)))
+                base_url = project_info[1][0] if len(project_info[1]) > 0 else None
+            elif len(project_info) >= 1:
+                # Original format: ('https://...', None)
+                base_url = project_info[0]
+        else:
+            base_url = project_info
+
+        if not base_url or not isinstance(base_url, str):
+            continue
+
+        # Normalize URL/path
+        base_url = base_url.rstrip('/')
+
+        # Handle local paths vs HTTP URLs
+        if base_url.startswith(('http://', 'https://')):
+            # Remote URL
+            graphson_url = f"{base_url}/_static/sphinx-visualized/graphson.json"
+            try:
+                with urllib.request.urlopen(graphson_url, timeout=10) as response:
+                    data = json.loads(response.read().decode('utf-8'))
+                    external_projects[project_name] = {
+                        'data': data,
+                        'base_url': base_url,
+                        'label': project_name.replace('_', ' ').replace('-', ' ').title()
+                    }
+                    logger.info(f"Fetched graphson for '{project_name}' from {graphson_url}")
+            except urllib.error.HTTPError as e:
+                logger.info(f"Could not fetch graphson for '{project_name}' (HTTP {e.code}): "
+                           f"Project may not have sphinx-visualized installed")
+            except urllib.error.URLError as e:
+                logger.info(f"Network error fetching graphson for '{project_name}': {e.reason}")
+            except json.JSONDecodeError as e:
+                logger.warning(f"Invalid JSON in graphson for '{project_name}': {e}")
+            except Exception as e:
+                logger.info(f"Could not fetch graphson for '{project_name}': {e}")
+        else:
+            # Local path - resolve relative to conf.py directory
+            if not os.path.isabs(base_url):
+                local_path = os.path.abspath(os.path.join(app.confdir, base_url))
+            else:
+                local_path = base_url
+
+            graphson_path = os.path.join(local_path, '_static', 'sphinx-visualized', 'graphson.json')
+
+            try:
+                if os.path.exists(graphson_path):
+                    with open(graphson_path, 'r', encoding='utf-8') as f:
+                        data = json.load(f)
+                        external_projects[project_name] = {
+                            'data': data,
+                            'base_url': local_path,  # Use local path for URL rewriting
+                            'label': project_name.replace('_', ' ').replace('-', ' ').title()
+                        }
+                        logger.info(f"Loaded graphson for '{project_name}' from {graphson_path}")
+                else:
+                    logger.info(f"Could not find graphson for '{project_name}' at {graphson_path}: "
+                               f"Project may not have sphinx-visualized installed")
+            except json.JSONDecodeError as e:
+                logger.warning(f"Invalid JSON in graphson for '{project_name}': {e}")
+            except Exception as e:
+                logger.info(f"Could not load graphson for '{project_name}': {e}")
+
+    return external_projects
 
 
 def create_objects(app):
@@ -655,6 +747,36 @@ def create_json(app, exception):
     filename = Path(app.outdir) / "_static" / "sphinx-visualized" / "graphson.json"
     with open(filename, "w") as json_file:
         json.dump(graphson, json_file, indent=2)
+
+    # Fetch and save external project graphsons for link graph project switcher
+    external_projects = fetch_external_graphson(app)
+
+    # Build projects list (current project + external projects with graphson)
+    projects_list = [{
+        'name': 'current',
+        'label': getattr(app.config, 'project', None) or 'Current Project',
+        'graphson': '../graphson.json',
+        'is_default': True
+    }]
+
+    for proj_name, proj_data in external_projects.items():
+        # Write external graphson file
+        ext_filename = Path(app.outdir) / "_static" / "sphinx-visualized" / f"graphson-{proj_name}.json"
+        with open(ext_filename, "w") as f:
+            json.dump(proj_data['data'], f, indent=2)
+
+        projects_list.append({
+            'name': proj_name,
+            'label': proj_data['label'],
+            'graphson': f'../graphson-{proj_name}.json',
+            'base_url': proj_data['base_url'],
+            'is_default': False
+        })
+
+    # Write projects.js
+    projects_filename = Path(app.outdir) / "_static" / "sphinx-visualized" / "js" / "projects.js"
+    with open(projects_filename, "w") as f:
+        f.write(f'var projects_data = {json.dumps(projects_list, indent=4)};')
 
     # Process inclusions for includes graph
     # Use our custom tracked includes from track_includes() function
