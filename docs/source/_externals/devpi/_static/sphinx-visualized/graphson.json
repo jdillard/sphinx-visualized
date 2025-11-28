@@ -1,0 +1,866 @@
+{
+  "vertices": [
+    {
+      "id": 0,
+      "label": "page",
+      "properties": {
+        "name": "devpi-server replication",
+        "path": "../../../adminman/replica.html"
+      }
+    },
+    {
+      "id": 1,
+      "label": "page",
+      "properties": {
+        "name": "Server Status information",
+        "path": "../../../adminman/server-status.html"
+      }
+    },
+    {
+      "id": 2,
+      "label": "page",
+      "properties": {
+        "name": "devpi-server security",
+        "path": "../../../adminman/security.html"
+      }
+    },
+    {
+      "id": 3,
+      "label": "page",
+      "properties": {
+        "name": "Authentication and User management",
+        "path": "../../../userman/devpi_user.html"
+      }
+    },
+    {
+      "id": 4,
+      "label": "page",
+      "properties": {
+        "name": "devpi-server administration",
+        "path": "../../../adminman/server.html"
+      }
+    },
+    {
+      "id": 5,
+      "label": "page",
+      "properties": {
+        "name": "Web interface and search",
+        "path": "../../../adminman/web.html"
+      }
+    },
+    {
+      "id": 6,
+      "label": "page",
+      "properties": {
+        "name": "devpi-server plugin hooks (experimental)",
+        "path": "../../../devguide/hooks.html"
+      }
+    },
+    {
+      "id": 7,
+      "label": "page",
+      "properties": {
+        "name": "Glossary devpi-server",
+        "path": "../../../devguide/glossary.html"
+      }
+    },
+    {
+      "id": 8,
+      "label": "page",
+      "properties": {
+        "name": "Glossary",
+        "path": "../../../glossary.html"
+      }
+    },
+    {
+      "id": 9,
+      "label": "page",
+      "properties": {
+        "name": "Concepts",
+        "path": "../../../userman/devpi_concepts.html"
+      }
+    },
+    {
+      "id": 10,
+      "label": "page",
+      "properties": {
+        "name": "devpi: PyPI server and packaging/testing/release tool",
+        "path": "../../../index.html"
+      }
+    },
+    {
+      "id": 11,
+      "label": "page",
+      "properties": {
+        "name": "devpi-server-4.5.0: update for pypi.org",
+        "path": "../../../announce/server-4.5.html"
+      }
+    },
+    {
+      "id": 12,
+      "label": "page",
+      "properties": {
+        "name": "Creating, configuring and using indices",
+        "path": "../../../userman/devpi_indices.html"
+      }
+    },
+    {
+      "id": 13,
+      "label": "page",
+      "properties": {
+        "name": "Quickstart: running a pypi mirror on your laptop",
+        "path": "../../../quickstart-pypimirror.html"
+      }
+    },
+    {
+      "id": 14,
+      "label": "page",
+      "properties": {
+        "name": "Quickstart: uploading, testing, pushing releases",
+        "path": "../../../quickstart-releaseprocess.html"
+      }
+    },
+    {
+      "id": 15,
+      "label": "page",
+      "properties": {
+        "name": "Miscellaneous",
+        "path": "../../../userman/devpi_misc.html"
+      }
+    },
+    {
+      "id": 16,
+      "label": "page",
+      "properties": {
+        "name": "Quickstart: permanent install on server/laptop",
+        "path": "../../../quickstart-server.html"
+      }
+    },
+    {
+      "id": 17,
+      "label": "page",
+      "properties": {
+        "name": "devpi command reference (client)",
+        "path": "../../../userman/devpi_commands.html"
+      }
+    },
+    {
+      "id": 18,
+      "label": "page",
+      "properties": {
+        "name": "Uploading, testing and pushing packages",
+        "path": "../../../userman/devpi_packages.html"
+      }
+    },
+    {
+      "id": 19,
+      "label": "page",
+      "properties": {
+        "name": "Welcome to pysober\u2019s documentation!",
+        "path": "../../../userman/pysober/doc/source/index.html"
+      }
+    },
+    {
+      "id": 20,
+      "label": "page",
+      "properties": {
+        "name": "devpi user manual",
+        "path": "../../../userman/index.html"
+      }
+    },
+    {
+      "id": 21,
+      "label": "page",
+      "properties": {
+        "name": "Overview",
+        "path": "../../../userman/pysober/doc/source/overview.html"
+      }
+    },
+    {
+      "id": 22,
+      "label": "page",
+      "properties": {
+        "name": "/genindex.html",
+        "path": "../../../genindex.html"
+      }
+    },
+    {
+      "id": 23,
+      "label": "page",
+      "properties": {
+        "name": "/py-modindex.html",
+        "path": "../../../py-modindex.html"
+      }
+    },
+    {
+      "id": 24,
+      "label": "page",
+      "properties": {
+        "name": "/search.html",
+        "path": "../../../search.html"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": 0,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 1,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 3,
+      "outV": 2,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 0,
+      "outV": 2,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 4,
+      "outV": 2,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 0,
+      "outV": 4,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 0,
+      "outV": 5,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 6,
+      "outV": 5,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "label": "term",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 8,
+      "outV": 7,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "term"
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 9,
+      "outV": 8,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 11,
+      "outV": 10,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 12,
+      "outV": 10,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 13,
+      "outV": 10,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 14,
+      "outV": 10,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 5,
+      "outV": 10,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 0,
+      "outV": 10,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 1,
+      "outV": 10,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 4,
+      "outV": 10,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 17,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 15,
+      "outV": 10,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 14,
+      "outV": 13,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 19,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 16,
+      "outV": 13,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 20,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 16,
+      "outV": 14,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 21,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 15,
+      "outV": 14,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 22,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 9,
+      "outV": 14,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 23,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 2,
+      "outV": 16,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 24,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 13,
+      "outV": 16,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 25,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 14,
+      "outV": 16,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 26,
+      "label": "term",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 8,
+      "outV": 9,
+      "properties": {
+        "strength": 1,
+        "reference_count": 4,
+        "types": [
+          "term"
+        ]
+      }
+    },
+    {
+      "id": 27,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 3,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 28,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 17,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 4,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 29,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 9,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 30,
+      "label": "term",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 8,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "term"
+        ]
+      }
+    },
+    {
+      "id": 31,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 14,
+      "outV": 15,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 32,
+      "label": "term",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 8,
+      "outV": 18,
+      "properties": {
+        "strength": 1,
+        "reference_count": 27,
+        "types": [
+          "term"
+        ]
+      }
+    },
+    {
+      "id": 33,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 17,
+      "outV": 18,
+      "properties": {
+        "strength": 1,
+        "reference_count": 5,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 34,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 9,
+      "outV": 18,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 35,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 12,
+      "outV": 18,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 36,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 19,
+      "outV": 18,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 37,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 17,
+      "outV": 3,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 38,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 12,
+      "outV": 3,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 39,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 10,
+      "outV": 20,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 40,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 21,
+      "outV": 19,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 41,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 22,
+      "outV": 19,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 42,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 23,
+      "outV": 19,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 43,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 24,
+      "outV": 19,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    }
+  ]
+}

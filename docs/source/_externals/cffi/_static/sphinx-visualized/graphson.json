@@ -1,0 +1,60 @@
+{
+  "vertices": [
+    {
+      "id": 0,
+      "label": "page",
+      "properties": {
+        "name": "Overview",
+        "path": "../../../overview.html"
+      }
+    },
+    {
+      "id": 1,
+      "label": "page",
+      "properties": {
+        "name": "Preparing and Distributing modules",
+        "path": "../../../cdef.html"
+      }
+    },
+    {
+      "id": 2,
+      "label": "page",
+      "properties": {
+        "name": "CFFI Reference",
+        "path": "../../../ref.html"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": 0,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 1,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 15,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 2,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "ref"
+        ]
+      }
+    }
+  ]
+}

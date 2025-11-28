@@ -72,6 +72,14 @@ pygments_style = "sphinx"
 
 intersphinx_mapping = {
     "sphinx": ("https://www.sphinx-doc.org/en/master/", "_externals/sphinx/objects.inv"),
+    "boltons": ("https://boltons.readthedocs.io/en/latest/", "_externals/boltons/objects.inv"),
+    "bottle": ("https://bottlepy.org/docs/dev/", "_externals/bottle/objects.inv"),
+    "build": ("https://pypa-build.readthedocs.io/en/stable/", "_externals/build/objects.inv"),
+    "cffi": ("https://cffi.readthedocs.io/en/latest/", "_externals/cffi/objects.inv"),
+    "cpython": ("https://docs.python.org/3", "_externals/cpython/objects.inv"),
+    "devpi": ("https://devpi.net/docs/devpi/devpi/latest/+doc", "_externals/devpi/objects.inv"),
+    "packaging": ("https://packaging.pypa.io/en/latest/", "_externals/packaging/objects.inv"),
+    "packaging.python.org": ("https://packaging.python.org/en/latest/", "_externals/packaging.python.org/objects.inv"),
 }
 
 
