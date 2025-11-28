@@ -1,0 +1,5877 @@
+{
+  "vertices": [
+    {
+      "id": 0,
+      "label": "page",
+      "properties": {
+        "name": "Architecture",
+        "path": "../../../architecture.html"
+      }
+    },
+    {
+      "id": 1,
+      "label": "intersphinx",
+      "properties": {
+        "name": "doctest \u2014 Test interactive Python examples",
+        "path": "https://docs.python.org/3/library/doctest.html#module-doctest",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 2,
+      "label": "page",
+      "properties": {
+        "name": "queueutils - Priority queues",
+        "path": "../../../queueutils.html"
+      }
+    },
+    {
+      "id": 3,
+      "label": "intersphinx",
+      "properties": {
+        "name": "python",
+        "path": "https://docs.python.org/2/library/heapq.html#priority-queue-implementation-notes",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 4,
+      "label": "page",
+      "properties": {
+        "name": "iterutils - itertools improvements",
+        "path": "../../../iterutils.html"
+      }
+    },
+    {
+      "id": 5,
+      "label": "intersphinx",
+      "properties": {
+        "name": "python",
+        "path": "https://docs.python.org/2/library/itertools.html#recipes",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 6,
+      "label": "page",
+      "properties": {
+        "name": "timeutils - datetime additions",
+        "path": "../../../timeutils.html"
+      }
+    },
+    {
+      "id": 7,
+      "label": "intersphinx",
+      "properties": {
+        "name": "python",
+        "path": "https://docs.python.org/2/library/datetime.html#tzinfo-objects",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 8,
+      "label": "page",
+      "properties": {
+        "name": "fileutils - Filesystem helpers",
+        "path": "../../../fileutils.html"
+      }
+    },
+    {
+      "id": 9,
+      "label": "intersphinx",
+      "properties": {
+        "name": "shutil \u2014 High-level file operations",
+        "path": "https://docs.python.org/3/library/shutil.html#shutil.copytree",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 10,
+      "label": "page",
+      "properties": {
+        "name": "namedutils - Lightweight containers",
+        "path": "../../../namedutils.html"
+      }
+    },
+    {
+      "id": 11,
+      "label": "intersphinx",
+      "properties": {
+        "name": "collections \u2014 Container datatypes",
+        "path": "https://docs.python.org/3/library/collections.html#collections.namedtuple",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 12,
+      "label": "page",
+      "properties": {
+        "name": "strutils - Text manipulation",
+        "path": "../../../strutils.html"
+      }
+    },
+    {
+      "id": 13,
+      "label": "page",
+      "properties": {
+        "name": "dictutils - Mapping types (OMD)",
+        "path": "../../../dictutils.html"
+      }
+    },
+    {
+      "id": 14,
+      "label": "page",
+      "properties": {
+        "name": "setutils - IndexedSet type",
+        "path": "../../../setutils.html"
+      }
+    },
+    {
+      "id": 15,
+      "label": "page",
+      "properties": {
+        "name": "listutils - list derivatives",
+        "path": "../../../listutils.html"
+      }
+    },
+    {
+      "id": 16,
+      "label": "page",
+      "properties": {
+        "name": "tableutils - 2D data structure",
+        "path": "../../../tableutils.html"
+      }
+    },
+    {
+      "id": 17,
+      "label": "page",
+      "properties": {
+        "name": "debugutils - Debugging utilities",
+        "path": "../../../debugutils.html"
+      }
+    },
+    {
+      "id": 18,
+      "label": "page",
+      "properties": {
+        "name": "gcutils - Garbage collecting tools",
+        "path": "../../../gcutils.html"
+      }
+    },
+    {
+      "id": 19,
+      "label": "page",
+      "properties": {
+        "name": "tbutils - Tracebacks and call stacks",
+        "path": "../../../tbutils.html"
+      }
+    },
+    {
+      "id": 20,
+      "label": "page",
+      "properties": {
+        "name": "cacheutils - Caches and caching",
+        "path": "../../../cacheutils.html"
+      }
+    },
+    {
+      "id": 21,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Types",
+        "path": "https://docs.python.org/3/library/stdtypes.html#dict",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 22,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Types",
+        "path": "https://docs.python.org/3/library/stdtypes.html#dict.get",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 23,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Types",
+        "path": "https://docs.python.org/3/library/stdtypes.html#dict.setdefault",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 24,
+      "label": "page",
+      "properties": {
+        "name": "/_modules/boltons/cacheutils.html",
+        "path": "../../../_modules/boltons/cacheutils.html"
+      }
+    },
+    {
+      "id": 25,
+      "label": "intersphinx",
+      "properties": {
+        "name": "collections \u2014 Container datatypes",
+        "path": "https://docs.python.org/3/library/collections.html#collections.defaultdict",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 26,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Functions",
+        "path": "https://docs.python.org/3/library/functions.html#int",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 27,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Exceptions",
+        "path": "https://docs.python.org/3/library/exceptions.html#KeyError",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 28,
+      "label": "intersphinx",
+      "properties": {
+        "name": "python",
+        "path": "https://docs.python.org/2/glossary.html#term-hashable",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 29,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Functions",
+        "path": "https://docs.python.org/3/library/functions.html#bool",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 30,
+      "label": "intersphinx",
+      "properties": {
+        "name": "functools \u2014 Higher-order functions and operations on callable objects",
+        "path": "https://docs.python.org/3/library/functools.html#functools.lru_cache",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 31,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Functions",
+        "path": "https://docs.python.org/3/library/functions.html#property",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 32,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Functions",
+        "path": "https://docs.python.org/3/library/functions.html#delattr",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 33,
+      "label": "intersphinx",
+      "properties": {
+        "name": "collections \u2014 Container datatypes",
+        "path": "https://docs.python.org/3/library/collections.html#collections.Counter",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 34,
+      "label": "intersphinx",
+      "properties": {
+        "name": "pdb \u2014 The Python Debugger",
+        "path": "https://docs.python.org/3/library/pdb.html#module-pdb",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 35,
+      "label": "page",
+      "properties": {
+        "name": "/_modules/boltons/debugutils.html",
+        "path": "../../../_modules/boltons/debugutils.html"
+      }
+    },
+    {
+      "id": 36,
+      "label": "intersphinx",
+      "properties": {
+        "name": "signal \u2014 Set handlers for asynchronous events",
+        "path": "https://docs.python.org/3/library/signal.html#module-signal",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 37,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Functions",
+        "path": "https://docs.python.org/3/library/functions.html#object",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 38,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Types",
+        "path": "https://docs.python.org/3/library/stdtypes.html#str",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 39,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Functions",
+        "path": "https://docs.python.org/3/library/functions.html#isinstance",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 40,
+      "label": "intersphinx",
+      "properties": {
+        "name": "collections \u2014 Container datatypes",
+        "path": "https://docs.python.org/3/library/collections.html#collections.OrderedDict",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 41,
+      "label": "page",
+      "properties": {
+        "name": "/_modules/boltons/dictutils.html",
+        "path": "../../../_modules/boltons/dictutils.html"
+      }
+    },
+    {
+      "id": 42,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Types",
+        "path": "https://docs.python.org/3/library/stdtypes.html#set",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 43,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Types",
+        "path": "https://docs.python.org/3/library/stdtypes.html#frozenset",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 44,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Types",
+        "path": "https://docs.python.org/3/library/stdtypes.html#dict.update",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 45,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Functions",
+        "path": "https://docs.python.org/3/library/functions.html#reversed",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 46,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Types",
+        "path": "https://docs.python.org/3/library/stdtypes.html#list",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 47,
+      "label": "page",
+      "properties": {
+        "name": "ecoutils - Ecosystem analytics",
+        "path": "../../../ecoutils.html"
+      }
+    },
+    {
+      "id": 48,
+      "label": "intersphinx",
+      "properties": {
+        "name": "sys \u2014 System-specific parameters and functions",
+        "path": "https://docs.python.org/3/library/sys.html#sys.path",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 49,
+      "label": "intersphinx",
+      "properties": {
+        "name": "sysconfig \u2014 Provide access to Python\u2019s configuration information",
+        "path": "https://docs.python.org/3/library/sysconfig.html#module-sysconfig",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 50,
+      "label": "intersphinx",
+      "properties": {
+        "name": "os \u2014 Miscellaneous operating system interfaces",
+        "path": "https://docs.python.org/3/library/os.html#os.environ",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 51,
+      "label": "page",
+      "properties": {
+        "name": "/_modules/boltons/ecoutils.html",
+        "path": "../../../_modules/boltons/ecoutils.html"
+      }
+    },
+    {
+      "id": 52,
+      "label": "intersphinx",
+      "properties": {
+        "name": "os \u2014 Miscellaneous operating system interfaces",
+        "path": "https://docs.python.org/3/library/os.html#module-os",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 53,
+      "label": "intersphinx",
+      "properties": {
+        "name": "os.path \u2014 Common pathname manipulations",
+        "path": "https://docs.python.org/3/library/os.path.html#module-os.path",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 54,
+      "label": "intersphinx",
+      "properties": {
+        "name": "shutil \u2014 High-level file operations",
+        "path": "https://docs.python.org/3/library/shutil.html#module-shutil",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 55,
+      "label": "page",
+      "properties": {
+        "name": "/_modules/boltons/fileutils.html",
+        "path": "../../../_modules/boltons/fileutils.html"
+      }
+    },
+    {
+      "id": 56,
+      "label": "intersphinx",
+      "properties": {
+        "name": "shutil \u2014 High-level file operations",
+        "path": "https://docs.python.org/3/library/shutil.html#shutil.copy2",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 57,
+      "label": "intersphinx",
+      "properties": {
+        "name": "python",
+        "path": "https://docs.python.org/2/reference/compound_stmts.html#with",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 58,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Exceptions",
+        "path": "https://docs.python.org/3/library/exceptions.html#OSError",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 59,
+      "label": "intersphinx",
+      "properties": {
+        "name": "os \u2014 Miscellaneous operating system interfaces",
+        "path": "https://docs.python.org/3/library/os.html#os.replace",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 60,
+      "label": "page",
+      "properties": {
+        "name": "formatutils - str.format() toolbox",
+        "path": "../../../formatutils.html"
+      }
+    },
+    {
+      "id": 61,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Types",
+        "path": "https://docs.python.org/3/library/stdtypes.html#str.format",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 62,
+      "label": "intersphinx",
+      "properties": {
+        "name": "python",
+        "path": "https://docs.python.org/2/library/string.html#format-string-syntax",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 63,
+      "label": "intersphinx",
+      "properties": {
+        "name": "python",
+        "path": "https://docs.python.org/2/library/string.html#string-formatting",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 64,
+      "label": "page",
+      "properties": {
+        "name": "/_modules/boltons/formatutils.html",
+        "path": "../../../_modules/boltons/formatutils.html"
+      }
+    },
+    {
+      "id": 65,
+      "label": "page",
+      "properties": {
+        "name": "funcutils - functools fixes",
+        "path": "../../../funcutils.html"
+      }
+    },
+    {
+      "id": 66,
+      "label": "intersphinx",
+      "properties": {
+        "name": "functools \u2014 Higher-order functions and operations on callable objects",
+        "path": "https://docs.python.org/3/library/functools.html#module-functools",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 67,
+      "label": "page",
+      "properties": {
+        "name": "/_modules/boltons/funcutils.html",
+        "path": "../../../_modules/boltons/funcutils.html"
+      }
+    },
+    {
+      "id": 68,
+      "label": "intersphinx",
+      "properties": {
+        "name": "functools \u2014 Higher-order functions and operations on callable objects",
+        "path": "https://docs.python.org/3/library/functools.html#functools.wraps",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 69,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Types",
+        "path": "https://docs.python.org/3/library/stdtypes.html#tuple",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 70,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Exceptions",
+        "path": "https://docs.python.org/3/library/exceptions.html#ValueError",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 71,
+      "label": "intersphinx",
+      "properties": {
+        "name": "python",
+        "path": "https://docs.python.org/2/glossary.html#term-garbage-collection",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 72,
+      "label": "intersphinx",
+      "properties": {
+        "name": "python",
+        "path": "https://docs.python.org/2/glossary.html#term-reference-count",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 73,
+      "label": "intersphinx",
+      "properties": {
+        "name": "python",
+        "path": "https://docs.python.org/2/library/gc.html#gc.set_threshold",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 74,
+      "label": "intersphinx",
+      "properties": {
+        "name": "gc \u2014 Garbage Collector interface",
+        "path": "https://docs.python.org/3/library/gc.html#module-gc",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 75,
+      "label": "page",
+      "properties": {
+        "name": "/_modules/boltons/gcutils.html",
+        "path": "../../../_modules/boltons/gcutils.html"
+      }
+    },
+    {
+      "id": 76,
+      "label": "intersphinx",
+      "properties": {
+        "name": "gc \u2014 Garbage Collector interface",
+        "path": "https://docs.python.org/3/library/gc.html#gc.get_referrers",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 77,
+      "label": "intersphinx",
+      "properties": {
+        "name": "gc \u2014 Garbage Collector interface",
+        "path": "https://docs.python.org/3/library/gc.html#gc.get_referents",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 78,
+      "label": "page",
+      "properties": {
+        "name": "boltons",
+        "path": "../../../index.html"
+      }
+    },
+    {
+      "id": 79,
+      "label": "intersphinx",
+      "properties": {
+        "name": "The Python Standard Library",
+        "path": "https://docs.python.org/3/library/index.html",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 80,
+      "label": "page",
+      "properties": {
+        "name": "/genindex.html",
+        "path": "../../../genindex.html"
+      }
+    },
+    {
+      "id": 81,
+      "label": "page",
+      "properties": {
+        "name": "ioutils - Input/output enhancements",
+        "path": "../../../ioutils.html"
+      }
+    },
+    {
+      "id": 82,
+      "label": "page",
+      "properties": {
+        "name": "/_modules/boltons/ioutils.html",
+        "path": "../../../_modules/boltons/ioutils.html"
+      }
+    },
+    {
+      "id": 83,
+      "label": "intersphinx",
+      "properties": {
+        "name": "itertools \u2014 Functions creating iterators for efficient looping",
+        "path": "https://docs.python.org/3/library/itertools.html#itertools.chain",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 84,
+      "label": "intersphinx",
+      "properties": {
+        "name": "itertools \u2014 Functions creating iterators for efficient looping",
+        "path": "https://docs.python.org/3/library/itertools.html#module-itertools",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 85,
+      "label": "page",
+      "properties": {
+        "name": "/_modules/boltons/iterutils.html",
+        "path": "../../../_modules/boltons/iterutils.html"
+      }
+    },
+    {
+      "id": 86,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Types",
+        "path": "https://docs.python.org/3/library/stdtypes.html#str.split",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 87,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Types",
+        "path": "https://docs.python.org/3/library/stdtypes.html#list.extend",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 88,
+      "label": "intersphinx",
+      "properties": {
+        "name": "itertools \u2014 Functions creating iterators for efficient looping",
+        "path": "https://docs.python.org/3/library/itertools.html#itertools.count",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 89,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Functions",
+        "path": "https://docs.python.org/3/library/functions.html#float",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 90,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Types",
+        "path": "https://docs.python.org/3/library/stdtypes.html#str.partition",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 91,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Functions",
+        "path": "https://docs.python.org/3/library/functions.html#sorted",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 92,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Functions",
+        "path": "https://docs.python.org/3/library/functions.html#sum",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 93,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Functions",
+        "path": "https://docs.python.org/3/library/functions.html#all",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 94,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Functions",
+        "path": "https://docs.python.org/3/library/functions.html#any",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 95,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Functions",
+        "path": "https://docs.python.org/3/library/functions.html#callable",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 96,
+      "label": "intersphinx",
+      "properties": {
+        "name": "python",
+        "path": "https://docs.python.org/2/glossary.html#term-iterable",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 97,
+      "label": "page",
+      "properties": {
+        "name": "jsonutils - JSON interactions",
+        "path": "../../../jsonutils.html"
+      }
+    },
+    {
+      "id": 98,
+      "label": "page",
+      "properties": {
+        "name": "/_modules/boltons/jsonutils.html",
+        "path": "../../../_modules/boltons/jsonutils.html"
+      }
+    },
+    {
+      "id": 99,
+      "label": "intersphinx",
+      "properties": {
+        "name": "json \u2014 JSON encoder and decoder",
+        "path": "https://docs.python.org/3/library/json.html#json.loads",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 100,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Exceptions",
+        "path": "https://docs.python.org/3/library/exceptions.html#StopIteration",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 101,
+      "label": "page",
+      "properties": {
+        "name": "/_modules/boltons/listutils.html",
+        "path": "../../../_modules/boltons/listutils.html"
+      }
+    },
+    {
+      "id": 102,
+      "label": "page",
+      "properties": {
+        "name": "mathutils - Mathematical functions",
+        "path": "../../../mathutils.html"
+      }
+    },
+    {
+      "id": 103,
+      "label": "intersphinx",
+      "properties": {
+        "name": "math \u2014 Mathematical functions",
+        "path": "https://docs.python.org/3/library/math.html#module-math",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 104,
+      "label": "page",
+      "properties": {
+        "name": "/_modules/boltons/mathutils.html",
+        "path": "../../../_modules/boltons/mathutils.html"
+      }
+    },
+    {
+      "id": 105,
+      "label": "intersphinx",
+      "properties": {
+        "name": "bisect \u2014 Array bisection algorithm",
+        "path": "https://docs.python.org/3/library/bisect.html#searching-sorted-lists",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 106,
+      "label": "intersphinx",
+      "properties": {
+        "name": "bisect \u2014 Array bisection algorithm",
+        "path": "https://docs.python.org/3/library/bisect.html#module-bisect",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 107,
+      "label": "page",
+      "properties": {
+        "name": "mboxutils - Unix mailbox utilities",
+        "path": "../../../mboxutils.html"
+      }
+    },
+    {
+      "id": 108,
+      "label": "page",
+      "properties": {
+        "name": "/_modules/boltons/mboxutils.html",
+        "path": "../../../_modules/boltons/mboxutils.html"
+      }
+    },
+    {
+      "id": 109,
+      "label": "intersphinx",
+      "properties": {
+        "name": "mailbox \u2014 Manipulate mailboxes in various formats",
+        "path": "https://docs.python.org/3/library/mailbox.html#mailbox.mbox",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 110,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Functions",
+        "path": "https://docs.python.org/3/library/functions.html#type",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 111,
+      "label": "page",
+      "properties": {
+        "name": "/_modules/boltons/namedutils.html",
+        "path": "../../../_modules/boltons/namedutils.html"
+      }
+    },
+    {
+      "id": 112,
+      "label": "page",
+      "properties": {
+        "name": "pathutils - Filesystem fun",
+        "path": "../../../pathutils.html"
+      }
+    },
+    {
+      "id": 113,
+      "label": "page",
+      "properties": {
+        "name": "/_modules/boltons/pathutils.html",
+        "path": "../../../_modules/boltons/pathutils.html"
+      }
+    },
+    {
+      "id": 114,
+      "label": "intersphinx",
+      "properties": {
+        "name": "os.path \u2014 Common pathname manipulations",
+        "path": "https://docs.python.org/3/library/os.path.html#os.path.expanduser",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 115,
+      "label": "intersphinx",
+      "properties": {
+        "name": "collections \u2014 Container datatypes",
+        "path": "https://docs.python.org/3/library/collections.html#collections.deque",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 116,
+      "label": "intersphinx",
+      "properties": {
+        "name": "heapq \u2014 Heap queue algorithm",
+        "path": "https://docs.python.org/3/library/heapq.html#module-heapq",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 117,
+      "label": "page",
+      "properties": {
+        "name": "/_modules/boltons/queueutils.html",
+        "path": "../../../_modules/boltons/queueutils.html"
+      }
+    },
+    {
+      "id": 118,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Functions",
+        "path": "https://docs.python.org/3/library/functions.html#staticmethod",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 119,
+      "label": "intersphinx",
+      "properties": {
+        "name": "heapq \u2014 Heap queue algorithm",
+        "path": "https://docs.python.org/3/library/heapq.html#heapq.heappop",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 120,
+      "label": "intersphinx",
+      "properties": {
+        "name": "heapq \u2014 Heap queue algorithm",
+        "path": "https://docs.python.org/3/library/heapq.html#heapq.heappush",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 121,
+      "label": "intersphinx",
+      "properties": {
+        "name": "bisect \u2014 Array bisection algorithm",
+        "path": "https://docs.python.org/3/library/bisect.html#bisect.insort",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 122,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Exceptions",
+        "path": "https://docs.python.org/3/library/exceptions.html#TypeError",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 123,
+      "label": "page",
+      "properties": {
+        "name": "/_modules/boltons/setutils.html",
+        "path": "../../../_modules/boltons/setutils.html"
+      }
+    },
+    {
+      "id": 124,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Functions",
+        "path": "https://docs.python.org/3/library/functions.html#len",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 125,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Functions",
+        "path": "https://docs.python.org/3/library/functions.html#iter",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 126,
+      "label": "page",
+      "properties": {
+        "name": "socketutils - socket wrappers",
+        "path": "../../../socketutils.html"
+      }
+    },
+    {
+      "id": 127,
+      "label": "intersphinx",
+      "properties": {
+        "name": "socket \u2014 Low-level networking interface",
+        "path": "https://docs.python.org/3/library/socket.html#module-socket",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 128,
+      "label": "intersphinx",
+      "properties": {
+        "name": "socket \u2014 Low-level networking interface",
+        "path": "https://docs.python.org/3/library/socket.html#socket.socket",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 129,
+      "label": "page",
+      "properties": {
+        "name": "/_modules/boltons/socketutils.html",
+        "path": "../../../_modules/boltons/socketutils.html"
+      }
+    },
+    {
+      "id": 130,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Types",
+        "path": "https://docs.python.org/3/library/stdtypes.html#bytes",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 131,
+      "label": "intersphinx",
+      "properties": {
+        "name": "socket \u2014 Low-level networking interface",
+        "path": "https://docs.python.org/3/library/socket.html#socket.error",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 132,
+      "label": "intersphinx",
+      "properties": {
+        "name": "socket \u2014 Low-level networking interface",
+        "path": "https://docs.python.org/3/library/socket.html#socket.AF_INET",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 133,
+      "label": "intersphinx",
+      "properties": {
+        "name": "socket \u2014 Low-level networking interface",
+        "path": "https://docs.python.org/3/library/socket.html#socket.AF_INET6",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 134,
+      "label": "intersphinx",
+      "properties": {
+        "name": "socket \u2014 Low-level networking interface",
+        "path": "https://docs.python.org/3/library/socket.html#socket.AF_UNIX",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 135,
+      "label": "intersphinx",
+      "properties": {
+        "name": "socket \u2014 Low-level networking interface",
+        "path": "https://docs.python.org/3/library/socket.html#socket.SOCK_STREAM",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 136,
+      "label": "intersphinx",
+      "properties": {
+        "name": "socket \u2014 Low-level networking interface",
+        "path": "https://docs.python.org/3/library/socket.html#socket.timeout",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 137,
+      "label": "page",
+      "properties": {
+        "name": "statsutils - Statistics fundamentals",
+        "path": "../../../statsutils.html"
+      }
+    },
+    {
+      "id": 138,
+      "label": "page",
+      "properties": {
+        "name": "/_modules/boltons/statsutils.html",
+        "path": "../../../_modules/boltons/statsutils.html"
+      }
+    },
+    {
+      "id": 139,
+      "label": "page",
+      "properties": {
+        "name": "/_modules/boltons/strutils.html",
+        "path": "../../../_modules/boltons/strutils.html"
+      }
+    },
+    {
+      "id": 140,
+      "label": "intersphinx",
+      "properties": {
+        "name": "subprocess \u2014 Subprocess management",
+        "path": "https://docs.python.org/3/library/subprocess.html#module-subprocess",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 141,
+      "label": "intersphinx",
+      "properties": {
+        "name": "pipes \u2014 Interface to shell pipelines",
+        "path": "https://docs.python.org/3/library/pipes.html#module-pipes",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 142,
+      "label": "intersphinx",
+      "properties": {
+        "name": "shlex \u2014 Simple lexical analysis",
+        "path": "https://docs.python.org/3/library/shlex.html#module-shlex",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 143,
+      "label": "intersphinx",
+      "properties": {
+        "name": "argparse \u2014 Parser for command-line options, arguments and subcommands",
+        "path": "https://docs.python.org/3/library/argparse.html#module-argparse",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 144,
+      "label": "intersphinx",
+      "properties": {
+        "name": "gzip \u2014 Support for gzip files",
+        "path": "https://docs.python.org/3/library/gzip.html#module-gzip",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 145,
+      "label": "intersphinx",
+      "properties": {
+        "name": "textwrap \u2014 Text wrapping and filling",
+        "path": "https://docs.python.org/3/library/textwrap.html#textwrap.dedent",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 146,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Types",
+        "path": "https://docs.python.org/3/library/stdtypes.html#str.splitlines",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 147,
+      "label": "intersphinx",
+      "properties": {
+        "name": "textwrap \u2014 Text wrapping and filling",
+        "path": "https://docs.python.org/3/library/textwrap.html#textwrap.wrap",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 148,
+      "label": "page",
+      "properties": {
+        "name": "/_modules/boltons/tableutils.html",
+        "path": "../../../_modules/boltons/tableutils.html"
+      }
+    },
+    {
+      "id": 149,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Functions",
+        "path": "https://docs.python.org/3/library/functions.html#repr",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 150,
+      "label": "intersphinx",
+      "properties": {
+        "name": "traceback \u2014 Print or retrieve a stack traceback",
+        "path": "https://docs.python.org/3/library/traceback.html#module-traceback",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 151,
+      "label": "page",
+      "properties": {
+        "name": "/_modules/boltons/tbutils.html",
+        "path": "../../../_modules/boltons/tbutils.html"
+      }
+    },
+    {
+      "id": 152,
+      "label": "intersphinx",
+      "properties": {
+        "name": "sys \u2014 System-specific parameters and functions",
+        "path": "https://docs.python.org/3/library/sys.html#sys.exc_info",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 153,
+      "label": "intersphinx",
+      "properties": {
+        "name": "traceback \u2014 Print or retrieve a stack traceback",
+        "path": "https://docs.python.org/3/library/traceback.html#traceback.format_exception",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 154,
+      "label": "intersphinx",
+      "properties": {
+        "name": "sys \u2014 System-specific parameters and functions",
+        "path": "https://docs.python.org/3/library/sys.html#sys.excepthook",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 155,
+      "label": "intersphinx",
+      "properties": {
+        "name": "traceback \u2014 Print or retrieve a stack traceback",
+        "path": "https://docs.python.org/3/library/traceback.html#traceback.print_exception",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 156,
+      "label": "intersphinx",
+      "properties": {
+        "name": "sys \u2014 System-specific parameters and functions",
+        "path": "https://docs.python.org/3/library/sys.html#sys._getframe",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 157,
+      "label": "intersphinx",
+      "properties": {
+        "name": "sys \u2014 System-specific parameters and functions",
+        "path": "https://docs.python.org/3/library/sys.html#sys.tracebacklimit",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 158,
+      "label": "intersphinx",
+      "properties": {
+        "name": "types \u2014 Dynamic type creation and names for built-in types",
+        "path": "https://docs.python.org/3/library/types.html#types.TracebackType",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 159,
+      "label": "intersphinx",
+      "properties": {
+        "name": "traceback \u2014 Print or retrieve a stack traceback",
+        "path": "https://docs.python.org/3/library/traceback.html#traceback.format_tb",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 160,
+      "label": "intersphinx",
+      "properties": {
+        "name": "traceback \u2014 Print or retrieve a stack traceback",
+        "path": "https://docs.python.org/3/library/traceback.html#traceback.format_stack",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 161,
+      "label": "intersphinx",
+      "properties": {
+        "name": "datetime \u2014 Basic date and time types",
+        "path": "https://docs.python.org/3/library/datetime.html#module-datetime",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 162,
+      "label": "intersphinx",
+      "properties": {
+        "name": "datetime \u2014 Basic date and time types",
+        "path": "https://docs.python.org/3/library/datetime.html#datetime.datetime",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 163,
+      "label": "intersphinx",
+      "properties": {
+        "name": "datetime \u2014 Basic date and time types",
+        "path": "https://docs.python.org/3/library/datetime.html#datetime.tzinfo",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 164,
+      "label": "page",
+      "properties": {
+        "name": "/_modules/boltons/timeutils.html",
+        "path": "../../../_modules/boltons/timeutils.html"
+      }
+    },
+    {
+      "id": 165,
+      "label": "intersphinx",
+      "properties": {
+        "name": "datetime \u2014 Basic date and time types",
+        "path": "https://docs.python.org/3/library/datetime.html#datetime.date",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 166,
+      "label": "intersphinx",
+      "properties": {
+        "name": "datetime \u2014 Basic date and time types",
+        "path": "https://docs.python.org/3/library/datetime.html#datetime.timedelta",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 167,
+      "label": "intersphinx",
+      "properties": {
+        "name": "datetime \u2014 Basic date and time types",
+        "path": "https://docs.python.org/3/library/datetime.html#datetime.datetime.isoformat",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 168,
+      "label": "intersphinx",
+      "properties": {
+        "name": "python",
+        "path": "https://docs.python.org/2/library/datetime.html#strftime-strptime-behavior",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 169,
+      "label": "intersphinx",
+      "properties": {
+        "name": "time \u2014 Time access and conversions",
+        "path": "https://docs.python.org/3/library/time.html#time.time",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 170,
+      "label": "intersphinx",
+      "properties": {
+        "name": "datetime \u2014 Basic date and time types",
+        "path": "https://docs.python.org/3/library/datetime.html#datetime.datetime.utcnow",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 171,
+      "label": "intersphinx",
+      "properties": {
+        "name": "datetime \u2014 Basic date and time types",
+        "path": "https://docs.python.org/3/library/datetime.html#datetime.datetime.now",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 172,
+      "label": "intersphinx",
+      "properties": {
+        "name": "datetime \u2014 Basic date and time types",
+        "path": "https://docs.python.org/3/library/datetime.html#datetime.datetime.replace",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 173,
+      "label": "intersphinx",
+      "properties": {
+        "name": "datetime \u2014 Basic date and time types",
+        "path": "https://docs.python.org/3/library/datetime.html#datetime.timezone.utc",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 174,
+      "label": "page",
+      "properties": {
+        "name": "typeutils - Type handling",
+        "path": "../../../typeutils.html"
+      }
+    },
+    {
+      "id": 175,
+      "label": "page",
+      "properties": {
+        "name": "/_modules/boltons/typeutils.html",
+        "path": "../../../_modules/boltons/typeutils.html"
+      }
+    },
+    {
+      "id": 176,
+      "label": "page",
+      "properties": {
+        "name": "urlutils - Structured URL",
+        "path": "../../../urlutils.html"
+      }
+    },
+    {
+      "id": 177,
+      "label": "intersphinx",
+      "properties": {
+        "name": "urllib \u2014 URL handling modules",
+        "path": "https://docs.python.org/3/library/urllib.html#module-urllib",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 178,
+      "label": "page",
+      "properties": {
+        "name": "/_modules/boltons/urlutils.html",
+        "path": "../../../_modules/boltons/urlutils.html"
+      }
+    },
+    {
+      "id": 179,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Types",
+        "path": "https://docs.python.org/3/library/stdtypes.html#bytes.decode",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": 0,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 1,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 2,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 3,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 4,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 5,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 6,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 7,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 8,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 9,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 10,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 11,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 12,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 13,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 14,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 15,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 16,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 17,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 17,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 18,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 19,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 19,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 21,
+      "outV": 20,
+      "properties": {
+        "strength": 1,
+        "reference_count": 7,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 20,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 22,
+      "outV": 20,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 21,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 23,
+      "outV": 20,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 22,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 24,
+      "outV": 20,
+      "properties": {
+        "strength": 1,
+        "reference_count": 21,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 23,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 25,
+      "outV": 20,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 24,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 26,
+      "outV": 20,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 25,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 27,
+      "outV": 20,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 26,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 28,
+      "outV": 20,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 27,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 29,
+      "outV": 20,
+      "properties": {
+        "strength": 1,
+        "reference_count": 4,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 28,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 30,
+      "outV": 20,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 29,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 31,
+      "outV": 20,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 30,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 32,
+      "outV": 20,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 31,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 33,
+      "outV": 20,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 32,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 34,
+      "outV": 17,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 33,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 35,
+      "outV": 17,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 34,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 26,
+      "outV": 17,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 35,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 36,
+      "outV": 17,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 36,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 37,
+      "outV": 17,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 37,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 38,
+      "outV": 17,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 38,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 39,
+      "outV": 17,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 39,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 21,
+      "outV": 13,
+      "properties": {
+        "strength": 1,
+        "reference_count": 14,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 40,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 33,
+      "outV": 13,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 41,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 40,
+      "outV": 13,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 42,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 41,
+      "outV": 13,
+      "properties": {
+        "strength": 1,
+        "reference_count": 48,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 43,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 42,
+      "outV": 13,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 44,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 43,
+      "outV": 13,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 45,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 44,
+      "outV": 13,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 46,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 45,
+      "outV": 13,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 47,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 27,
+      "outV": 13,
+      "properties": {
+        "strength": 1,
+        "reference_count": 4,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 48,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 46,
+      "outV": 13,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 49,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 23,
+      "outV": 13,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 50,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 29,
+      "outV": 13,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 51,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 48,
+      "outV": 47,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 52,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 49,
+      "outV": 47,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 53,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 50,
+      "outV": 47,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 54,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 51,
+      "outV": 47,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 55,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 29,
+      "outV": 47,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 56,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 52,
+      "outV": 8,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 57,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 53,
+      "outV": 8,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 58,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 54,
+      "outV": 8,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 59,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 55,
+      "outV": 8,
+      "properties": {
+        "strength": 1,
+        "reference_count": 9,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 60,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 38,
+      "outV": 8,
+      "properties": {
+        "strength": 1,
+        "reference_count": 10,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 61,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 46,
+      "outV": 8,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 62,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 29,
+      "outV": 8,
+      "properties": {
+        "strength": 1,
+        "reference_count": 6,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 63,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 26,
+      "outV": 8,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 64,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 9,
+      "outV": 8,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 65,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 56,
+      "outV": 8,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 66,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 57,
+      "outV": 8,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 67,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 58,
+      "outV": 8,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 68,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 59,
+      "outV": 8,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 69,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 61,
+      "outV": 60,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 70,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 62,
+      "outV": 60,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 71,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 63,
+      "outV": 60,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 72,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 64,
+      "outV": 60,
+      "properties": {
+        "strength": 1,
+        "reference_count": 10,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 73,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 29,
+      "outV": 60,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 74,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 66,
+      "outV": 65,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 75,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 67,
+      "outV": 65,
+      "properties": {
+        "strength": 1,
+        "reference_count": 16,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 76,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 68,
+      "outV": 65,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 77,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 38,
+      "outV": 65,
+      "properties": {
+        "strength": 1,
+        "reference_count": 8,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 78,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 46,
+      "outV": 65,
+      "properties": {
+        "strength": 1,
+        "reference_count": 5,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 79,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 69,
+      "outV": 65,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 80,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 21,
+      "outV": 65,
+      "properties": {
+        "strength": 1,
+        "reference_count": 4,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 81,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 26,
+      "outV": 65,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 82,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 29,
+      "outV": 65,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 83,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 70,
+      "outV": 65,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 84,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 37,
+      "outV": 65,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 85,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 71,
+      "outV": 18,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 86,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 72,
+      "outV": 18,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 87,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 73,
+      "outV": 18,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 88,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 74,
+      "outV": 18,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 89,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 75,
+      "outV": 18,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 90,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 76,
+      "outV": 18,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 91,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 77,
+      "outV": 18,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 92,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 79,
+      "outV": 78,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 93,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 8,
+      "outV": 78,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 94,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 13,
+      "outV": 78,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 95,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 2,
+      "outV": 78,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 96,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 4,
+      "outV": 78,
+      "properties": {
+        "strength": 1,
+        "reference_count": 4,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 97,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 19,
+      "outV": 78,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 98,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 6,
+      "outV": 78,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 99,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 80,
+      "outV": 78,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 100,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 0,
+      "outV": 78,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 101,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 82,
+      "outV": 81,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 102,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 83,
+      "outV": 81,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 103,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 84,
+      "outV": 4,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 104,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 46,
+      "outV": 4,
+      "properties": {
+        "strength": 1,
+        "reference_count": 6,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 105,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 85,
+      "outV": 4,
+      "properties": {
+        "strength": 1,
+        "reference_count": 37,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 106,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 38,
+      "outV": 4,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 107,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 86,
+      "outV": 4,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 108,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 69,
+      "outV": 4,
+      "properties": {
+        "strength": 1,
+        "reference_count": 4,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 109,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 21,
+      "outV": 4,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 110,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 42,
+      "outV": 4,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 111,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 87,
+      "outV": 4,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 112,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 44,
+      "outV": 4,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 113,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 29,
+      "outV": 4,
+      "properties": {
+        "strength": 1,
+        "reference_count": 9,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 114,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 88,
+      "outV": 4,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 115,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 89,
+      "outV": 4,
+      "properties": {
+        "strength": 1,
+        "reference_count": 4,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 116,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 26,
+      "outV": 4,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 117,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 90,
+      "outV": 4,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 118,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 91,
+      "outV": 4,
+      "properties": {
+        "strength": 1,
+        "reference_count": 4,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 119,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 92,
+      "outV": 4,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 120,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 93,
+      "outV": 4,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 121,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 94,
+      "outV": 4,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 122,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 95,
+      "outV": 4,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 123,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 96,
+      "outV": 4,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 124,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 98,
+      "outV": 97,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 125,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 29,
+      "outV": 97,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 126,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 99,
+      "outV": 97,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 127,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 89,
+      "outV": 97,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 128,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 21,
+      "outV": 97,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 129,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 100,
+      "outV": 97,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 130,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 26,
+      "outV": 97,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 131,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 46,
+      "outV": 15,
+      "properties": {
+        "strength": 1,
+        "reference_count": 4,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 132,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 101,
+      "outV": 15,
+      "properties": {
+        "strength": 1,
+        "reference_count": 12,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 133,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 103,
+      "outV": 102,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 134,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 104,
+      "outV": 102,
+      "properties": {
+        "strength": 1,
+        "reference_count": 14,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 135,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 26,
+      "outV": 102,
+      "properties": {
+        "strength": 1,
+        "reference_count": 5,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 136,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 89,
+      "outV": 102,
+      "properties": {
+        "strength": 1,
+        "reference_count": 5,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 137,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 105,
+      "outV": 102,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 138,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 106,
+      "outV": 102,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 139,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 108,
+      "outV": 107,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 140,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 109,
+      "outV": 107,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 141,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 38,
+      "outV": 107,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 142,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 110,
+      "outV": 107,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 143,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 29,
+      "outV": 107,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 144,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 26,
+      "outV": 107,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 145,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 37,
+      "outV": 10,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 146,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 111,
+      "outV": 10,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 147,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 113,
+      "outV": 112,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 148,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 38,
+      "outV": 112,
+      "properties": {
+        "strength": 1,
+        "reference_count": 12,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 149,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 29,
+      "outV": 112,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 150,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 114,
+      "outV": 112,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 151,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 21,
+      "outV": 2,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 152,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 115,
+      "outV": 2,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 153,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 91,
+      "outV": 2,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 154,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 106,
+      "outV": 2,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 155,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 116,
+      "outV": 2,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 156,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 117,
+      "outV": 2,
+      "properties": {
+        "strength": 1,
+        "reference_count": 7,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 157,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 118,
+      "outV": 2,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 158,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 27,
+      "outV": 2,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 159,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 119,
+      "outV": 2,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 160,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 120,
+      "outV": 2,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 161,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 121,
+      "outV": 2,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 162,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 42,
+      "outV": 14,
+      "properties": {
+        "strength": 1,
+        "reference_count": 7,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 163,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 122,
+      "outV": 14,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 164,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 123,
+      "outV": 14,
+      "properties": {
+        "strength": 1,
+        "reference_count": 26,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 165,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 46,
+      "outV": 14,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 166,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 124,
+      "outV": 14,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 167,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 125,
+      "outV": 14,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 168,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 127,
+      "outV": 126,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 169,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 128,
+      "outV": 126,
+      "properties": {
+        "strength": 1,
+        "reference_count": 4,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 170,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 129,
+      "outV": 126,
+      "properties": {
+        "strength": 1,
+        "reference_count": 29,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 171,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 89,
+      "outV": 126,
+      "properties": {
+        "strength": 1,
+        "reference_count": 6,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 172,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 26,
+      "outV": 126,
+      "properties": {
+        "strength": 1,
+        "reference_count": 9,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 173,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 130,
+      "outV": 126,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 174,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 131,
+      "outV": 126,
+      "properties": {
+        "strength": 1,
+        "reference_count": 8,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 175,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 132,
+      "outV": 126,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 176,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 133,
+      "outV": 126,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 177,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 134,
+      "outV": 126,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 178,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 29,
+      "outV": 126,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 179,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 135,
+      "outV": 126,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 180,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 136,
+      "outV": 126,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 181,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 138,
+      "outV": 137,
+      "properties": {
+        "strength": 1,
+        "reference_count": 10,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 182,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 46,
+      "outV": 137,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 183,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 89,
+      "outV": 137,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 184,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 29,
+      "outV": 137,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 185,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 124,
+      "outV": 137,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 186,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 38,
+      "outV": 137,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 187,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 21,
+      "outV": 137,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 188,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 26,
+      "outV": 137,
+      "properties": {
+        "strength": 1,
+        "reference_count": 6,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 189,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 139,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 33,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 190,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 29,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 5,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 191,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 26,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 6,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 192,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 140,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 193,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 141,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 194,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 142,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 195,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 143,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 196,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 38,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 15,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 197,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 46,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 198,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 144,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 199,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 130,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 200,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 145,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 201,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 70,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 202,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 37,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 203,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 146,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 204,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 86,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 205,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 124,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 206,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 147,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 207,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 148,
+      "outV": 16,
+      "properties": {
+        "strength": 1,
+        "reference_count": 9,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 208,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 46,
+      "outV": 16,
+      "properties": {
+        "strength": 1,
+        "reference_count": 4,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 209,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 21,
+      "outV": 16,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 210,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 37,
+      "outV": 16,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 211,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 26,
+      "outV": 16,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 212,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 38,
+      "outV": 16,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 213,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 29,
+      "outV": 16,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 214,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 149,
+      "outV": 16,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 215,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 150,
+      "outV": 19,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 216,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 151,
+      "outV": 19,
+      "properties": {
+        "strength": 1,
+        "reference_count": 28,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 217,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 38,
+      "outV": 19,
+      "properties": {
+        "strength": 1,
+        "reference_count": 7,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 218,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 26,
+      "outV": 19,
+      "properties": {
+        "strength": 1,
+        "reference_count": 5,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 219,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 21,
+      "outV": 19,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 220,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 149,
+      "outV": 19,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 221,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 152,
+      "outV": 19,
+      "properties": {
+        "strength": 1,
+        "reference_count": 4,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 222,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 153,
+      "outV": 19,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 223,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 154,
+      "outV": 19,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 224,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 155,
+      "outV": 19,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 225,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 70,
+      "outV": 19,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 226,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 46,
+      "outV": 19,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 227,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 156,
+      "outV": 19,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 228,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 157,
+      "outV": 19,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 229,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 158,
+      "outV": 19,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 230,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 159,
+      "outV": 19,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 231,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 160,
+      "outV": 19,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 232,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 161,
+      "outV": 6,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 233,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 162,
+      "outV": 6,
+      "properties": {
+        "strength": 1,
+        "reference_count": 8,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 234,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 163,
+      "outV": 6,
+      "properties": {
+        "strength": 1,
+        "reference_count": 5,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 235,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 164,
+      "outV": 6,
+      "properties": {
+        "strength": 1,
+        "reference_count": 9,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 236,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 165,
+      "outV": 6,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 237,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 26,
+      "outV": 6,
+      "properties": {
+        "strength": 1,
+        "reference_count": 4,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 238,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 166,
+      "outV": 6,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 239,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 69,
+      "outV": 6,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 240,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 29,
+      "outV": 6,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 241,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 167,
+      "outV": 6,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 242,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 38,
+      "outV": 6,
+      "properties": {
+        "strength": 1,
+        "reference_count": 5,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 243,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 70,
+      "outV": 6,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 244,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 168,
+      "outV": 6,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 245,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 169,
+      "outV": 6,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 246,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 170,
+      "outV": 6,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 247,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 171,
+      "outV": 6,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 248,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 172,
+      "outV": 6,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 249,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 89,
+      "outV": 6,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 250,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 173,
+      "outV": 6,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 251,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 66,
+      "outV": 174,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 252,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 175,
+      "outV": 174,
+      "properties": {
+        "strength": 1,
+        "reference_count": 4,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 253,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 31,
+      "outV": 174,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 254,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 46,
+      "outV": 174,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 255,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 110,
+      "outV": 174,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 256,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 122,
+      "outV": 174,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 257,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 38,
+      "outV": 174,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 258,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 177,
+      "outV": 176,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 259,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 178,
+      "outV": 176,
+      "properties": {
+        "strength": 1,
+        "reference_count": 21,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 260,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 69,
+      "outV": 176,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 261,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 13,
+      "outV": 176,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 262,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 38,
+      "outV": 176,
+      "properties": {
+        "strength": 1,
+        "reference_count": 9,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 263,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 21,
+      "outV": 176,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 264,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 26,
+      "outV": 176,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 265,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 29,
+      "outV": 176,
+      "properties": {
+        "strength": 1,
+        "reference_count": 5,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 266,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 46,
+      "outV": 176,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 267,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 127,
+      "outV": 176,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 268,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 179,
+      "outV": 176,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 269,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 42,
+      "outV": 176,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    }
+  ],
+  "clusters": [
+    {
+      "name": "python (external)",
+      "patterns": []
+    }
+  ]
+}

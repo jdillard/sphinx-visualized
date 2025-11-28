@@ -11,7 +11,43 @@ const DEFAULT_COLORS = [
   '#7c5d28', '#a54a49', '#cf7435'
 ];
 
+// Track current project for external URL handling
+let currentProject = null;
+let projectsData = [];
+
+// Load projects data
+async function loadProjectsData() {
+  try {
+    const response = await fetch('../js/projects.js');
+    const text = await response.text();
+    // Execute the script to get projects_data
+    const fn = new Function(text + '; return projects_data;');
+    return fn();
+  } catch (error) {
+    console.log('No projects data found, using current project only');
+    return [];
+  }
+}
+
 window.addEventListener('DOMContentLoaded', async () => {
+  // Load projects data first
+  projectsData = await loadProjectsData();
+
+  // Check if a project was selected from sessionStorage
+  const savedProjectName = sessionStorage.getItem('sphinx-visualized-project');
+
+  // Find the saved project, default project, or use first one
+  if (savedProjectName && projectsData.length > 0) {
+    currentProject = projectsData.find(p => p.name === savedProjectName);
+  }
+  if (!currentProject) {
+    currentProject = projectsData.find(p => p.is_default) || projectsData[0] || {
+      name: 'current',
+      label: 'Current Project',
+      graphson: '../graphson.json',
+      is_default: true
+    };
+  }
   // Load SVG icons for control buttons
   const loadControlIcons = async () => {
     const controls = [
@@ -37,11 +73,21 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   await loadControlIcons();
 
-  // Fetch the GraphSON data
+  // Fetch the GraphSON data for current project
   let graphsonData;
   try {
-    const response = await fetch('../graphson.json');
+    const response = await fetch(currentProject.graphson);
     graphsonData = await response.json();
+
+    // If viewing external project, rewrite paths to absolute URLs
+    if (currentProject.base_url) {
+      graphsonData.vertices.forEach(vertex => {
+        const path = vertex.properties.path;
+        if (path && path.startsWith('../../../')) {
+          vertex.properties.path = currentProject.base_url + '/' + path.replace('../../../', '');
+        }
+      });
+    }
   } catch (error) {
     console.error('Error loading GraphSON data:', error);
     return;
@@ -231,6 +277,29 @@ window.addEventListener('DOMContentLoaded', async () => {
           content.classList.toggle('collapsed');
           collapseIcon.classList.toggle('collapsed');
         });
+
+        // Add project dropdown if multiple projects available
+        if (projectsData.length > 1) {
+          const exportBtn = document.getElementById('export-json');
+          const projectSelectDiv = document.createElement('div');
+          projectSelectDiv.className = 'mt-3';
+          projectSelectDiv.innerHTML = `
+            <label class="block text-sm font-medium text-muted-foreground mb-1">Project</label>
+            <select id="project-select" class="w-full px-3 py-2 border border-input rounded-md text-sm bg-background">
+              ${projectsData.map(p => `
+                <option value="${p.name}" ${p.name === currentProject.name ? 'selected' : ''}>${p.label}</option>
+              `).join('')}
+            </select>
+          `;
+          content.insertBefore(projectSelectDiv, exportBtn);
+
+          document.getElementById('project-select').addEventListener('change', (e) => {
+            const selectedName = e.target.value;
+            // Store selected project and reload page
+            sessionStorage.setItem('sphinx-visualized-project', selectedName);
+            window.location.reload();
+          });
+        }
       }
     };
 
@@ -245,7 +314,8 @@ window.addEventListener('DOMContentLoaded', async () => {
       const nodeData = graph.getNodeAttributes(node);
       if (nodeData.path) {
         // Open external links in new tab, navigate internal links in current tab
-        if (nodeData.isExternal) {
+        // When viewing an external project, all links should open in new tab
+        if (nodeData.isExternal || currentProject.base_url) {
           window.open(nodeData.path, '_blank', 'noopener,noreferrer');
         } else {
           window.location.href = nodeData.path;

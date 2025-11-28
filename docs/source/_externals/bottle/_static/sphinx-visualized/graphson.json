@@ -1,0 +1,1007 @@
+{
+  "vertices": [
+    {
+      "id": 0,
+      "label": "page",
+      "properties": {
+        "name": "API Reference",
+        "path": "../../../api.html"
+      }
+    },
+    {
+      "id": 1,
+      "label": "page",
+      "properties": {
+        "name": "User\u2019s Guide",
+        "path": "../../../tutorial.html"
+      }
+    },
+    {
+      "id": 2,
+      "label": "page",
+      "properties": {
+        "name": "/_modules/bottle.html",
+        "path": "../../../_modules/bottle.html"
+      }
+    },
+    {
+      "id": 3,
+      "label": "page",
+      "properties": {
+        "name": "Writing Plugins",
+        "path": "../../../plugins/dev.html"
+      }
+    },
+    {
+      "id": 4,
+      "label": "intersphinx",
+      "properties": {
+        "name": "io \u2014 Core tools for working with streams",
+        "path": "https://docs.python.org/3/library/io.html#io.BytesIO",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 5,
+      "label": "intersphinx",
+      "properties": {
+        "name": "configparser \u2014 Configuration file parser",
+        "path": "https://docs.python.org/3/library/configparser.html#configparser.ConfigParser",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 6,
+      "label": "page",
+      "properties": {
+        "name": "SimpleTemplate",
+        "path": "../../../stpl.html"
+      }
+    },
+    {
+      "id": 7,
+      "label": "page",
+      "properties": {
+        "name": "Release Notes",
+        "path": "../../../changelog.html"
+      }
+    },
+    {
+      "id": 8,
+      "label": "page",
+      "properties": {
+        "name": "Configuration",
+        "path": "../../../configuration.html"
+      }
+    },
+    {
+      "id": 9,
+      "label": "page",
+      "properties": {
+        "name": "Using Plugins",
+        "path": "../../../plugins/index.html"
+      }
+    },
+    {
+      "id": 10,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Types",
+        "path": "https://docs.python.org/3/library/stdtypes.html#dict",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 11,
+      "label": "page",
+      "properties": {
+        "name": "Deployment",
+        "path": "../../../deployment.html"
+      }
+    },
+    {
+      "id": 12,
+      "label": "page",
+      "properties": {
+        "name": "F.A.Q.",
+        "path": "../../../faq.html"
+      }
+    },
+    {
+      "id": 13,
+      "label": "page",
+      "properties": {
+        "name": "3rd Party Plugins",
+        "path": "../../../plugins/list.html"
+      }
+    },
+    {
+      "id": 14,
+      "label": "intersphinx",
+      "properties": {
+        "name": "werkzeug",
+        "path": "https://werkzeug.palletsprojects.com/en/3.0.x/",
+        "cluster": "werkzeug (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 15,
+      "label": "page",
+      "properties": {
+        "name": "Asynchronous Applications",
+        "path": "../../../async.html"
+      }
+    },
+    {
+      "id": 16,
+      "label": "page",
+      "properties": {
+        "name": "Bottle: Python Web Framework",
+        "path": "../../../index.html"
+      }
+    },
+    {
+      "id": 17,
+      "label": "page",
+      "properties": {
+        "name": "Request Routing",
+        "path": "../../../routing.html"
+      }
+    },
+    {
+      "id": 18,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Exceptions",
+        "path": "https://docs.python.org/3/library/exceptions.html#NameError",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 19,
+      "label": "intersphinx",
+      "properties": {
+        "name": "venv \u2014 Creation of virtual environments",
+        "path": "https://docs.python.org/3/library/venv.html",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 20,
+      "label": "intersphinx",
+      "properties": {
+        "name": "Built-in Types",
+        "path": "https://docs.python.org/3/library/stdtypes.html#str",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 21,
+      "label": "page",
+      "properties": {
+        "name": "ToDo Application Example",
+        "path": "../../../tutorial_app.html"
+      }
+    },
+    {
+      "id": 22,
+      "label": "intersphinx",
+      "properties": {
+        "name": "string \u2014 Common string operations",
+        "path": "https://docs.python.org/3/library/string.html#format-string-syntax",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 23,
+      "label": "intersphinx",
+      "properties": {
+        "name": "sqlite3 \u2014 DB-API 2.0 interface for SQLite databases",
+        "path": "https://docs.python.org/3/library/sqlite3.html#module-sqlite3",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 24,
+      "label": "intersphinx",
+      "properties": {
+        "name": "re \u2014 Regular expression operations",
+        "path": "https://docs.python.org/3/library/re.html",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    },
+    {
+      "id": 25,
+      "label": "intersphinx",
+      "properties": {
+        "name": "pathlib \u2014 Object-oriented filesystem paths",
+        "path": "https://docs.python.org/3/library/pathlib.html",
+        "cluster": "python (external)",
+        "is_external": true,
+        "is_intersphinx": true
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": 0,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 1,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 2,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 142,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 3,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 4,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 5,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 6,
+      "outV": 0,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 0,
+      "outV": 7,
+      "properties": {
+        "strength": 1,
+        "reference_count": 72,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 8,
+      "outV": 7,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 3,
+      "outV": 7,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 6,
+      "outV": 7,
+      "properties": {
+        "strength": 1,
+        "reference_count": 6,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 9,
+      "outV": 7,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 0,
+      "outV": 8,
+      "properties": {
+        "strength": 1,
+        "reference_count": 10,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 10,
+      "outV": 8,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 2,
+      "outV": 8,
+      "properties": {
+        "strength": 1,
+        "reference_count": 10,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 5,
+      "outV": 8,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 0,
+      "outV": 11,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 13,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 17,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 1,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 0,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 4,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 19,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 14,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 20,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 15,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 21,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 3,
+      "outV": 12,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 22,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 1,
+      "outV": 16,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 23,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 9,
+      "outV": 3,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 24,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 0,
+      "outV": 3,
+      "properties": {
+        "strength": 1,
+        "reference_count": 20,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 25,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 13,
+      "outV": 9,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 26,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 3,
+      "outV": 9,
+      "properties": {
+        "strength": 1,
+        "reference_count": 4,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 27,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 0,
+      "outV": 9,
+      "properties": {
+        "strength": 1,
+        "reference_count": 15,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 28,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 1,
+      "outV": 9,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 29,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 8,
+      "outV": 9,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 30,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 9,
+      "outV": 13,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 31,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 3,
+      "outV": 13,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 32,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 1,
+      "outV": 17,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 33,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 0,
+      "outV": 17,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 34,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 0,
+      "outV": 6,
+      "properties": {
+        "strength": 1,
+        "reference_count": 5,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 35,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 18,
+      "outV": 6,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 36,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 2,
+      "outV": 6,
+      "properties": {
+        "strength": 1,
+        "reference_count": 3,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 37,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 0,
+      "outV": 1,
+      "properties": {
+        "strength": 1,
+        "reference_count": 112,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 38,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 12,
+      "outV": 1,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 39,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 19,
+      "outV": 1,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 40,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 11,
+      "outV": 1,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 41,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 17,
+      "outV": 1,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 42,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 20,
+      "outV": 1,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 43,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 4,
+      "outV": 1,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 44,
+      "label": "ref",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 6,
+      "outV": 1,
+      "properties": {
+        "strength": 1,
+        "reference_count": 2,
+        "types": [
+          "ref"
+        ]
+      }
+    },
+    {
+      "id": 45,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 22,
+      "outV": 21,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 46,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 19,
+      "outV": 21,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 47,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 23,
+      "outV": 21,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 48,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 24,
+      "outV": 21,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    },
+    {
+      "id": 49,
+      "label": "intersphinx",
+      "inVLabel": "page",
+      "outVLabel": "page",
+      "inV": 25,
+      "outV": 21,
+      "properties": {
+        "strength": 1,
+        "reference_count": 1,
+        "types": [
+          "intersphinx"
+        ]
+      }
+    }
+  ],
+  "clusters": [
+    {
+      "name": "python (external)",
+      "patterns": []
+    },
+    {
+      "name": "werkzeug (external)",
+      "patterns": []
+    }
+  ]
+}
